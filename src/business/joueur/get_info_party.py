@@ -37,3 +37,5 @@ for participant in participants:
     
     # Assigner la liste d'informations au puuid dans le dictionnaire
     participant_info[puuid] = participant_data
+
+print(participant_info)
