@@ -1,14 +1,39 @@
-"""
-InfoDto : gameDuration, EUW1_6627153849
-
-ParticipantDto : assists, championId, championLevel, death , goldEarned, kills, neutralMinionsKilled, puuid, role and lane, summoner1id, summoner2id, totalDamageDealt, win, teamId
-"""
 import sqlite3
 import pandas as pd
-
-api_key = 'RGAPI-2c02a22e-1bdc-43fc-91a6-ecea79c4b0c8'
-
-match_key = 'https://europe.api.riotgames.com/lol/match/v5/matches/EUW1_6627699808?api_key=RGAPI-a8b3f16b-23ed-455a-8fb5-e976ea8225d7'
-print(match_key)
+import json
 
 
+with open('src/business/joueur/infos_partie.json', 'r') as fichier_json:
+    infos_partie = json.load(fichier_json)
+    
+info = infos_partie.get("info")
+
+# Accéder aux informations spécifiques pour chaque participant
+participants = info.get("participants", [])
+
+# Créer un dictionnaire pour stocker les informations par puuid
+participant_info = {}
+
+for participant in participants:
+    puuid = participant["puuid"]
+    # Créer une liste avec les informations spécifiques pour ce participant
+    participant_data = [
+        info["gameDuration"],
+        participant["assists"],
+        participant["championId"],
+        participant["champLevel"],
+        participant["deaths"],
+        participant["goldEarned"],
+        participant["kills"],
+        participant["neutralMinionsKilled"],
+        participant["role"],
+        participant["lane"],
+        participant["summoner1Id"],
+        participant["summoner2Id"],
+        participant["totalDamageDealt"],
+        participant["win"],
+        participant["teamId"]
+    ]
+    
+    # Assigner la liste d'informations au puuid dans le dictionnaire
+    participant_info[puuid] = participant_data
