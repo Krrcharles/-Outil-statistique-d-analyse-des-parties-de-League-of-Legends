@@ -19,6 +19,10 @@ def extract_participant_info(json_data):
     """
     info = json_data.get("info")
 
+    # Vérifie si json_data est un dictionnaire 
+    if not isinstance(json_data, dict):
+        raise ValueError("json_data n'est pas un dictionnaire JSON valide")
+
     # Accéder aux informations spécifiques pour chaque participant
     participants = info.get("participants", [])
 
