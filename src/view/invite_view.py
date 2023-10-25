@@ -8,10 +8,10 @@ class InviteView(AbstractView):
     def __init__(self):
         self.__questions = [
             {
-                "type": "input",
-                "Identifiant": "login",
-                "Mot de passe":"password"
-                "message": "What's your password",
+                "choices": [
+                    "Champion : ",
+                    "Quit",
+                ],
             }
         ]
 
