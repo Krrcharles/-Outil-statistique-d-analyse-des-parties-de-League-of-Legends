@@ -12,15 +12,13 @@ class Joueur :
 
     def __init__(
         self,
-        nom : str,
+        name : str,
         id : str,
         puuid : str,
         rank : str, 
-        winrate : float,
-        KDA : float,
-        Ga15 : float,
-        champions_joue : list(str),
-        last_games : list(str)
+        win : int,
+        loses : int,
+        level : int
     )-> None :
 
 
@@ -29,16 +27,16 @@ class Joueur :
     ####################################
 
 
-    self._nom = nom,
+    self._name = name,
     self._id = id,
     self._puuid  = puuid,
     self._rank = rank, 
-    self._winrate = winrate,
-    self._KDA = KDA,
-    self._Ga15 = Ga15,
-    self._champions_joue = champions_joue,
-    self._last_games = last_games
+    self._win = win,
+    self._loses = loses,
+    self._level = level,
 
     ####################################
     #             Methods              #
     ####################################
+    def consulter_stat_player(self,name) -> dict :
+        pass
