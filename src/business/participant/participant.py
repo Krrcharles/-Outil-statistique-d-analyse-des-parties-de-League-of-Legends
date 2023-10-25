@@ -14,6 +14,19 @@ class Participant :
         self,
         id_player : str,
         id_game : str,
+        puuid : str,
+        teamID : int,
+        totalDamageDealtToChampions : int,
+        win : bool,
+        lane : str,
+        role : str,
+        totalMinionsKilled : int,
+        championName : str,
+        goldEarned : int,
+        death : int,
+        assists : int,
+        kills : int,
+        gameDuration : int
     )-> None :
 
 
@@ -22,14 +35,26 @@ class Participant :
     ####################################
 
 
-        self._id : str,
-        self._login : str,
-        self._password : str
-
+        self._id_player = id_player,
+        self._id_game = id_game,
+        self._puuid = puuid,
+        self._teamID = teamID,
+        self._totalDamageDealtToChampions = totalDamageDealtToChampions,
+        self._win = win,
+        self._lane = lane,
+        self._role = role,
+        self._totaleMinionsKilled = totalMinionsKilled,
+        self._championName = championName,
+        self._goldEarned = goldEarned,
+        self._death = death,
+        self._assists = assists,
+        self._kills = kills,
+        self._gameDuration = gameDuration
+        
 
     ####################################
     #             Methods              #
     ####################################
 
-
-    def consulter_stat_player ()
+    def consult_game_stat (self, id_player,id_game) -> dict :
+        pass
