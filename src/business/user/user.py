@@ -22,10 +22,10 @@ class User ():
     #           Attributes             #
     ####################################
 
-    self._id = id,
-    self._login = login,
-    self._password = password,
-    self._is_admin = is_admin
+        self._id = id,
+        self._login = login,
+        self._password = password,
+        self._is_admin = is_admin
 
     ####################################
     #             Methods              #

@@ -2,7 +2,7 @@ import sqlite3, requests, json, time
 import pandas as pd
 
 
-class Joueur :
+class Participant :
 
 
 
@@ -12,13 +12,8 @@ class Joueur :
 
     def __init__(
         self,
-        name : str,
-        id : str,
-        puuid : str,
-        rank : str, 
-        win : int,
-        loses : int,
-        level : int
+        id_player : str,
+        id_game : str,
     )-> None :
 
 
@@ -27,16 +22,14 @@ class Joueur :
     ####################################
 
 
-    self._name = name,
-    self._id = id,
-    self._puuid  = puuid,
-    self._rank = rank, 
-    self._win = win,
-    self._loses = loses,
-    self._level = level,
+        self._id : str,
+        self._login : str,
+        self._password : str
+
 
     ####################################
     #             Methods              #
     ####################################
-    def consulter_stat_player(self,name) -> dict :
-        pass
+
+
+    def consulter_stat_player ()
