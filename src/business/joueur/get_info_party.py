@@ -28,6 +28,7 @@ def extract_participant_info(json_data):
 
     # Créer une liste pour stocker les informations de tous les participants
     participant_info = []
+    participant_info.append(info["matchId"])
     participant_info.append(info["gameDuration"])
 
     for participant in participants:
