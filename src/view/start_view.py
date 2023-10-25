@@ -6,7 +6,17 @@ from view.session import Session
 
 class StartView(AbstractView):
     def __init__(self):
-        " A définir "
+        self.__questions = [
+            {
+                "name": "choix",
+                "message": f"Hello {Session().user_name}",
+                "choices": [
+                    "Invite",
+                    "Connection",
+                    "Quit",
+                ],
+            }
+        ]
 
     def display_info(self):
         with open("src/graphical_assets/banner.txt", "r", encoding="utf-8") as asset:
