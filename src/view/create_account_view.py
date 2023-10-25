@@ -24,8 +24,8 @@ class CreateView(AbstractView):
 
     def make_choice(self):
         answers = prompt(self.__questions)
-        Session().user_identifiant = answers["name_1"]
-        Session().user_mdp = answers["name_2"]
+        Session().user_identifiant = answers["name"]
+        Session().user_mdp = answers["name"]
 
         from view.start_view import StartView
 
