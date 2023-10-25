@@ -41,9 +41,20 @@ class StartView(AbstractView):
             return InviteView()
 
         elif reponse["choix"] == "Create":
-            from view.create_account_view import CreateView
+            self.__questions_create = [
+            {
+                "type": "list",
+                "name": "choix",
+                "choices": [
+                    "Login",
+                    "Password",
+                ],
+            }
+        ]
+            reponse = prompt(self.__questions_create)
+            from view.connection_view import ConnectionView
 
-            return CreateView()
+            return ConnectionView()
 
         elif reponse["choix"] == "Stats":
             from view.battle_view import StatsView
