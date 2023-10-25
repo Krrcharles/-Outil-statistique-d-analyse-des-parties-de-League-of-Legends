@@ -13,6 +13,8 @@ class StartView(AbstractView):
                 "choices": [
                     "Invite",
                     "Connection",
+                    "Admin",
+                    "Create",
                     "Quit",
                 ],
             }
@@ -27,15 +29,20 @@ class StartView(AbstractView):
         if reponse["choix"] == "Quit":
             pass
 
+        elif reponse["choix"] == "Connection":
+            from view.connection_view import ConnectionView
+
+            return ConnectionView()
+
         elif reponse["choix"] == "Invite":
             from view.connection_view import InviteView
 
             return InviteView()
 
-        elif reponse["choix"] == "Connection":
-            from view.connection_view import ConnectionView
+        elif reponse["choix"] == "Create":
+            from view.connection_view import CreateView
 
-            return ConnectionView()
+            return CreateView()
 
         elif reponse["choix"] == "Stats":
             from view.battle_view import StatsView

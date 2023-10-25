@@ -4,21 +4,19 @@ from view.abstract_view import AbstractView
 from view.session import Session
 
 
-class InviteView(AbstractView):
+class createAccountView(AbstractView):
     def __init__(self):
         self.__questions = [
             {
                 "type": "input",
-                "choices": [
-                    "Champion : ",
-                    "Quit",
-                ],
-                "message": "What are you looking for",
+                "Identifiant": "login",
+                "Mot de passe":"password"
+                "message": "What's your password",
             }
         ]
 
     def display_info(self):
-        print(f"")
+        print(f"Hello, please enter your new login and password")
 
     def make_choice(self):
         answers = prompt(self.__questions)

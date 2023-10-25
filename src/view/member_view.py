@@ -8,19 +8,17 @@ class MemberView(AbstractView):
         self.__questions = [
             {
                 "type": "input",
-                "Identifiant": "login",
-                "Mot de passe":"password"
-                "message": "What's your password",
+                "message": "What are you looking for",
             }
         ]
 
     def display_info(self):
-        print(f"Hello, please enter your login and password")
+        print(f"")
 
     def make_choice(self):
         answers = prompt(self.__questions)
-        Session().user_name = answers["login"]
-        Session().user_name = answers["password"]
+        Session().user_identifiant = answers["login"]
+        Session().user_mdp = answers["password"]
 
         from view.start_view import StartView
 

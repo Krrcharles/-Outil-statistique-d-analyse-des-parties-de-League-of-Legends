@@ -11,7 +11,7 @@ class ConnectionView(AbstractView):
                 "type": "input",
                 "Identifiant": "login",
                 "Mot de passe":"password"
-                "message": "What's your password",
+                "message": "Enter your login and password",
             }
         ]
 
@@ -20,8 +20,8 @@ class ConnectionView(AbstractView):
 
     def make_choice(self):
         answers = prompt(self.__questions)
-        Session().user_name = answers["login"]
-        Session().user_name = answers["password"]
+        Session().user_identifiant = answers["login"]
+        Session().user_mdp = answers["password"]
 
         from view.start_view import StartView
 
