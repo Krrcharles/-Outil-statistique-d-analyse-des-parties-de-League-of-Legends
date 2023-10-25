@@ -36,7 +36,7 @@ def extract_participant_info(json_data):
         participant_data = [
             participant["puuid"],
             participant["assists"],
-            participant["championId"],
+            participant["championName"],
             participant["champLevel"],
             participant["deaths"],
             participant["goldEarned"],
