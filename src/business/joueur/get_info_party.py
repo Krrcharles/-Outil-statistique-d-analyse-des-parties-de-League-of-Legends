@@ -6,7 +6,7 @@ import json
 with open('src/business/joueur/infos_partie.json', 'r') as fichier_json:
     infos_partie = json.load(fichier_json)
     
-def extract_participant_info(json_data):
+def extract_participant_info(json_data) -> None :
     """ Obtenir les informations d'une partie à partir d'un JSON
 
     Parameters :
@@ -19,7 +19,7 @@ def extract_participant_info(json_data):
     """
     info = json_data.get("info")
 
-    # Vérifie si json_data est un dictionnaire 
+    # Vérifie si json_data est un dictionnaire
     if not isinstance(json_data, dict):
         raise ValueError("json_data n'est pas un dictionnaire JSON valide")
 
@@ -28,8 +28,9 @@ def extract_participant_info(json_data):
 
     # Créer une liste pour stocker les informations de tous les participants
     participant_info = []
-    participant_info.append(info["matchId"])
+    participant_info.append(participants["metadata"])
     participant_info.append(info["gameDuration"])
+    
 
     for participant in participants:
         # Créer une liste avec les informations spécifiques pour ce participant
@@ -44,8 +45,6 @@ def extract_participant_info(json_data):
             participant["neutralMinionsKilled"],
             participant["role"],
             participant["lane"],
-            participant["summoner1Id"],
-            participant["summoner2Id"],
             participant["totalDamageDealt"],
             participant["win"],
             participant["teamId"]
@@ -56,7 +55,7 @@ def extract_participant_info(json_data):
 
     return participant_info
     
-""" Voir le résultat sur un exemple
+
 test = extract_participant_info(infos_partie)
 print(test)
-"""
+
