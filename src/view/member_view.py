@@ -3,8 +3,7 @@ from InquirerPy import prompt
 from view.abstract_view import AbstractView
 from view.session import Session
 
-
-class ConnectionView(AbstractView):
+class MemberView(AbstractView):
     def __init__(self):
         self.__questions = [
             {
