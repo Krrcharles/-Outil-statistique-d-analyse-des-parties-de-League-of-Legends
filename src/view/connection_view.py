@@ -9,9 +9,8 @@ class ConnectionView(AbstractView):
         self.__questions = [
             {
                 "type": "input",
-                "Identifiant": "login",
-                "Mot de passe":"password"
-                "message": "Enter your login and password",
+                "name": "Identifiant",
+                "message":"Enter your login and password",
             }
         ]
 

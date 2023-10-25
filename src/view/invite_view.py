@@ -9,9 +9,12 @@ class InviteView(AbstractView):
         self.__questions = [
             {
                 "type": "input",
+                "name": "invite",
                 "choices": [
-                    "Champion : ",
-                    "Quit",
+                    "Player games : ",
+                    "Player information",
+                    "Champion statistics",
+                    "Champion Rankings ()",
                 ],
                 "message": "What are you looking for",
             }
@@ -27,4 +30,4 @@ class InviteView(AbstractView):
 
         from view.start_view import StartView
 
-        return memberView()
+        return MemberView()

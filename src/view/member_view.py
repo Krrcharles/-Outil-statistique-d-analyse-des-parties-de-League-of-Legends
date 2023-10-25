@@ -8,6 +8,7 @@ class MemberView(AbstractView):
         self.__questions = [
             {
                 "type": "input",
+                "name": "identifiant",
                 "message": "What are you looking for",
             }
         ]
