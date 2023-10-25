@@ -54,7 +54,7 @@ def extract_participant_info(json_data) -> None :
         ]
 
         # Étendre la liste d'informations à la liste des participants
-        participants_info.append(Participant(*participant_data))
+        participants_info.append(str(Participant(*participant_data)))
 
     return participants_info
     
