@@ -4,14 +4,18 @@ from view.abstract_view import AbstractView
 from view.session import Session
 
 
-class createAccountView(AbstractView):
+class CreateView(AbstractView):
     def __init__(self):
         self.__questions = [
             {
                 "type": "input",
-                "Identifiant": "login",
-                "Mot de passe":"password"
-                "message": "What's your password",
+                "name": "identifiant",
+                "message":"What's your login",
+            },
+            {
+                "type": "input",
+                "name": "password",
+                "message":"What's your password",
             }
         ]
 
@@ -20,9 +24,9 @@ class createAccountView(AbstractView):
 
     def make_choice(self):
         answers = prompt(self.__questions)
-        Session().user_identifiant = answers["login"]
-        Session().user_mdp = answers["password"]
+        Session().user_identifiant = answers["name_1"]
+        Session().user_mdp = answers["name_2"]
 
         from view.start_view import StartView
 
-        return memberView()
+        return MemberView()
