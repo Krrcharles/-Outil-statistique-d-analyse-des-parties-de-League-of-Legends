@@ -10,8 +10,8 @@ class ConnectionView(AbstractView):
             {
                 "type": "input",
                 "Identifiant": "login",
-                "Mot de passe":"password"
-                "message": "Enter your login and password",
+                "Mot de passe":"password",
+                "message":"Enter your login and password",
             }
         ]
 

@@ -8,8 +8,9 @@ class StartView(AbstractView):
     def __init__(self):
         self.__questions = [
             {
+                "type": "list",
                 "name": "choix",
-                "message": f"Hello {Session().user_name}",
+                "message": f"Hello {Session().user_identifiant}",
                 "choices": [
                     "Invite",
                     "Connection",
