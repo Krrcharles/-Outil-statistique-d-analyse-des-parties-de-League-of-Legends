@@ -56,5 +56,4 @@ class Participant :
     #             Methods              #
     ####################################
 
-    def consult_game_stat (self, id_player,id_game) -> dict :
-        pass
+

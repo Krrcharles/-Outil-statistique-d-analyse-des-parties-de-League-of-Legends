@@ -38,5 +38,3 @@ class Player :
     ####################################
     #             Methods              #
     ####################################
-    def consult_stat_player(self,name) -> dict :
-        pass
