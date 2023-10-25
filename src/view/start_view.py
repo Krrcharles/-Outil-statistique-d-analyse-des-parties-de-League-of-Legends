@@ -36,12 +36,12 @@ class StartView(AbstractView):
             return ConnectionView()
 
         elif reponse["choix"] == "Invite":
-            from view.connection_view import InviteView
+            from view.invite_view import InviteView
 
             return InviteView()
 
         elif reponse["choix"] == "Create":
-            from view.connection_view import CreateView
+            from view.create_account_view import CreateView
 
             return CreateView()
 
