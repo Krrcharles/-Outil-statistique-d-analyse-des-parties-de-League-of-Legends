@@ -11,10 +11,10 @@ class User ():
     
     def __init__(
         self,
-        nom : str ,
-        nbr_games : int ,
-        winrate : float ,
-        Ga15 : float
+        id : str ,
+        login : int ,
+        password : float ,
+        is_admin : bool
     ) -> None : 
 
 
@@ -22,7 +22,11 @@ class User ():
     #           Attributes             #
     ####################################
 
-    self._nom = nom,
-    self._nbr_games  = nbr_games,
-    self._winrate = winrate,
-    self._Ga15 = Ga15,    
+    self._id = id,
+    self._login = login,
+    self._password = password,
+    self._is_admin = is_admin
+
+    ####################################
+    #             Methods              #
+    ####################################
