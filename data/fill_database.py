@@ -1,6 +1,6 @@
 import sqlite3, requests, json, time
 import pandas as pd
-
+#RGAPI-0282fe35-e799-4f1a-b81f-713b8c4b7d7b
 api_key = input('API Key : ')
 
 challengers_url = 'https://euw1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5'
@@ -28,9 +28,10 @@ for id_joueur in joueurs['summonerId']:
     puuid.append(summoner_data['puuid'])
     level.append(summoner_data['summonerLevel'])
     time.sleep(1.2)
-    
+
 joueurs['puuid'] = puuid
 joueurs['level'] = level
+joueurs = joueurs[:100]
 
 matches = []
 for puuid_joueur in joueurs['puuid']:
@@ -42,7 +43,7 @@ for puuid_joueur in joueurs['puuid']:
 joueurs['matches'] = matches
 
 # Connect to a database (or create one)
-conn = sqlite3.connect('data/database.db')
+conn = sqlite3.connect('data/database_test.db')
 joueurs['matches'] = joueurs['matches'].apply(json.dumps)
 joueurs.to_sql('joueur', conn, if_exists='replace', index=False)
 conn.close()

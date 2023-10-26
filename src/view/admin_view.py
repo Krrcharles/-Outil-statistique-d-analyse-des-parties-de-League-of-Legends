@@ -25,23 +25,26 @@ class AdminView(MemberView):
     def make_choice(self):
         answers = prompt(self.__questions)
 
-        # methode en suspens
+        Session().user_identifiant = answers["identifiant"]
+        Session().user_mdp = answers["password"]
 
-        another_infos = prompt(
-            [
-                {
-                    "type": "confirm",
-                    "name": "continue",
-                    "message": "Another Information ?",
-                    "default": True,
-                }
-            ]
-        )
+        while True:
+            answers = prompt(self.__questions)
 
-        if another_infos["continue"]:
-            return AdminView()
+            self.display_info()  # Appelez la fonction display_info pour afficher les informations
 
-        else:
-            from view.start_view import StartView
+            another_infos = prompt(
+                [
+                    {
+                        "type": "confirm",
+                        "name": "continue",
+                        "message": "Another Information ?",
+                        "default": True,
+                    }
+                ]
+            )
 
-            return StartView()
+            if not another_infos["continue"]:
+                from view.start_view import StartView
+
+                return StartView()

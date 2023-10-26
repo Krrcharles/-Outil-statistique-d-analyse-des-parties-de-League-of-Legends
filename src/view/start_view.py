@@ -15,7 +15,6 @@ class StartView(AbstractView):
                     "Create",
                     "Invite",
                     "Connection",
-                    "Admin",
                     "Quit",
                 ],
             }
@@ -45,7 +44,3 @@ class StartView(AbstractView):
 
             return MemberView()
 
-        elif reponse["choix"] == "Stats":
-            from view.battle_view import StatsView
-
-            return StatsView()
