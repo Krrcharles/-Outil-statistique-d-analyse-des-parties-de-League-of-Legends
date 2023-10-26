@@ -6,12 +6,11 @@ from utils.singleton import Singleton
 
 class PlayerService(metaclass=Singleton) : 
 
-    def afficher_parties() : 
+    def afficher_parties_from_websites() : 
         pass
 
-    def afficher_stat_player () : 
+    def afficher_stat_player_from_websites () : 
         pass
-    def supprimer_player():
-        pass
+
 
     
