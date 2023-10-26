@@ -1,5 +1,6 @@
 import sqlite3, requests, json, time
 import pandas as pd
+from componants import extract_participant_info
 #RGAPI-0282fe35-e799-4f1a-b81f-713b8c4b7d7b
 api_key = input('API Key : ')
 
@@ -34,16 +35,16 @@ for puuid_joueur in joueurs['puuid']:
     
 joueurs['matches'] = matches
 
-#####PARTICIPANT#####
-
 # Connect to a database (or create one)
-conn = sqlite3.connect('data/database_test.db')
+conn = sqlite3.connect('database.db')
 joueurs['matches'] = joueurs['matches'].apply(json.dumps)
 joueurs.to_sql('joueur', conn, if_exists='replace', index=False)
 conn.close()
 
+#####PARTICIPANT#####
+
 # Connect to the SQLite database
-conn = sqlite3.connect('../data/database.db')
+conn = sqlite3.connect('database.db')
 
 # Read the table into a dataframe
 df = pd.read_sql('SELECT * FROM joueur', conn)
@@ -60,4 +61,15 @@ df['matches'] = df['matches'].apply(lambda x: x[:2])
 # Aplatir la colonne
 liste_aplatie = df.explode('matches')['matches'].unique().tolist()
 
-
+for matchId in liste_aplatie:
+    match_url = "https://europe.api.riotgames.com/lol/match/v5/matches/EUW1_6641697219"+ '?api_key=' + api_key
+    match_data = requests.get(match_url).json()
+    time.sleep(1.2)
+    participants = extract_participant_info(match_data)
+    
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    for participant in participants:
+        cursor.execute('INSERT INTO participant VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', participant)
+        conn.commit()
+    conn.close()

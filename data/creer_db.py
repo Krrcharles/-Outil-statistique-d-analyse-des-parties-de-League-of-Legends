@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connexion à la base de données SQLite (cela créera un fichier 'databse.db' s'il n'existe pas)
-conn = sqlite3.connect('data/database.db')
+conn = sqlite3.connect('data/database_test.db')
 cursor = conn.cursor()
 
 

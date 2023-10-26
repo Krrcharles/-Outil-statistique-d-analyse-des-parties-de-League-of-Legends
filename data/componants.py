@@ -1,12 +1,3 @@
-import sqlite3
-import pandas as pd
-import json
-from participant import Participant
-
-
-with open('src/business/player/infos_partie.json', 'r') as fichier_json:
-    infos_partie = json.load(fichier_json)
-    
 def extract_participant_info(json_data) -> None :
     """ Obtenir les informations d'une partie à partir d'un JSON
 
@@ -18,8 +9,8 @@ def extract_participant_info(json_data) -> None :
 
         None
     """
-    match_id = json_data.get("metadata").get("matchId")
-    info = json_data.get("info")
+    match_id = json_data["metadata"]["matchId"]
+    info = json_data["info"]
 
     # Vérifie si json_data est un dictionnaire
     if not isinstance(json_data, dict):
@@ -43,9 +34,9 @@ def extract_participant_info(json_data) -> None :
             participant["teamId"],
             participant["totalDamageDealtToChampions"],
             participant["win"],
+            participant["totalMinionsKilled"],
             participant["lane"],
             participant["role"],
-            participant["totalMinionsKilled"],
             participant["championName"],
             participant["goldEarned"],
             participant["deaths"],
@@ -57,8 +48,3 @@ def extract_participant_info(json_data) -> None :
         participants_info.append(participant_data)
 
     return participants_info
-    
-
-test = extract_participant_info(infos_partie)
-print(test)
-
