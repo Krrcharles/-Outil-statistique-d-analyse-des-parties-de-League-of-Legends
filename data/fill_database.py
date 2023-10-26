@@ -1,4 +1,4 @@
-import sqlite3, requests, json, time
+import sqlite3, requests, json, time, hashlib
 import pandas as pd
 from componants import extract_participant_info
 #RGAPI-0282fe35-e799-4f1a-b81f-713b8c4b7d7b
@@ -35,7 +35,7 @@ for puuid_joueur in joueurs['puuid']:
 joueurs['matches'] = matches
 
 # Connect to a database (or create one)
-conn = sqlite3.connect('database.db')
+conn = sqlite3.connect('data/database.db')
 joueurs['matches'] = joueurs['matches'].apply(json.dumps)
 joueurs.to_sql('joueur', conn, if_exists='replace', index=False)
 conn.close()
@@ -43,7 +43,7 @@ conn.close()
 #####PARTICIPANT#####
 
 # Connect to the SQLite database
-conn = sqlite3.connect('database.db')
+conn = sqlite3.connect('data/database.db')
 
 # Read the table into a dataframe
 df = pd.read_sql('SELECT * FROM joueur', conn)
@@ -72,3 +72,13 @@ for matchId in liste_aplatie:
         cursor.execute('INSERT INTO participant VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', participant)
         conn.commit()
     conn.close()
+    
+#####utilisateur#####
+
+conn = sqlite3.connect('data/database.db')
+cursor = conn.cursor()
+
+cursor.execute('INSERT INTO utilisateur (id, login, password, isadmin) VALUES (?,?,?)', (0, 'teemo', hashlib.pbkdf2_hmac('sha256', '1234'.encode('utf-8'), 'teemo'.encode('utf-8'), 100), 0))
+conn.commit()
+cursor.execute('INSERT INTO utilisateur (id, login, password, isadmin) VALUES (?,?,?)', (1, 'admin', hashlib.pbkdf2_hmac('sha256', 'admin'.encode('utf-8'), 'admin'.encode('utf-8'), 100), 1))
+conn.commit()
