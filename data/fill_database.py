@@ -1,6 +1,6 @@
 import sqlite3, requests, json, time
 import pandas as pd
-
+#RGAPI-0282fe35-e799-4f1a-b81f-713b8c4b7d7b
 api_key = input('API Key : ')
 
 challengers_url = 'https://euw1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5'
