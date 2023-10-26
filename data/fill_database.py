@@ -8,6 +8,7 @@ final_challengers_url = challengers_url + '?api_key=' + api_key
 
 challengers_data = requests.get(final_challengers_url)
 time.sleep(1.2)
+
 joueurs = pd.DataFrame(challengers_data.json()['entries'])
 
 puuid = []
