@@ -17,7 +17,7 @@ class Player :
         puuid : str,
         rank : str, 
         win : int,
-        loses : int,
+        losses : int,
         level : int
     )-> None :
 
@@ -27,12 +27,12 @@ class Player :
     ####################################
 
 
-        self._name = name,
-        self._id = id,
-        self._puuid  = puuid,
-        self._rank = rank, 
-        self._win = win,
-        self._loses = loses,
+        self._name = name
+        self._id = id
+        self._puuid  = puuid
+        self._rank = rank
+        self._win = win
+        self._losses = losses
         self._level = level
 
     ####################################
