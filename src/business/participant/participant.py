@@ -12,9 +12,8 @@ class Participant :
 
     def __init__(
         self,
-        puuid : str,
         id_game : str,
-        gameDuration : int,
+        puuid : str,
         teamID : int,
         totalDamageDealtToChampions : int,
         win : bool,
@@ -25,14 +24,14 @@ class Participant :
         goldEarned : int,
         death : int,
         assists : int,
-        kills : int
+        kills : int,
+        gameDuration : int
     )-> None :
 
 
     ####################################
     #           Attributes             #
     ####################################
-
 
         self._id_game = id_game,
         self._puuid = puuid,
