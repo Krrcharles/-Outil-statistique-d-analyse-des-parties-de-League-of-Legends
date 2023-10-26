@@ -12,10 +12,10 @@ class StartView(AbstractView):
                 "name": "choix",
                 "message": f"Hello {Session().user_identifiant}",
                 "choices": [
+                    "Create",
                     "Invite",
                     "Connection",
                     "Admin",
-                    "Create",
                     "Quit",
                 ],
             }
@@ -30,31 +30,20 @@ class StartView(AbstractView):
         if reponse["choix"] == "Quit":
             pass
 
-        elif reponse["choix"] == "Connection":
-            from view.connection_view import ConnectionView
+        elif reponse["choix"] == "Create":  
+            from create_account_view import CreateAccountView
 
-            return ConnectionView()
+            return CreateAccountView()
 
         elif reponse["choix"] == "Invite":
             from view.invite_view import InviteView
 
             return InviteView()
 
-        elif reponse["choix"] == "Create":
-            self.__questions_create = [
-            {
-                "type": "list",
-                "name": "choix",
-                "choices": [
-                    "Login",
-                    "Password",
-                ],
-            }
-        ]
-            reponse = prompt(self.__questions_create)
-            from view.connection_view import ConnectionView
+        elif reponse["choix"] == "Connection":
+            from view.member_view import MemberView
 
-            return ConnectionView()
+            return MemberView()
 
         elif reponse["choix"] == "Stats":
             from view.battle_view import StatsView

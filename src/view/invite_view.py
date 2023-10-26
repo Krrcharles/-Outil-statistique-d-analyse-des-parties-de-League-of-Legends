@@ -1,4 +1,5 @@
 from InquirerPy import prompt
+from InquirerPy.separator import Separator
 
 from view.abstract_view import AbstractView
 from view.session import Session
@@ -6,28 +7,48 @@ from view.session import Session
 
 class InviteView(AbstractView):
     def __init__(self):
+        infos_option = [
+            Separator("📰"),
+            "Stats Champion",
+            Separator("👑"),
+            "Ranking Champion",
+            Separator("🎮"),
+            "Stats Player",
+        ]
+        self.infos_option = infos_option
         self.__questions = [
             {
-                "type": "input",
-                "name": "invite",
-                "choices": [
-                    "Player games : ",
-                    "Player information",
-                    "Champion statistics",
-                    "Champion Rankings ()",
-                ],
+                "type": "list",
+                "name": "choix",
                 "message": "What are you looking for",
+                "choices": infos_option,
             }
         ]
 
     def display_info(self):
-        print(f"")
+        print(f"") # a def
 
     def make_choice(self):
-        answers = prompt(self.__questions)
-        Session().user_identifiant = answers["login"]
-        Session().user_mdp = answers["password"]
+        answers = prompt(self.__questions) 
 
-        from view.start_view import StartView
+        # methode en suspens
 
-        return MemberView()
+        another_infos = prompt(
+            [
+                {
+                    "type": "confirm",
+                    "name": "continue",
+                    "message": "Another Information ?",
+                    "default": True,
+                }
+            ]
+        )
+
+        if another_infos["continue"]:
+            return InviteView()
+
+        else:
+            from view.start_view import StartView
+
+            return StartView()
+        
