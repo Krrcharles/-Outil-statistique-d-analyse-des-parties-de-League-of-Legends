@@ -10,6 +10,7 @@ class PlayerClient(metaclass=Singleton):
         self.__HOST = os.environ["HOST_WEBSERVICE"]
 
     def afficher_parties():
+
         pass
 
     def afficher_stats_player():

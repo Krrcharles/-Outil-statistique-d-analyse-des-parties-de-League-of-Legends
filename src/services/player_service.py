@@ -19,8 +19,10 @@ class PlayerService(metaclass=Singleton) :
         name : nom du joueur 
 
         Return
+        ------
+
         """
-        pass
+        
 
     def afficher_stat_player_from_websites () : 
         pass
