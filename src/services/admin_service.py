@@ -7,7 +7,7 @@ from utils.singleton import Singleton
 END_POINT = "/attack"
 
 
-class AdminClient(metaclass=Singleton):
+class AdminService(metaclass=Singleton):
     def __init__(self) -> None:
         
 
