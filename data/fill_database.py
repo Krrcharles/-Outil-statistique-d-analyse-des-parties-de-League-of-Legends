@@ -21,7 +21,6 @@ for id_joueur in joueurs['summonerId']:
     puuid.append(summoner_data['puuid'])
     level.append(summoner_data['summonerLevel'])
     time.sleep(1.2)
-    print("ca avance 1")
 
 joueurs['puuid'] = puuid
 joueurs['level'] = level
@@ -67,7 +66,7 @@ for matchId in liste_aplatie:
     time.sleep(1.2)
     participants = extract_participant_info(match_data)
     
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('data/database.db')
     cursor = conn.cursor()
     for participant in participants:
         cursor.execute('INSERT INTO participant VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', participant)
