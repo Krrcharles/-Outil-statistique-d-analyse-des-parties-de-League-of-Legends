@@ -37,9 +37,9 @@ class CreateAccountView(AbstractView):
         if resultat == False :
             print(f"L'identfiant '{user_identifiant}' est déjà utilisé")
 
+            from view.create_account_view import CreateAccountView
 
-        Session().user_identifiant = answers["identifiant"]
-        Session().user_mdp = answers["password"]
+            return CreateAccountView()
 
         # methode en suspens
 
