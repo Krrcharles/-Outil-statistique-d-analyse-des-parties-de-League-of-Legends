@@ -1,5 +1,6 @@
 from InquirerPy import prompt
 from InquirerPy.separator import Separator
+from services.connexion_services import Connexion_services
 
 from view.invite_view import InviteView
 from view.session import Session
@@ -47,14 +48,19 @@ class MemberView(InviteView):
         # Vérification que l'identifiant existe, et que l'identifiant et le mot de passe coincident 
 
         instance = Connexion_services()
-        resultat = instance.inscription(user_identifiant,password)
+        resultat = instance.connexion(user_identifiant,password)
 
-        if resultat == False :
+        if resultat == "failed" :
             print(f"Il se peut que votre nom d'utilisateur ou mot de passe soit incorrect ou que vous deviez passer à un compte Riot si vous n'avez pas joué depuis quelques mois.")
 
             from view.member_view import MemberView
 
             return MemberView()
+
+        elif resultat == "admin":
+            from view.admin_view import AdminView
+
+            return AdminView()
 
         while True:
             answers = prompt(self.__question)
