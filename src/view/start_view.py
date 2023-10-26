@@ -31,7 +31,7 @@ class StartView(AbstractView):
             pass
 
         elif reponse["choix"] == "Create":  
-            from create_account_view import CreateAccountView
+            from view.create_account_view import CreateAccountView
 
             return CreateAccountView()
 
