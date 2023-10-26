@@ -1,7 +1,6 @@
 import sqlite3, requests, json, time, hashlib
 import pandas as pd
 from componants import extract_participant_info
-#RGAPI-0282fe35-e799-4f1a-b81f-713b8c4b7d7b
 api_key = input('API Key : ')
 
 #####JOUEUR#####
@@ -61,7 +60,8 @@ df['matches'] = df['matches'].apply(lambda x: x[:2])
 liste_aplatie = df.explode('matches')['matches'].unique().tolist()
 
 for matchId in liste_aplatie:
-    match_url = "https://europe.api.riotgames.com/lol/match/v5/matches/EUW1_6641697219"+ '?api_key=' + api_key
+    print(matchId)
+    match_url = "https://europe.api.riotgames.com/lol/match/v5/matches/"+ matchId + '?api_key=' + api_key
     match_data = requests.get(match_url).json()
     time.sleep(1.2)
     participants = extract_participant_info(match_data)
@@ -78,7 +78,7 @@ for matchId in liste_aplatie:
 conn = sqlite3.connect('data/database.db')
 cursor = conn.cursor()
 
-cursor.execute('INSERT INTO utilisateur (id, login, password, isadmin) VALUES (?,?,?)', (0, 'teemo', hashlib.pbkdf2_hmac('sha256', '1234'.encode('utf-8'), 'teemo'.encode('utf-8'), 100), 0))
+cursor.execute('INSERT INTO utilisateur (id, login, password, isadmin) VALUES (?,?,?,?)', (0, 'teemo', hashlib.pbkdf2_hmac('sha256', '1234'.encode('utf-8'), 'teemo'.encode('utf-8'), 100), 0))
 conn.commit()
-cursor.execute('INSERT INTO utilisateur (id, login, password, isadmin) VALUES (?,?,?)', (1, 'admin', hashlib.pbkdf2_hmac('sha256', 'admin'.encode('utf-8'), 'admin'.encode('utf-8'), 100), 1))
+cursor.execute('INSERT INTO utilisateur (id, login, password, isadmin) VALUES (?,?,?,?)', (1, 'admin', hashlib.pbkdf2_hmac('sha256', 'admin'.encode('utf-8'), 'admin'.encode('utf-8'), 100), 1))
 conn.commit()
