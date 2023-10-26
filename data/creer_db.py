@@ -43,11 +43,11 @@ CREATE TABLE IF NOT EXISTS joueur (
 ''')
 
 cursor.execute('''
-    CREATE TABLE IF NOT EXISTS utilisateurs (
-        id SERIAL PRIMARY KEY,
+    CREATE TABLE IF NOT EXISTS utilisateur (
+        id INTEGER SERIAL PRIMARY KEY,
         login TEXT,
         password INTEGER,
-        isadmin BOOL
+        isadmin INTEGER
     )
 ''')
 

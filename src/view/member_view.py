@@ -1,26 +1,47 @@
 from InquirerPy import prompt
+from InquirerPy.separator import Separator
 
-from view.abstract_view import AbstractView
+from view.invite_view import InviteView
 from view.session import Session
 
-class MemberView(AbstractView):
+
+class MemberView(InviteView):
     def __init__(self):
+        super().__init__()
+        self.infos_option.append(Separator("🔍"))
+        self.infos_option.append("Stats Account")
         self.__questions = [
             {
-                "type": "input",
-                "name": "identifiant",
+                "type": "list",
+                "name": "choix",
                 "message": "What are you looking for",
+                "choices": self.infos_option,
             }
         ]
 
     def display_info(self):
-        print(f"")
+        print(f"") # a def
 
     def make_choice(self):
         answers = prompt(self.__questions)
-        Session().user_identifiant = answers["login"]
-        Session().user_mdp = answers["password"]
 
-        from view.start_view import StartView
+        # methode en suspens
+        
+        another_infos = prompt(
+            [
+                {
+                    "type": "confirm",
+                    "name": "continue",
+                    "message": "Another Information ?",
+                    "default": True,
+                }
+            ]
+        )
 
-        return memberView()
+        if another_infos["continue"]:
+            return MemberView()
+
+        else:
+            from view.start_view import StartView
+
+            return StartView()
