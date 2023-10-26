@@ -1,38 +1,66 @@
 import psycopg2
-import sqlite3
 
-class championDAO:
-    
-    def __init__(self, db_file):
-        self.conn = sqlite3.connect(db_file)
-        self.cursor = self.conn.cursor()
+from typing import Optional
+from src.dao.db_connection import AbstractDAO
+from src.utils.singleton import Singleton
 
-    # Afficher la liste des champions suivant le nombre de games joués
-    def get_conn_by_games_played(self):
-        request='SELECT * '
-                ' FROM conn '
-                ' ORDER BY {}'.format(wins+losses)
+class participantDAO(metaclass=Singleton):
+    """
+    Communicate with the player table
+    """
 
-    # Etape 1 : On récupère une connexion en utilisant la classe DBConnection.
-    with DBConnection().connection as connection :
+    def find_all_statistics(self) -> list[str]:
+        """
+        Get all statistics return a list
 
-    # Etape 2 : à partir de la connexion on fait un curseur pour la requête 
-        with connection.cursor() as cursor : 
-        
-        # Etape 3 : on exécute notre requête SQL.
-                cursor.execute(request)
-        
-        # Etape 4 : on stocke le résultat de la requête
+        :return: A list of the statistics of the participant
+        :rtype: List of str
+        """
+        with AbstractDAO.connection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT *                                  "
+                    "  FROM data                  "
+                )
+
+                # to store raw results
                 res = cursor.fetchall()
 
-        # Étape 2 : Exécuter une requête SQL pour ajouter la nouvelle colonne
-        #games_played = 'sum_column'
-        #self.cursor.execute('ALTER TABLE db_file ADD COLUMN {} INTEGER'.format(games_played))
-        #self.conn.commit()
+        # Create an empty list to store formatted results
+        participant_stat: list[str] = []
 
-    # Étape 3 : Mettre à jour les enregistrements existants avec la somme des deux autres colonnes
-    #def update_conn_with_sum_column(self):
-     #   self.cursor.execute('UPDATE conn SET {} = wins + losses'.format(games_played))
-      #  self.conn.commit()
+        # if the SQL query returned results (ie. res not None)
+        if res:
+            for row in res:
+                participant_stat.append(row["summonerName"])
 
-  
+                print(row["summonerId"])
+
+        return participant_stat
+
+    def find_id_by_label(self, label: str) -> Optional[int]:
+        """
+        Get the id_participant from the label
+        """
+        with connection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT summonerId                  "
+                    "  FROM data                       "
+                    " WHERE summonerId = %(summonerId)s ",
+                    {"participant": label},
+                )
+                res = cursor.fetchone()
+
+        if res:
+            return res["summonerId"]
+
+
+if __name__ == "__main__":
+    # Pour charger les variables d'environnement contenues dans le fichier .env
+    import dotenv
+
+    dotenv.load_dotenv(override=True)
+
+    participant= participantDAO().find_all_statistics()
+    print(participant)
