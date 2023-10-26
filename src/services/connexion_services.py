@@ -1,42 +1,15 @@
 import sqlite3
 import hashlib
+import os
 
-########################################
-### CREATION DE LA TABLE UTILISATEUR ###
-########################################
-
-# Le mettre en fonction ?????
-
-# Connexion à la base de données
-#conn = sqlite3.connect('data/database.db')
-
-# Création objet "cursor"
-#cursor = conn.cursor()
-
-# Création de la table utilisateur
-#cursor.execute('''
-#    CREATE TABLE IF NOT EXISTS utilisateurs (
-#        id SERIAL PRIMARY KEY,
-#        login TEXT,
-#        password INTEGER,
-#        isadmin BOOL
-#    )
-#''')
-
-# Validez les modifications
-#conn.commit()
-
-# Fermez le curseur et la connexion à la base de données lorsque vous avez terminé
-#cursor.close()
-#conn.close()
-
+salti = os.urandom(16)
 
 class Connexion_services():
     """
     Cette classe gère l'inscription et la connexion des utilisateurs 
     en stockant les mots de passe de manière sécurisée.
     """
-    def __init__(self, db_name='database.db'):
+    def __init__(self, db_name='data/database.db'):
         """
         Initialise la classe avec le nom de la base de données.
 
@@ -47,7 +20,11 @@ class Connexion_services():
         """
         self.db_name = db_name
 
-    def hached(self, login, password):
+    def hached(self, login, password, salt):
+        password_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100)
+        return password_hash
+
+    def hachedi(self, login, password):
         """
         Fonction qui prend un mot de passe en clair et un nom d'utilisateur,
         hache le mot de passe avec le sel et retourne le résultat.
@@ -68,8 +45,8 @@ class Connexion_services():
 
         cursor.execute("SELECT id FROM utilisateurs WHERE login = ?", (login,))
         user_id = cursor.fetchone()
-
-        password_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), user_id, 100)
+        user_id
+        password_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salti[0], 100)
 
         cursor.close()
         conn.close()
@@ -99,14 +76,16 @@ class Connexion_services():
         if list_login is not None:
             cursor.close()
             conn.close()
+            print('erreur')
             return False
 
         hached_password = self.hached(newlogin, newpassword)
 
-        cursor.execute("INSERT INTO utilisateur VALUES (?,?,?)", (newlogin, hached_password, False))
+        cursor.execute("INSERT INTO utilisateurs (login, password, isadmin) VALUES (?,?,?)", (newlogin, hached_password, False))
         conn.commit()
         cursor.close()
         conn.close()
+        print("good")
         return True
 
     def connexion(self, login, password):
@@ -127,13 +106,33 @@ class Connexion_services():
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         cursor.execute("SELECT password FROM utilisateurs WHERE login = ?", (login,))
-        realpassword = self.hached(login, cursor.fetchone())
+        
+        row = cursor.fetchone()
+        if row is not None:
+            realpassword = self.hached(login, row[0], salti[0])
+    # Reste de votre code pour la vérification du mot de passe
+        else:
+            print("problème")
+        #realpassword = self.hached(login, cursor.fetchone())
 
         if password == realpassword:
             cursor.close()
             conn.close()
+            print("good")
             return True
 
         cursor.close()
         conn.close()
+        print('erreur')
         return False
+
+
+D = Connexion_services('data/database.db')
+
+#D.inscription('teemo', 'lemdpkitue')
+
+#D.inscription('teemo', 'unmdpnul')
+
+D.connexion('teemo', 'lemdpkitue')
+
+#D.connexion('teemo', '" or 1=1; -- ')
