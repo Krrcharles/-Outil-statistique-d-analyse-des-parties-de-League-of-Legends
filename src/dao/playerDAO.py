@@ -17,13 +17,13 @@ class PlayerDAO():
 
         if res:
             player = Player(
-                name = res[""],
-                id = res[""],
-                puuid = res[""],
-                rank = res[""],
-                win = res[""],
-                losses = res[""],
-                level = res[""]
+                name = res["summonerName"],
+                id = res["summonerId"],
+                puuid = res["puuid"],
+                rank = res["rank"],
+                win = res["wins"],
+                losses = res["losses"],
+                level = res["level"]
                 )
 
         return player
