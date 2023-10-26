@@ -12,12 +12,12 @@ class CreateAccountView(AbstractView):
             {
                 "type": "input",
                 "name": "identifiant",
-                "message": "What's your login",
+                "message": "What is your login",
             },
             {
                 "type": "input",
                 "name": "password",
-                "message": "What's your password",
+                "message": "What is your password",
             }
         ]
 

@@ -16,14 +16,15 @@ class InviteView(AbstractView):
             "Stats Player",
         ]
         self.infos_option = infos_option
-        self.__questions = [
+        questions = [
             {
                 "type": "list",
                 "name": "choix",
                 "message": "What are you looking for",
-                "choices": infos_option,
+                "choices": self.infos_option,
             }
         ]
+        self.__questions = questions
 
     def display_info(self):
         print(f"") # a def

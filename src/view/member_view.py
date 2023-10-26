@@ -10,7 +10,17 @@ class MemberView(InviteView):
         super().__init__()
         self.infos_option.append(Separator("🔍"))
         self.infos_option.append("Stats Account")
-        self.__questions = [
+        questions = [
+            {
+                "type": "input",
+                "name": "identifiant",
+                "message": "What is your login",
+            },
+            {
+                "type": "input",
+                "name": "password",
+                "message": "What is your password",
+            }
             {
                 "type": "list",
                 "name": "choix",
@@ -18,6 +28,8 @@ class MemberView(InviteView):
                 "choices": self.infos_option,
             }
         ]
+        self.__questions = questions
+
 
     def display_info(self):
         print(f"") # a def
