@@ -4,7 +4,7 @@ from utils.singleton import Singleton
 
 
 
-class StatChampion(metaclass=Singleton) : 
+class ChampionService(metaclass=Singleton) : 
 
     def afficher_parties() : 
         pass

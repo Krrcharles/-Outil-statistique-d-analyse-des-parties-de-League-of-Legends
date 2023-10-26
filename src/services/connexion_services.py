@@ -1,35 +1,6 @@
 import sqlite3
 import hashlib
 
-########################################
-### CREATION DE LA TABLE UTILISATEUR ###
-########################################
-
-# Le mettre en fonction ?????
-
-# Connexion à la base de données
-#conn = sqlite3.connect('data/database.db')
-
-# Création objet "cursor"
-#cursor = conn.cursor()
-
-# Création de la table utilisateur
-#cursor.execute('''
-#    CREATE TABLE IF NOT EXISTS utilisateurs (
-#        id SERIAL PRIMARY KEY,
-#        login TEXT,
-#        password INTEGER,
-#        isadmin BOOL
-#    )
-#''')
-
-# Validez les modifications
-#conn.commit()
-
-# Fermez le curseur et la connexion à la base de données lorsque vous avez terminé
-#cursor.close()
-#conn.close()
-
 
 class Connexion_services():
     """
@@ -63,16 +34,7 @@ class Connexion_services():
         ------
         Le mot de passe haché.
         """
-        conn = sqlite3.connect(self.db_name)
-        cursor = conn.cursor()
-
-        cursor.execute("SELECT id FROM utilisateurs WHERE login = ?", (login,))
-        user_id = cursor.fetchone()
-
-        password_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), user_id, 100)
-
-        cursor.close()
-        conn.close()
+        password_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), login.encode('utf-8'), 100)
         return password_hash
 
     def inscription(self, newlogin, newpassword):
@@ -93,20 +55,22 @@ class Connexion_services():
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
 
-        cursor.execute("SELECT * FROM utilisateurs WHERE login = ?", (newlogin,))
+        cursor.execute("SELECT * FROM utilisateur WHERE login = ?", (newlogin,))
         list_login = cursor.fetchone()
 
         if list_login is not None:
             cursor.close()
             conn.close()
+            print('erreur')
             return False
 
         hached_password = self.hached(newlogin, newpassword)
 
-        cursor.execute("INSERT INTO utilisateur VALUES (?,?,?)", (newlogin, hached_password, False))
+        cursor.execute("INSERT INTO utilisateur (login, password, isadmin) VALUES (?,?,?)", (newlogin, hached_password, 0))
         conn.commit()
         cursor.close()
         conn.close()
+        print("good")
         return True
 
     def connexion(self, login, password):
@@ -126,14 +90,29 @@ class Connexion_services():
         """
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
-        cursor.execute("SELECT password FROM utilisateurs WHERE login = ?", (login,))
-        realpassword = self.hached(login, cursor.fetchone())
+        cursor.execute("SELECT password FROM utilisateur WHERE login = ?", (login,))
 
-        if password == realpassword:
+        real_password = cursor.fetchone()[0]
+        test_password = self.hached(login, password)
+
+        if test_password == real_password:
             cursor.close()
             conn.close()
+            print("good")
             return True
 
         cursor.close()
         conn.close()
+        print('erreur')
         return False
+
+
+D = Connexion_services('data/database.db')
+
+D.inscription('teemo', 'lemdpkitue')
+
+D.inscription('teemo', 'unmdpnul')
+
+D.connexion('teemo', 'lemdpkitue')
+
+D.connexion('teemo', '" or 1=1; -- ')
