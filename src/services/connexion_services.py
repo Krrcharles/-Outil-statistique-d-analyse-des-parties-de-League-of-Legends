@@ -4,7 +4,7 @@ import hashlib
 
 class Connexion_services():
     """
-    Cette classe gère l'inscription et la connexion des utilisateurs 
+    Cette classe gère l'inscription et la connexion des utilisateurs
     en stockant les mots de passe de manière sécurisée.
     """
     def __init__(self, db_name='data/database.db'):
@@ -61,7 +61,6 @@ class Connexion_services():
         if list_login is not None:
             cursor.close()
             conn.close()
-            print('erreur')
             return False
 
         hached_password = self.hached(newlogin, newpassword)
@@ -70,7 +69,6 @@ class Connexion_services():
         conn.commit()
         cursor.close()
         conn.close()
-        print("good")
         return True
 
     def connexion(self, login, password):
@@ -90,29 +88,29 @@ class Connexion_services():
         """
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
-        cursor.execute("SELECT password FROM utilisateur WHERE login = ?", (login,))
+        cursor.execute("SELECT password, isadmin FROM utilisateur WHERE login = ?", (login,))
 
-        real_password = cursor.fetchone()[0]
+        real_password, isadmin = cursor.fetchone()
         test_password = self.hached(login, password)
-
-        if test_password == real_password:
-            cursor.close()
-            conn.close()
-            print("good")
-            return True
 
         cursor.close()
         conn.close()
-        print('erreur')
+
+        if test_password == real_password:
+            if isadmin == 1:
+                return ("admin")
+            return ("membre")
         return False
 
 
-D = Connexion_services('data/database.db')
+# D = Connexion_services('data/database.db')
 
-D.inscription('teemo', 'lemdpkitue')
+# print(D.inscription('teemo', 'lemdpkitue'))
 
-D.inscription('teemo', 'unmdpnul')
+# D.inscription('teemo', 'unmdpnul')
 
-D.connexion('teemo', 'lemdpkitue')
+# print(D.connexion('teemo', 'lemdpkitue'))
 
-D.connexion('teemo', '" or 1=1; -- ')
+# print(D.connexion('admin', 'admin'))
+
+# print(D.connexion('teemo', '" or 1=1; -- '))
