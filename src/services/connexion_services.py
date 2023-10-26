@@ -100,7 +100,7 @@ class Connexion_services():
             if isadmin == 1:
                 return ("admin")
             return ("membre")
-        return False
+        return ("failed")
 
 
 # D = Connexion_services('data/database.db')
