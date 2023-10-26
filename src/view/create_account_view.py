@@ -35,7 +35,7 @@ class CreateAccountView(AbstractView):
         resultat = instance.inscription(user_identifiant,password)
 
         if resultat == False :
-            print(f"L'identfiant '{user_identifiant}' est déjà utilisé")
+            print(f"L'identifiant '{user_identifiant}' est déjà utilisé")
 
             from view.create_account_view import CreateAccountView
 
