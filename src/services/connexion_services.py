@@ -36,7 +36,7 @@ class Connexion_services():
     Cette classe gère l'inscription et la connexion des utilisateurs 
     en stockant les mots de passe de manière sécurisée.
     """
-    def __init__(self, db_name='database.db'):
+    def __init__(self, db_name='data/database.db'):
         """
         Initialise la classe avec le nom de la base de données.
 
