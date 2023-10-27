@@ -1,7 +1,5 @@
-#import psycopg2
 import sqlite3
 from typing import List
-#from src.dao.db_connection import AbstractDAO
 from src.utils.singleton import Singleton
 import os
 
@@ -28,21 +26,20 @@ class participantDAO(metaclass=Singleton):
         :return: A list of winrate for champions
         :rtype: List of str
         """
-        conn = sqlite3.connect(self.db_name)
+        conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
         #Liste des champions classés par popularité (nombre total de games joués)
         query=  """ SELECT championName as Champion, COUNT(*) AS total_parties       
                     FROM participant                  
                     GROUP BY championName              
-                    ORDER BY total_parties  DESC;    
+                    ORDER BY total_parties DESC   
                 """ 
         cursor.execute(query)
         results = cursor.fetchall()   # Récupérer les résultats de la requête
         print(results)
         statpop: List[str] = []  # Pour stocker les statistiques
         # Pour chaque résultat, créer une chaîne de statistiques et l'ajouter à la liste
-        
-        
+
          # if the SQL query returned results (ie. res not None)
         for row in results:
             print(row)
@@ -53,18 +50,9 @@ class participantDAO(metaclass=Singleton):
         return statpop
 
 
-if __name__ == '__main':
-    # Pour charger les variables d'environnement contenues dans le fichier .env
-    import dotenv
 
-    dotenv.load_dotenv(override=True)
-
-    # Créez une instance de participantDAO
-    my_dao = participantDAO()
-
-    # Appelez la méthode find_best_champ pour obtenir la liste des champions par popularité
-    champions_popularity = my_dao.find_best_champ()
     
-     # Affichez les résultats
-    # for champ_stats in champions_popularity:
-    #     print(champ_stats)
+#Exemple d'utilisation
+particip_dao = participantDAO()
+result = particip_dao.find_best_champ()
+print(result)
