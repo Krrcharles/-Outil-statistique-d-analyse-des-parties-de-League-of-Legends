@@ -8,7 +8,7 @@ class participantDAO(metaclass=Singleton):
     Communicate with the participant table
     """
 
-    def __init__(self, critere_affichage, db_file='data/database.db'):
+    def __init__(self, db_file='data/database.db'):
 
         """
         Initialize the class with the name of the SQLite database file.
@@ -17,7 +17,7 @@ class participantDAO(metaclass=Singleton):
         db_name (str): Name of the SQLite database file.
         """
         self.db_file = db_file
-        self.critere_affichage=["Per_game","Per_winrate","Per_KDA","Per_gold","Per_lane","Per_other_stat"]
+
 
     def find_best_champ(self,critere) -> List[str]:
         """
@@ -26,9 +26,11 @@ class participantDAO(metaclass=Singleton):
         :return: A list of winrate for champions
         :rtype: List of str
         """
+        critere_affichage=["Per_game","Per_winrate","Per_KDA","Per_gold","Per_lane","Per_other_stat"]
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
-        if critere==self.critere_affichage[0]:   
+
+        if critere==critere_affichage[0]:   
         #Liste des champions classés par popularité (nombre total de games joués)
             query=  """ SELECT championName as Champion, COUNT(*) AS total_parties       
                         FROM participant                  
@@ -49,7 +51,8 @@ class participantDAO(metaclass=Singleton):
 
             return statpop
 
-        elif critere==self.critere_affichage[1]:
+        #Liste des champions classés par winrate (nombre de parties gagnées/nombre de parties jouées)
+        elif critere==critere_affichage[1]:
             query=  """SELECT championName, COUNT(*) AS total_parties, SUM(win) AS parties_gagnees, ROUND((SUM(win) * 1.0 / COUNT(*)),3) AS winrate
                     FROM participant                                 
                     GROUP BY championName                             
@@ -65,10 +68,10 @@ class participantDAO(metaclass=Singleton):
                     stat_str = f"Champion: {champion_name}, Total Parties: {total_parties}, Parties Gagnées: {parties_gagnees}, Winrate: {winrate}"
                     statwin.append(stat_str)
 
-            return statwin  # Retourner la liste des statistiques
+            return statwin  # Retourner la liste des statistiques 
 
-        elif critere==self.critere_affichage[2]:
         #Liste des champions suivant l'ordre décroissant de leur KDA (kills+assists)/deaths sur toutes leurs parties jouées
+        elif critere==critere_affichage[2]:
             query= """SELECT championName , ROUND((kills + assists) / deaths,1) AS kda
                     FROM participant 
                     GROUP BY championName 
@@ -84,9 +87,9 @@ class participantDAO(metaclass=Singleton):
                     statKDA.append(stat_str)
 
             return statKDA  # Retourner la liste des statistiques
-
-        elif critere==self.critere_affichage[3]:
-        #Liste des champions suivant l'ordre croissant de leur KDA (kills+assists)/deaths
+        
+        #Liste des champions suivant l'ordre décroissant de leur gold par minute
+        elif critere==critere_affichage[3]:
             query= """ SELECT championName, ROUND(goldEarned / gameDuration,2) AS golds_per_minute
                     FROM participant
                     GROUP BY championName 
@@ -102,8 +105,9 @@ class participantDAO(metaclass=Singleton):
                     statgold.append(stat_str)
 
             return statgold  # Retourner la liste des statistiques
-
-        elif critere==self.critere_affichage[4]:
+        
+        #Liste des lane suivant l'ordre décroissant du winrate par lane
+        elif critere==critere_affichage[4]:
             query= """ SELECT lane, COUNT(*) AS total_parties, ROUND((SUM(win) * 1.0 / COUNT(*)),3) AS winrate
                     FROM participant                                    
                     GROUP BY lane                                       
@@ -119,8 +123,9 @@ class participantDAO(metaclass=Singleton):
                     statlane.append(stat_str)
 
             return statlane  # Retourner la liste des statistiques
-
-        elif critere==self.critere_affichage[5]:
+        
+        #Liste des champions et leur gold, totalminionkilled et l'ordre décroissant de leur total_games joués
+        elif critere==critere_affichage[5]:
             query=  """ SELECT championName, COUNT(*) AS total_parties, SUM(goldEarned) AS total_gold, SUM(totalMinionsKilled) AS total_minions_killed
                         FROM participant                                    
                         GROUP BY championName                               
@@ -139,6 +144,6 @@ class participantDAO(metaclass=Singleton):
 
 
 #Exemple d'utilisation
-particip_dao = participantDAO(critere_affichage="Per_lane")
-result = particip_dao.find_best_champ("Per_lane")
+particip_dao = participantDAO()
+result = particip_dao.find_best_champ("Per_KDA")
 print(result)
