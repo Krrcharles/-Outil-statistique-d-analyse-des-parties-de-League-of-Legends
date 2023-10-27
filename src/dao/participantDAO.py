@@ -8,7 +8,7 @@ class participantDAO(metaclass=Singleton):
     Communicate with the participant table
     """
 
-    def __init__(self, db_file='data/database.db'):
+    def __init__(self,critere_affichage, db_file='data/database.db'):
 
         """
         Initialize the class with the name of the SQLite database file.
