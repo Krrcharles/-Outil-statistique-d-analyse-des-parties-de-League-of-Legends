@@ -47,7 +47,7 @@ class InviteView(AbstractView):
                 "type": "list",
                 "name": "choix",
                 "message": "What are you looking for",
-                "choices": "Name Player",
+                "choices": ,
             }
         ]
         self.__question = question

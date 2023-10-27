@@ -43,4 +43,4 @@ class Player :
         """
         Affichage d'un joueur
         """
-        return f"Player: {self._name}, ID: {self._id}, Rank: {self._rank}, PUUID : {self._puuid} \n, win : {self._win}, loses : {self._losses}, level : {self._level}"
+        return f"Player: {self._name}, ID: {self._id}, Rank: {self._rank}, PUUID : {self._puuid}, \n win : {self._win}, loses : {self._losses}, level : {self._level}"
