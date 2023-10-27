@@ -14,7 +14,7 @@ class MemberView(InviteView):
         super().__init__()
         self.infos_option.append(Separator("🔍"))
         self.infos_option.append("Stats Account")
-        questions = [
+        self.__questions = [
             {
                 "type": "input",
                 "name": "identifiant",
@@ -25,7 +25,7 @@ class MemberView(InviteView):
                 "name": "password",
                 "message": "What is your password",
             },]
-        question = [{
+        self.question = [{
                 "type": "list",
                 "name": "choix",
                 "message": "What are you looking for",
@@ -56,8 +56,6 @@ class MemberView(InviteView):
                 "choices": "Name Player",
             }
         ]
-        self.__questions = questions
-        self.__question = question
         self.infos_option = infos_option
         self.__champion_question = champion_question
         self.__rank_champion_question = rank_champion_question
@@ -102,10 +100,10 @@ class MemberView(InviteView):
                 rep = prompt[self.__champion_question]
                 stats_champion = rep['choix']
                 stats_champion = instance.afficher_stat_player(stats_champion)
-                print (stats_champion)
+                print(stats_champion)
 
             elif answer['choix'] == "Ranking Champion" :
-                print ("RC")
+                print("RC")
 
             elif answer['choix'] == "Stats Player" :
                 instance = PlayerService()
@@ -113,12 +111,12 @@ class MemberView(InviteView):
                 rep = prompt(self.__player_question)
                 stats_player = rep['choix']
                 stats_player = instance.afficher_stat_player(stats_player)
-                print (stats_player)
+                print(stats_player)
             
             else :
                 instance = PlayerService()
                 stats_player = instance.afficher_stat_player(answers["identifiant"])
-                print (stats_player)
+                print(stats_player)
 
 
             self.display_info()  # Appelez la fonction display_info pour afficher les informations
