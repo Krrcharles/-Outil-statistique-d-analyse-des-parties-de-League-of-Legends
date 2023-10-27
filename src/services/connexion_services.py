@@ -56,15 +56,15 @@ class Connexion_services():
         ------
         True si l'inscription est réussie, False si le nom d'utilisateur existe déjà.
         """
-        utilisateur = UserDAO
+        utilisateur = UserDAO('data/database.db')
         verif = utilisateur.afficher_utilisateur(newlogin)
 
         if verif._login is not None:
             return "login déjà utilisé"
         else :
 
-            newpassword = self.hached(newlogin, newpassword)
-            utilisateur.inserer_utilisateur(newlogin,newpassword)
+            hashed_password = self.hached(newlogin, newpassword)
+            utilisateur.inserer_utilisateur(newlogin,hashed_password)
 
     def connexion(self, login, password):
         """
@@ -109,3 +109,9 @@ class Connexion_services():
 # print(D.connexion('admin', 'admin'))
 
 # print(D.connexion('teemo', '" or 1=1; -- '))
+
+connect = Connexion_services('data/database.db')
+login = "sidoine"
+password = 'le boss'
+result = connect.inscription(login,password)
+print(result)
