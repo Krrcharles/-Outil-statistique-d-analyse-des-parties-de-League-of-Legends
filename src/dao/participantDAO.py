@@ -38,7 +38,7 @@ class participantDAO(metaclass=Singleton):
                 """ 
         cursor.execute(query)
         results = cursor.fetchall()   # Récupérer les résultats de la requête
-
+        print(results)
         statpop: List[str] = []  # Pour stocker les statistiques
         # Pour chaque résultat, créer une chaîne de statistiques et l'ajouter à la liste
         
