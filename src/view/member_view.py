@@ -1,6 +1,7 @@
 from InquirerPy import prompt
 from InquirerPy.separator import Separator
 from services.connexion_services import Connexion_services
+from services.player_service import PlayerService
 
 from view.invite_view import InviteView
 from view.session import Session
@@ -74,6 +75,16 @@ class MemberView(InviteView):
                 print ("RC")
 
             elif answer['choix'] == "Stats Player" :
+                instance = PlayerService()
+
+                question = [{
+                "type": "list",
+                "name": "choix",
+                "message": "What are you looking for",
+                "choices": "Name Player",
+                    },
+                ]
+                stats_player = instance.afficher_stat_player("")
                 print ("SP")
 
             else :
