@@ -34,16 +34,17 @@ class InviteView(AbstractView):
         while True:
             answer = prompt(self.__question)
 
-            # Méthodes
-
             if answer['choix'] == "Stats Champion" :
                 print ("SC")
 
             elif answer['choix'] == "Ranking Champion" :
                 print ("RC")
 
+            elif answer['choix'] == "Stats Player" :
+                print ("SP")
+
             else :
-                print("S")
+                print("SA")
 
             self.display_info()  # Appelez la fonction display_info pour afficher les informations
 
