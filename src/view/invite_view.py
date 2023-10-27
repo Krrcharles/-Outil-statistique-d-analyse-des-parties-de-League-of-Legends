@@ -32,7 +32,12 @@ class InviteView(AbstractView):
     def make_choice(self):
         answers = prompt(self.__questions) 
 
-        # methode en suspens
+        # Méthodes
+
+        # Partie Stats champions
+
+        if answers[0] == "Stats Champion":
+            
 
         another_infos = prompt(
             [
