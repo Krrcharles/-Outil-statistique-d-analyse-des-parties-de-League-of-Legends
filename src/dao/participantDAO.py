@@ -11,7 +11,6 @@ class participantDAO(metaclass=Singleton):
 
     def find_best_champ(self) -> list[str]:
         """
-<<<<<<< HEAD
         Get all champions by winrate return a list
         
         :return: A list of winrate for champions
@@ -136,3 +135,20 @@ class participantDAO(metaclass=Singleton):
                 statother.append(stat_str)
 
         return statother  # Retourner la liste des statistiques
+
+
+if __name__ == '__main':
+    # Pour charger les variables d'environnement contenues dans le fichier .env
+    import dotenv
+
+    dotenv.load_dotenv(override=True)
+
+    # Créez une instance de participantDAO
+    my_dao = participantDAO()
+
+    # Appelez la méthode find_best_champ pour obtenir la liste des champions par popularité
+    champions_popularity = my_dao.find_best_champ()
+    
+     # Affichez les résultats
+    for champ_stats in champions_popularity:
+        print(champ_stats)
