@@ -3,6 +3,7 @@ from InquirerPy.separator import Separator
 from services.player_service import PlayerService
 from services.champion_service import ChampionService
 
+
 from view.abstract_view import AbstractView
 from view.session import Session
 
@@ -17,7 +18,6 @@ class InviteView(AbstractView):
             Separator("🎮"),
             "Stats Player",
         ]
-        self.infos_option = infos_option
         question = [
             {
                 "type": "list",
@@ -47,9 +47,10 @@ class InviteView(AbstractView):
                 "type": "list",
                 "name": "choix",
                 "message": "What are you looking for",
-                "choices": ,
+                "choices": "Name Player",
             }
         ]
+        self.infos_option = infos_option
         self.__question = question
         self.__champion_question = champion_question
         self.__rank_champion_question = rank_champion_question
@@ -74,16 +75,13 @@ class InviteView(AbstractView):
             elif answer['choix'] == "Ranking Champion" :
                 print ("RC")
 
-            elif answer['choix'] == "Stats Player" :
+            else :
                 instance = PlayerService()
 
                 rep = prompt(self.__player_question)
                 stats_player = rep['choix']
                 stats_player = instance.afficher_stat_player(stats_player)
                 print (stats_player)
-
-            else :
-                print("SA")
 
             self.display_info()  # Appelez la fonction display_info pour afficher les informations
 
