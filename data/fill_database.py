@@ -10,7 +10,7 @@ final_challengers_url = challengers_url + '?api_key=' + api_key
 challengers_data = requests.get(final_challengers_url)
 time.sleep(1.2)
 
-joueurs = pd.DataFrame(challengers_data.json()['entries'])[:5]
+joueurs = pd.DataFrame(challengers_data.json()['entries'])
 
 puuid = []
 level = []
@@ -54,7 +54,7 @@ df['matches'] = df['matches'].apply(json.loads)
 conn.close()
 
 # Extraire les deux premiers éléments de chaque liste
-df['matches'] = df['matches'].apply(lambda x: x[:2])
+df['matches'] = df['matches'].apply(lambda x: x[:10])
 
 # Aplatir la colonne
 liste_aplatie = df.explode('matches')['matches'].unique().tolist()
@@ -73,7 +73,7 @@ for matchId in liste_aplatie:
         conn.commit()
     conn.close()
     
-#####utilisateur#####
+#####UTILISATEUR#####
 
 conn = sqlite3.connect('data/database.db')
 cursor = conn.cursor()

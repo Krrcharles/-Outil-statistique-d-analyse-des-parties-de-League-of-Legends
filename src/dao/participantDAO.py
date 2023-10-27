@@ -12,55 +12,43 @@ class participantDAO(metaclass=Singleton):
     def find_all_statistics(self) -> list[str]:
         """
         Get all statistics return a list
-
+        
         :return: A list of the statistics of the participant
         :rtype: List of str
         """
-        with AbstractDAO.connection().connection as conn:
-            with conn.cursor() as cursor:
+        statistics = []  # Pour stocker les statistiques
+
+        with AbstractDAO.connection().connection as connection:
+            with connection.cursor() as cursor:
                 cursor.execute(
-                    "SELECT *                                  "
-                    "  FROM data                  "
-                )
+                        "SELECT                                          "
+                        "       championName,                            "
+                        "       COUNT(*) AS total_parties,               "
+                        "       SUM(win) AS parties_gagnees,             "
+                        "       (SUM(win) * 1.0 / COUNT(*)) AS winrate   "
+                        "       FROM participant                         "
+                        "       GROUP BY championName ;                  "
+                        )
 
-                # to store raw results
-                res = cursor.fetchall()
+    
+# Récupérer les résultats de la requête
+            results = cursor.fetchall()
 
-        # Create an empty list to store formatted results
-        participant_stat: list[str] = []
+            # Pour chaque résultat, créer une chaîne de statistiques et l'ajouter à la liste
+            for result in results:
+                champion_name, total_parties, parties_gagnees, winrate = result
+                stat_str = f"Champion: {champion_name}, Total Parties: {total_parties}, Parties Gagnées: {parties_gagnees}, Winrate: {winrate}"
+                statistics.append(stat_str)
 
-        # if the SQL query returned results (ie. res not None)
-        if res:
-            for row in res:
-                participant_stat.append(row["summonerName"])
-
-                print(row["summonerId"])
-
-        return participant_stat
-
-    def find_id_by_label(self, label: str) -> Optional[int]:
-        """
-        Get the id_participant from the label
-        """
-        with connection().connection as conn:
-            with conn.cursor() as cursor:
-                cursor.execute(
-                    "SELECT summonerId                  "
-                    "  FROM data                       "
-                    " WHERE summonerId = %(summonerId)s ",
-                    {"participant": label},
-                )
-                res = cursor.fetchone()
-
-        if res:
-            return res["summonerId"]
-
+        return statistics  # Retourner la liste des statistiques
 
 if __name__ == "__main__":
-    # Pour charger les variables d'environnement contenues dans le fichier .env
-    import dotenv
+    # Créez une instance de participantDAO
+    dao = participantDAO()
 
-    dotenv.load_dotenv(override=True)
+    # Appelez la fonction find_all_statistics pour obtenir les statistiques
+    statistics = dao.find_all_statistics()
 
-    participant= participantDAO().find_all_statistics()
-    print(participant)
+    # Affichez les statistiques
+    for stat in statistics:
+        print(stat)
