@@ -30,4 +30,4 @@ class AdminService():
         print(result)
 
 
-
+##https://darkintaqt.com/blog/league-v4-summoner
