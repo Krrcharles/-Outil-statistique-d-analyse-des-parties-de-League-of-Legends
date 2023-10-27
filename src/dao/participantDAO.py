@@ -3,7 +3,7 @@ from typing import List
 from src.utils.singleton import Singleton
 import os
 
-class participantDAO(metaclass=Singleton):
+class ParticipantDAO(metaclass=Singleton):
     """
     Communicate with the participant table
     """
@@ -144,6 +144,6 @@ class participantDAO(metaclass=Singleton):
 
 
 #Exemple d'utilisation
-particip_dao = participantDAO()
+particip_dao = ParticipantDAO()
 result = particip_dao.find_best_champ("Per_KDA")
 print(result)
