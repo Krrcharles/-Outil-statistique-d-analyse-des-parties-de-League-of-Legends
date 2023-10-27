@@ -45,12 +45,9 @@ class PlayerDAO:
         return player
 
 # Example usage:
-"""player_name = "TwTv Raideru"
+player_name = "TwTv Raideru"
 player_dao = PlayerDAO()
-<<<<<<< HEAD
-result = player_dao.find_player_by_name(player_name)
-print(result)"""
-=======
 result = player_dao.find_player("id","FXFhCq_epeKxwHFbGUarfcxsOghqKxthv6rfldZZsxMyQzslEPdUy7qKUA")
 print(result)
->>>>>>> d22f9c2fb7ac4e75d9701c8ffbc7dffb08ae909c
+
+
