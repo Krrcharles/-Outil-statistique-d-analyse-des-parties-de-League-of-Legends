@@ -1,6 +1,7 @@
 from InquirerPy import prompt
 from InquirerPy.separator import Separator
 from services.connexion_services import Connexion_services
+from services.player_service import PlayerService
 
 from view.invite_view import InviteView
 from view.session import Session
@@ -63,7 +64,21 @@ class MemberView(InviteView):
             return AdminView()
 
         while True:
-            answers = prompt(self.__question)
+            answer = prompt(self.__question)
+
+            # Méthodes
+
+            if answer['choix'] == "Stats Champion" :
+                print ("SC")
+
+            elif answer['choix'] == "Ranking Champion" :
+                print ("RC")
+
+            elif answer['choix'] == "Stats Player" :
+                pass
+            
+            else :
+                print("SA")
 
             self.display_info()  # Appelez la fonction display_info pour afficher les informations
 
