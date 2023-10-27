@@ -76,7 +76,61 @@ class participantDAO(metaclass=Singleton):
 
         return statwin  # Retourner la liste des statistiques
 
-    
+
+    def find_champ_KDA(self) -> list[str]:
+        """
+        Get all champions by KDA return a list
+        
+        :return: A list of champions and KDA
+        :rtype: List of str
+        """
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
+        #Liste des champions suivant l'ordre décroissant de leur KDA (kills+assists)/deaths sur toutes leurs parties jouées
+        query= """SELECT championName , ROUND((kills + assists) / deaths,1) AS kda
+                  FROM participant 
+                  GROUP BY championName 
+                  ORDER BY kda DESC 
+               """
+        cursor.execute(query)       
+        results = cursor.fetchall()   # Récupérer les résultats de la requête
+        statKDA: list[str] = []  # Pour stocker les statistiques
+        # Pour chaque résultat, créer une chaîne de statistiques et l'ajouter à la liste
+        for result in results:
+                champion_name, kda= result
+                stat_str = f"Champion: {champion_name}, KDA: {kda}"
+                statKDA.append(stat_str)
+
+        return statKDA  # Retourner la liste des statistiques
+
+
+    def find_champ_golds(self) -> list[str]:
+        """
+        Get all champions by total games played, total golds and total minions killed return a list
+        
+        :return: A list of champions and total games played, total golds and total minions killed
+        :rtype: List of str
+        """
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
+        #Liste des champions suivant l'ordre croissant de leur KDA (kills+assists)/deaths
+        query= """ SELECT championName, ROUND(goldEarned / gameDuration,2) AS golds_per_minute
+                   FROM participant
+                   GROUP BY championName 
+                   ORDER BY golds_per_minute DESC
+               """
+        cursor.execute(query)       
+        results = cursor.fetchall()   # Récupérer les résultats de la requête
+        statgold: list[str] = []  # Pour stocker les statistiques
+        # Pour chaque résultat, créer une chaîne de statistiques et l'ajouter à la liste
+        for result in results:
+                champion_name, golds_per_minute= result
+                stat_str = f"Champion: {champion_name}, Golds_per_minute: {golds_per_minute}"
+                statgold.append(stat_str)
+
+        return statgold  # Retourner la liste des statistiques
+
+
     
     def find_champ_lane(self) -> list[str]:
         """
@@ -130,8 +184,8 @@ class participantDAO(metaclass=Singleton):
 
         return statother  # Retourner la liste des statistiques
 
-    
+
 #Exemple d'utilisation
 particip_dao = participantDAO()
-result = particip_dao.find_best_champ()
+result = particip_dao.find_champ_golds()
 print(result)

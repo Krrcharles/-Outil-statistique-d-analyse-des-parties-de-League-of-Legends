@@ -3,7 +3,7 @@ import sqlite3
 import hashlib
 
 
-class UserDAO : 
+class UserDAO() : 
     def __init__(self, db_name='data/database.db'):
 
         """
@@ -15,26 +15,7 @@ class UserDAO :
         self.db_name = db_name
 
 
-    def hached(self, login, password):
-        """
-        Fonction qui prend un mot de passe en clair et un nom d'utilisateur,
-        hache le mot de passe avec le sel et retourne le résultat.
-
-        Parameters
-        ----------
-        login: str
-            Nom d'utilisateur.
-        password: str
-            Mot de passe en clair.
-
-        Return
-        ------
-        Le mot de passe haché.
-        """
-        password_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), login.encode('utf-8'), 100)
-        return password_hash
-
-    def rajouter_utilisateur(self, newlogin, newpassword):
+    def afficher_utilisateur(self, login):
         """
         Enregistre un nouvel utilisateur dans la base de données.
 
@@ -51,18 +32,27 @@ class UserDAO :
         """
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
-
-        cursor.execute("SELECT * FROM utilisateur WHERE login = ?", (newlogin,))
+        query = """SELECT id, login, password, isadmin 
+                    FROM utilisateur 
+                    WHERE login = ?
+                    """
+      
+        cursor.execute(query, (login,))
         list_login = cursor.fetchone()
 
-        if list_login is not None:
-            cursor.close()
-            conn.close()
-            return False
-        hached_password = self.hached(newlogin, newpassword)
+        user = None
 
-        cursor.execute("INSERT INTO utilisateur (login, password, isadmin) VALUES (?,?,?)", (newlogin, hached_password, 0))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return True
+        if list_login :
+            user = User(
+                id = list_login[0],
+                login = list_login[1],
+                password = list_login[2],
+                is_admin = list_login[3] 
+            )
+
+        return user
+
+
+
+A = UserDAO('data/database.db')
+print(A.afficher_utilisateur('Bamara_Le_Goat'))
