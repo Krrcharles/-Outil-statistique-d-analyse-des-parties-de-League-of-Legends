@@ -1,21 +1,40 @@
 from src.business.player.player import Player
+from src.dao.playerDAO import PlayerDAO
 
 
 class PlayerService(): 
+    def afficher_parties(self, player: Player):
+        """
+        """
 
-    #def afficher_parties(self, player: Player):
-    #    pass
+        pass
 
     def afficher_stat_player(self, player):
         """
         """
-        # Demander nom du player à la DAO
-        # Demander nom du player à la DAO
-        P = Player('Teemo_du_666', '12', '13', 'gold', 12, 13, 178)
-        PS = PlayerService()
-        PS.afficher_stat_player(P)
-        winrate = round(player._win / (player._win + player._losses) * 100)
+        P = PlayerDAO().find_player(player)
 
-        affichage = f"{player._name} - Level {player._level} - {player._rank}\n\t{player._win} - {player._losses} ({winrate}%)"
+        winrate = round(P._win / (P._win + P._losses) * 100)
+        if P._rank == "I":
+            rank = "Challenger"
+        
+        cote = "|"
+        coins = "+"
+        
+        affichage_top = f"{P._name} - Level {P._level} - {rank}"
+        affichage_bot= f"\t{P._win} Victoires / {P._losses} Défaite ({winrate}%)"
 
-        print(affichage)
+        max_lenght = max(len(affichage_top), len(affichage_bot) + 8)
+        separateur = coins + "-" * max_lenght + coins
+        affichage_top = cote + affichage_top + " " * (max_lenght - len(affichage_top)) + cote
+        affichage_bot = cote + affichage_bot + " " * (max_lenght - len(affichage_bot) - 6) + cote
+
+        print(separateur)
+        print(affichage_top)
+        print(affichage_bot)
+        print(separateur)
+        #affichage_finale = f"{separateur}\n{affichage_top}\n{affichage_bot}\n{separateur}"
+        #return affichage_finale
+
+PlayerService().afficher_stat_player("T1 FSZ")
+PlayerService().afficher_stat_player("BurgerMäker")
