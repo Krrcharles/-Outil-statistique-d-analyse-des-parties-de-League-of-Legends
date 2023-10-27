@@ -18,43 +18,39 @@ class InviteView(AbstractView):
             Separator("🎮"),
             "Stats Player",
         ]
-        question = [
-            {
-                "type": "list",
-                "name": "choix",
-                "message": "What are you looking for",
-                "choices": infos_option,
-            }
-        ]
-        champion_question = [
-            {
-                "type": "list",
-                "name": "choix",
-                "message": "What are you looking for",
-                "choices": "Name Champion",
-            }
-        ]
-        rank_champion_question = [
-            {
-                "type": "list",
-                "name": "choix",
-                "message": "What are you looking for",
-                "choices": "Name Champion",
-            }
-        ]
-        player_question = [
-            {
-                "type": "list",
-                "name": "choix",
-                "message": "What are you looking for",
-                "choices": "Name Player",
-            }
-        ]
         self.infos_option = infos_option
-        self.__question = question
-        self.__champion_question = champion_question
-        self.__rank_champion_question = rank_champion_question
-        self.__player_question = player_question
+        self.__question = [
+            {
+                "type": "list",
+                "name": "choix",
+                "message": "What are you looking for",
+                "choices": self.infos_option,
+            }
+        ]
+        self.__champion_question = [
+            {
+                "type": "list",
+                "name": "choix",
+                "message": "What are you looking for",
+                "choices": "Name Champion",
+            }
+        ]
+        self.__rank_champion_question = [
+            {
+                "type": "list",
+                "name": "choix",
+                "message": "What are you looking for",
+                "choices": "Name Champion",
+            }
+        ]
+        self.__player_question = [
+            {
+                "type": "list",
+                "name": "Name Player",
+                "message": "What are you looking for",
+            }
+        ]
+        
 
     def display_info(self):
         print(f"") # a def
@@ -68,9 +64,9 @@ class InviteView(AbstractView):
                 instance = ChampionService()
 
                 rep = prompt[self.__champion_question]
-                stats_champion = rep['choix']
-                stats_champion = instance.afficher_stat_player(stats_champion)
-                print (stats_champion)
+                # stats_champion = rep['choix']
+                # stats_champion = instance.afficher_stat_player(stats_champion)
+                # print (stats_champion)
 
             elif answer['choix'] == "Ranking Champion" :
                 print ("RC")
@@ -79,9 +75,9 @@ class InviteView(AbstractView):
                 instance = PlayerService()
 
                 rep = prompt(self.__player_question)
-                stats_player = rep['choix']
-                stats_player = instance.afficher_stat_player(stats_player)
-                print (stats_player)
+                # stats_player = rep['Name Player']
+                # stats_player = instance.afficher_stat_player(stats_player)
+                # print (stats_player)
 
             self.display_info()  # Appelez la fonction display_info pour afficher les informations
 
