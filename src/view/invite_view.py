@@ -31,17 +31,8 @@ class InviteView(AbstractView):
 
     def make_choice(self): 
 
-<<<<<<< HEAD
-        # Méthodes
-
-        # Partie Stats champions
-
-        if answers[0] == "Stats Champion":
-            
-=======
         while True:
             answer = prompt(self.__question)
->>>>>>> c2e213775b9bd1a7cfaba285dcec250016f8f526
 
             if answer['choix'] == "Stats Champion" :
                 print ("SC")
