@@ -18,7 +18,7 @@ class PlayerDAO:
         cursor = conn.cursor()
 
         # Using a parameterized query to avoid SQL injection
-        # precise the name of the columns in the case that the order change so ze can still use the integer from line 35 to 41
+        # precise the name of the columns in the case that the order change so we can still use the integer from line 35 to 41
         query = """SELECT summonerName AS name, summonerId AS id, puuid, rank, wins, losses, level 
                     FROM joueur 
                     WHERE summonerName = ?
@@ -45,7 +45,7 @@ class PlayerDAO:
         return player
 
 # Example usage:
-player_name = "TwTv Raideru"
+"""player_name = "TwTv Raideru"
 player_dao = PlayerDAO()
 result = player_dao.find_player_by_name(player_name)
-print(result)
+print(result)"""
