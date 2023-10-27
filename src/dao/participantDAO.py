@@ -9,43 +9,26 @@ class participantDAO(metaclass=Singleton):
     Communicate with the participant table
     """
 
+    def __init__(self, db_name='data/database.db'):
+
+        """
+        Initialize the class with the name of the SQLite database file.
+
+        Parameters:
+        db_name (str): Name of the SQLite database file.
+        """
+        self.db_name = db_name
+
+
     def find_best_champ(self) -> list[str]:
         """
-<<<<<<< HEAD
-        Get all statistics return a list
-        
-        :return: A list of the statistics of the participant
-        :rtype: List of str
-        """
-
-        with AbstractDAO().connection as connection:
-            with connection.cursor() as cursor:
-                cursor.execute(
-                        "SELECT                                          "
-                        "       championName,                            "
-                        "       COUNT(*) AS total_parties,               "
-                        "       SUM(win) AS parties_gagnees,             "
-                        "       (SUM(win) * 1.0 / COUNT(*)) AS winrate   "
-                        "       FROM participant                         "
-                        "       GROUP BY championName ;                  "
-                        )
-
-                results = cursor.fetchall()   # Récupérer les résultats de la requête
-            statistics: list[str] = []  # Pour stocker les statistiques
-            # Pour chaque résultat, créer une chaîne de statistiques et l'ajouter à la liste
-        for result in results:
-                champion_name, total_parties, parties_gagnees, winrate = result
-                stat_str = f"Champion: {champion_name}, Total Parties: {total_parties}, Parties Gagnées: {parties_gagnees}, Winrate: {winrate}"
-                statistics.append(stat_str)
-
-        return statistics  # Retourner la liste des statistiques
-
-=======
         Get all champions by winrate return a list
         
         :return: A list of winrate for champions
         :rtype: List of str
         """
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
         
         with AbstractDAO().connection as connection:
             with connection.cursor() as cursor:
@@ -182,4 +165,3 @@ if __name__ == '__main':
      # Affichez les résultats
     for champ_stats in champions_popularity:
         print(champ_stats)
->>>>>>> c2e213775b9bd1a7cfaba285dcec250016f8f526
