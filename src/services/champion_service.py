@@ -1,13 +1,18 @@
 from typing import List, Union
-
 from utils.singleton import Singleton
 
 
-
-class ChampionService(metaclass=Singleton) : 
-
-    def afficher_parties() : 
+class ChampionService(metaclass=Singleton):
+    """
+    """
+    def classement_champion():
+        """
+        Renvoyer un classement des meilleurs champions
+        """
+        
+        
+        
+        
+        
         pass
 
-    def afficher_stat_player () : 
-        pass
