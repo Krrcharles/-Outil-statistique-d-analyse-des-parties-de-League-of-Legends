@@ -17,19 +17,18 @@ class UserDAO() :
 
     def afficher_utilisateur(self, login):
         """
-        Enregistre un nouvel utilisateur dans la base de données.
+        affiche un utilisateur de l'application présent dans la bdd.
 
         Parameters
         ----------
-        newlogin: str
-            Nom d'utilisateur du nouvel utilisateur.
-        newpassword: str
-            Mot de passe en clair du nouvel utilisateur.
+        login: str
+            Nom d'utilisateur de l'utilisateur.
 
         Return
         ------
-        True si l'inscription est réussie, False si le nom d'utilisateur existe déjà.
+        l'instance user de la classe User
         """
+
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         query = """SELECT id, login, password, isadmin 
@@ -52,7 +51,15 @@ class UserDAO() :
 
         return user
 
+    def inserer_utilisateur(self, newlogin, newpassword) :
 
+        """Permet d'insérer dans la bdd un nouvel utilisateur"""
 
-A = UserDAO('data/database.db')
-print(A.afficher_utilisateur('Bamara_Le_Goat'))
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+
+        query  = "INSERT INTO utilisateur (login, password, isadmin) VALUES (?,?,?)"
+        cursor.execute(query,(newlogin, newpassword, 0))
+
+"""A = UserDAO('data/database.db')
+print(A.afficher_utilisateur('Bamara_Le_Goat'))"""

@@ -1,5 +1,6 @@
 import sqlite3
 import hashlib
+from src.dao.userDAO import UserDAO
 
 
 class Connexion_services():
@@ -39,7 +40,10 @@ class Connexion_services():
 
     def inscription(self, newlogin, newpassword):
         """
-        Enregistre un nouvel utilisateur dans la base de données.
+        Cette fonction prend un nouveau login et un mdp,
+        vérifie si le login est déjà dans la bdd puis 
+        1) si elle y est on retourne "login déjà utilisé". sinon
+        2) créé un nouveau mdp et on insert dans la bdd
 
         Parameters
         ----------
@@ -52,24 +56,15 @@ class Connexion_services():
         ------
         True si l'inscription est réussie, False si le nom d'utilisateur existe déjà.
         """
-        conn = sqlite3.connect(self.db_name)
-        cursor = conn.cursor()
+        utilisateur = UserDAO
+        verif = utilisateur.afficher_utilisateur(newlogin)
 
-        cursor.execute("SELECT * FROM utilisateur WHERE login = ?", (newlogin,))
-        list_login = cursor.fetchone()
+        if verif._login is not None:
+            return "login déjà utilisé"
+        else :
 
-        if list_login is not None:
-            cursor.close()
-            conn.close()
-            return False
-
-        hached_password = self.hached(newlogin, newpassword)
-
-        cursor.execute("INSERT INTO utilisateur (login, password, isadmin) VALUES (?,?,?)", (newlogin, hached_password, 0))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return True
+            newpassword = self.hached(newlogin, newpassword)
+            utilisateur.inserer_utilisateur(newlogin,newpassword)
 
     def connexion(self, login, password):
         """
