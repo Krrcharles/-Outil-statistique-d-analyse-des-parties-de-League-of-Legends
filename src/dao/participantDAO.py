@@ -41,7 +41,7 @@ class participantDAO(metaclass=Singleton):
 
          # if the SQL query returned results (ie. res not None)
         for row in results:
-            print(row)
+            #print(row)
             champion_name, total_parties = row
             stat_str = f"Champion: {champion_name}, Total Parties: {total_parties}"
             statpop.append(stat_str)
@@ -133,5 +133,5 @@ class participantDAO(metaclass=Singleton):
     
 #Exemple d'utilisation
 particip_dao = participantDAO()
-result = particip_dao.find_champ_other()
+result = particip_dao.find_best_champ()
 print(result)
