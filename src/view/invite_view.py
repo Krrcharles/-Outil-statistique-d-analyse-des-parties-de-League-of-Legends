@@ -16,45 +16,49 @@ class InviteView(AbstractView):
             "Stats Player",
         ]
         self.infos_option = infos_option
-        questions = [
+        question = [
             {
                 "type": "list",
                 "name": "choix",
                 "message": "What are you looking for",
-                "choices": self.infos_option,
+                "choices": infos_option,
             }
         ]
-        self.__questions = questions
+        self.__question = question
 
     def display_info(self):
         print(f"") # a def
 
-    def make_choice(self):
-        answers = prompt(self.__questions) 
+    def make_choice(self): 
 
-        # Méthodes
+        while True:
+            answer = prompt(self.__question)
 
-        # Partie Stats champions
+            # Méthodes
 
-        if answers[0] == "Stats Champion":
-            
+            if answer['choix'] == "Stats Champion" :
+                print ("SC")
 
-        another_infos = prompt(
-            [
-                {
-                    "type": "confirm",
-                    "name": "continue",
-                    "message": "Another Information ?",
-                    "default": True,
-                }
-            ]
-        )
+            elif answer['choix'] == "Ranking Champion" :
+                print ("RC")
 
-        if another_infos["continue"]:
-            return InviteView()
+            else :
+                print("S")
 
-        else:
-            from view.start_view import StartView
+            self.display_info()  # Appelez la fonction display_info pour afficher les informations
 
-            return StartView()
-        
+            another_infos = prompt(
+                [
+                    {
+                        "type": "confirm",
+                        "name": "continue",
+                        "message": "Another Information ?",
+                        "default": True,
+                    }
+                ]
+            )
+
+            if not another_infos["continue"]:
+                from view.start_view import StartView
+
+                return StartView()
