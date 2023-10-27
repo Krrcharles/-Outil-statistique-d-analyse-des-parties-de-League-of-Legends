@@ -73,7 +73,7 @@ for matchId in liste_aplatie:
         conn.commit()
     conn.close()
     
-#####utilisateur#####
+#####UTILISATEUR#####
 
 conn = sqlite3.connect('data/database.db')
 cursor = conn.cursor()
