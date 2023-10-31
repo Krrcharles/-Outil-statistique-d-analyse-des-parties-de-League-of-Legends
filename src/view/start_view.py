@@ -2,6 +2,7 @@ from InquirerPy import prompt
 
 from view.abstract_view import AbstractView
 from view.session import Session
+from view.connexion_view import ConnexionView
 
 
 class StartView(AbstractView):
@@ -40,7 +41,7 @@ class StartView(AbstractView):
             return InviteView()
 
         elif reponse["choix"] == "Connection":
-            from view.member_view import MemberView
+            from view.connexion_view import ConnexionView
 
-            return MemberView()
+            return ConnexionView()
 

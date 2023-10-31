@@ -14,82 +14,40 @@ class MemberView(InviteView):
         super().__init__()
         self.infos_option.append(Separator("🔍"))
         self.infos_option.append("Stats Account")
-        self.__questions = [
-            {
-                "type": "input",
-                "name": "identifiant",
-                "message": "What is your login",
-            },
-            {
-                "type": "input",
-                "name": "password",
-                "message": "What is your password",
-            },]
-        self.question = [{
+        self.__question = [{
                 "type": "list",
                 "name": "choix",
                 "message": "What are you looking for",
                 "choices": self.infos_option,
             },
         ]
-        champion_question = [
+        self.__champion_question = [
             {
                 "type": "list",
-                "name": "choix",
+                "name": "Name Champion",
                 "message": "What are you looking for",
-                "choices": "Name Champion",
             }
         ]
-        rank_champion_question = [
+        self.__rank_champion_question = [
             {
                 "type": "list",
-                "name": "choix",
+                "name": "?",
                 "message": "What are you looking for",
-                "choices": "Name Champion",
             }
         ]
-        player_question = [
+        self.__player_question = [
             {
                 "type": "list",
-                "name": "choix",
+                "name": "Name Player",
                 "message": "What are you looking for",
-                "choices": "Name Player",
             }
         ]
-        self.infos_option = infos_option
-        self.__champion_question = champion_question
-        self.__rank_champion_question = rank_champion_question
-        self.__player_question = player_question
 
 
     def display_info(self):
         print(f"") # a def
 
     def make_choice(self):
-        answers = prompt(self.__questions)
-
-        Session().user_identifiant = answers["identifiant"]
-        Session().user_mdp = answers["password"]
-
-        user_identifiant = answers["identifiant"]
-        password = answers["password"]
-        
-        # Vérification que l'identifiant existe, et que l'identifiant et le mot de passe coincident 
-
-        instance = Connexion_services()
-        resultat = instance.connexion(user_identifiant,password)
-
-        if resultat == "failed" :
-            print(f"Il se peut que votre nom d'utilisateur ou mot de passe soit incorrect ou que vous deviez passer à un compte Riot si vous n'avez pas joué depuis quelques mois.")
-
-            from view.member_view import MemberView
-
-            return MemberView()
-
-        elif resultat == "admin":
-            from view.admin_view import AdminView
-
-            return AdminView()
 
         while True:
             answer = prompt(self.__question)
@@ -97,8 +55,8 @@ class MemberView(InviteView):
             if answer['choix'] == "Stats Champion" :
                 instance = ChampionService()
 
-                rep = prompt[self.__champion_question]
-                stats_champion = rep['choix']
+                rep = prompt(self.__champion_question)
+                stats_champion = rep["Name Champion"]
                 stats_champion = instance.afficher_stat_player(stats_champion)
                 print(stats_champion)
 

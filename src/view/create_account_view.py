@@ -2,6 +2,7 @@ from InquirerPy import prompt
 from view.abstract_view import AbstractView
 from view.session import Session
 from services.connexion_services import Connexion_services
+from view.connexion_view import ConnexionView
 
 import sqlite3
 import pandas as pd
@@ -55,9 +56,9 @@ class CreateAccountView(AbstractView):
         )
 
         if choice["connect"]:
-            from view.member_view import MemberView
+            from view.connexion_view import ConnexionView
 
-            return MemberView()
+            return ConnexionView()
 
         else:
             from view.invite_view import InviteView
