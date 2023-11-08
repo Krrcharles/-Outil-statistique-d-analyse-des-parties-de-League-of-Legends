@@ -1,4 +1,5 @@
 from InquirerPy import prompt
+from InquirerPy.separator import Separator
 
 from src.view.abstract_view import AbstractView
 from src.view.session import Session
@@ -12,21 +13,16 @@ class RankingChampion(AbstractView):
             "Per_game",
             Separator("👑"),
             "Per_winrate",
-            Separator("📰"),
+            Separator("🔪"),
             "Per_KDA",
-            Separator("👑"),
+            Separator("💰"),
             "Per_gold",    
-            Separator("👑"),
+            Separator("🌴"),
             "Per_lane",   
-            Separator("👑"),
+            Separator("💨"),
             "Per_other_stat",    
         ]
         self.__question = [
-            {
-                "type": "input",
-                "name": "Name Champion",
-                "message": "Which champion are you looking for",
-            },
             {
                 "type": "list",
                 "name": "type info",
@@ -47,7 +43,6 @@ class RankingChampion(AbstractView):
 
         print(instance.classement_champion(choice))
 
-
         choice = prompt(
             [
                 {
@@ -60,7 +55,7 @@ class RankingChampion(AbstractView):
         )
 
         if choice["yes"]:
-            from src.view.stats_ranking_champions import RankingChampion
+            from src.view.stats_ranking_champion import RankingChampion
 
             return RankingChampion()
 

@@ -32,22 +32,20 @@ class InviteView(AbstractView):
         print(f"") # a def
 
     def make_choice(self): 
+        answer = prompt(self.__question)
 
-        while True:
-            answer = prompt(self.__question)
+        if answer['choix'] == "Stats Champion" :
+            from src.view.stats_champion import StatsChampion
 
-            if answer['choix'] == "Stats Champion" :
-                from src.view.stats_champion import StatsChampion
-
-                return StatsChampion()
+            return StatsChampion()
 
 
-            elif answer['choix'] == "Ranking Champion" :
-                from src.view.ranking_champion import RankingChampion
+        elif answer['choix'] == "Ranking Champion" :
+            from src.view.stats_ranking_champion import RankingChampion
 
-                return RankingChampion()
+            return RankingChampion()
 
-            else :
-                from src.view.stats_player import StatsPlayer
+        else :
+            from src.view.stats_player import StatsPlayer
 
-                return StatsPlayer()
+            return StatsPlayer()
