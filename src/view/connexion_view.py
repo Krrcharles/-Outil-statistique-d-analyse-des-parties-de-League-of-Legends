@@ -1,10 +1,10 @@
 from InquirerPy import prompt
 from InquirerPy.separator import Separator
 
-from view.member_view import MemberView
-from services.connexion_services import Connexion_services
-from view.abstract_view import AbstractView
-from view.session import Session
+from src.view.member_view import MemberView
+from src.services.connexion_services import Connexion_services
+from src.view.abstract_view import AbstractView
+from src.view.session import Session
 
 
 class ConnexionView(AbstractView):
