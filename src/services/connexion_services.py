@@ -56,31 +56,26 @@ class Connexion_services():
         ------
         True si l'authentification est réussie, False sinon.
         """
-        conn = sqlite3.connect(self.db_name)
-        cursor = conn.cursor()
-        cursor.execute("SELECT password, isadmin FROM utilisateur WHERE login = ?", (login,))
+        connexion = False
+        classe = UserDAO()
+        test_password = classe.hached(login, password)
+        utilisateur = classe.recuperer_mdp(login,password)
 
-        real_password, isadmin = cursor.fetchone()
-        hachage = UserDAO()
-        test_password = hachage.hached(login, password)
-
-        cursor.close()
-        conn.close()
-
-        if test_password == real_password:
-            if isadmin == 1:
-                return ("admin")
-            return ("membre")
-        return ("failed")
+        if test_password == utilisateur[0]:
+            connexion = True
+            if utilisateur[1] == 1:
+                print("admin")
+                connexion = False
+        return connexion
 
 
-D = Connexion_services('data/database.db')
+# D = Connexion_services('data/database.db')
 
-print(D.inscription('teemo_ultime', 'lemdpkitue'))
+#print(D.inscription('teemo_ultime', 'lemdpkitue'))
 
 # D.inscription('teemo', 'unmdpnul')
 
-# print(D.connexion('teemo', 'lemdpkitue'))
+#print(D.connexion('teemo', 'lemdpkitue'))
 
 # print(D.connexion('admin', 'admin'))
 

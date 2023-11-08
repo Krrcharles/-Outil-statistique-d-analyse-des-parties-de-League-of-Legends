@@ -72,7 +72,7 @@ class UserDAO :
 
         Return
         ------
-        .
+        bool
         """
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
@@ -88,5 +88,19 @@ class UserDAO :
             conn.close()
         return not verif
 
-a=UserDAO()
-print(a.rajouter_utilisateur('best_user','mdpasse'))
+    def recuperer_mdp(self, login,password) :
+
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+        cursor.execute("SELECT password, isadmin FROM utilisateur WHERE login = ?", (login,))
+
+        real_password, isadmin = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        return real_password, isadmin
+
+
+"""a=UserDAO()
+print(a.rajouter_utilisateur('best_user','mdpasse'))"""
