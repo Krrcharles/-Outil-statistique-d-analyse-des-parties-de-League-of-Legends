@@ -34,6 +34,31 @@ class UserDAO :
         password_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), login.encode('utf-8'), 100)
         return password_hash
 
+
+    def verifier_utilisateur (self, login):
+        """
+        Vérifie si un utilisateur est dans la base de données.
+
+        Parameters
+        ----------
+        login: str
+            Nom d'utilisateur à vérifier.
+        Return
+        ------
+        True si l'utilisateur y est, False sinon.
+        """
+
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM utilisateur WHERE login = ?", (login,))
+        list_login = cursor.fetchone()
+
+        present = True
+        if list_login is None:
+            present = False 
+        return present
+
     def rajouter_utilisateur(self, newlogin, newpassword):
         """
         Enregistre un nouvel utilisateur dans la base de données.
@@ -47,22 +72,20 @@ class UserDAO :
 
         Return
         ------
-        True si l'inscription est réussie, False si le nom d'utilisateur existe déjà.
+        .
         """
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
 
-        cursor.execute("SELECT * FROM utilisateur WHERE login = ?", (newlogin,))
-        list_login = cursor.fetchone()
+        verif = UserDAO().verifier_utilisateur(newlogin)
 
-        if list_login is not None:
+        if verif == False :
+            hached_password = self.hached(newlogin, newpassword)
+
+            cursor.execute("INSERT INTO utilisateur (login, password, isadmin) VALUES (?,?,?)", (newlogin, hached_password, 0))
+            conn.commit()
             cursor.close()
             conn.close()
-            return False
-        hached_password = self.hached(newlogin, newpassword)
 
-        cursor.execute("INSERT INTO utilisateur (login, password, isadmin) VALUES (?,?,?)", (newlogin, hached_password, 0))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return True
+"""a=UserDAO()
+print(a.verifier_utilisateur('bama'))"""

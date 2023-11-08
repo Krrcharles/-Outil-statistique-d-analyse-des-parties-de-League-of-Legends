@@ -1,5 +1,6 @@
 import sqlite3
 import hashlib
+import UserDAO from src.dao.userDAO
 
 
 class Connexion_services():
@@ -52,24 +53,8 @@ class Connexion_services():
         ------
         True si l'inscription est réussie, False si le nom d'utilisateur existe déjà.
         """
-        conn = sqlite3.connect(self.db_name)
-        cursor = conn.cursor()
 
-        cursor.execute("SELECT * FROM utilisateur WHERE login = ?", (newlogin,))
-        list_login = cursor.fetchone()
 
-        if list_login is not None:
-            cursor.close()
-            conn.close()
-            return False
-
-        hached_password = self.hached(newlogin, newpassword)
-
-        cursor.execute("INSERT INTO utilisateur (login, password, isadmin) VALUES (?,?,?)", (newlogin, hached_password, 0))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return True
 
     def connexion(self, login, password):
         """
