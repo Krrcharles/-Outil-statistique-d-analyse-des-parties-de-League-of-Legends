@@ -1,8 +1,8 @@
 from InquirerPy import prompt
 
-from view.abstract_view import AbstractView
-from view.session import Session
-from view.connexion_view import ConnexionView
+from src.view.abstract_view import AbstractView
+from src.view.session import Session
+from src.view.connexion_view import ConnexionView
 
 
 class StartView(AbstractView):
@@ -31,17 +31,17 @@ class StartView(AbstractView):
             pass
 
         elif reponse["choix"] == "Create":  
-            from view.create_account_view import CreateAccountView
+            from src.view.create_account_view import CreateAccountView
 
             return CreateAccountView()
 
         elif reponse["choix"] == "Invite":
-            from view.invite_view import InviteView
+            from src.view.invite_view import InviteView
 
             return InviteView()
 
         elif reponse["choix"] == "Connection":
-            from view.connexion_view import ConnexionView
+            from src.view.connexion_view import ConnexionView
 
             return ConnexionView()
 
