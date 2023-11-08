@@ -88,14 +88,23 @@ class UserDAO :
             conn.close()
         return not verif
 
-    def recuperer_mdp(self, login,password) :
+    def recuperer_mdp(self, login) :
+        """
+        Récupère le mdp d'un utilisateur en fonction de son login
+        Parameters
+        ----------
+        login: str
+            Nom d'utilisateur du nouvel utilisateur.
+
+        Return
+        ------
+        tuple
+        """        
 
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         cursor.execute("SELECT password, isadmin FROM utilisateur WHERE login = ?", (login,))
-
         real_password, isadmin = cursor.fetchone()
-
         cursor.close()
         conn.close()
 
