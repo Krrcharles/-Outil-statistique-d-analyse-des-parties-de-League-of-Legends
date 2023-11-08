@@ -1,6 +1,7 @@
 import sqlite3
 import hashlib
-import UserDAO from src.dao.userDAO
+from src.dao.userDAO import UserDAO
+
 
 
 class Connexion_services():
@@ -19,25 +20,6 @@ class Connexion_services():
         """
         self.db_name = db_name
 
-    def hached(self, login, password):
-        """
-        Fonction qui prend un mot de passe en clair et un nom d'utilisateur,
-        hache le mot de passe avec le sel et retourne le résultat.
-
-        Parameters
-        ----------
-        login: str
-            Nom d'utilisateur.
-        password: str
-            Mot de passe en clair.
-
-        Return
-        ------
-        Le mot de passe haché.
-        """
-        password_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), login.encode('utf-8'), 100)
-        return password_hash
-
     def inscription(self, newlogin, newpassword):
         """
         Enregistre un nouvel utilisateur dans la base de données.
@@ -53,7 +35,10 @@ class Connexion_services():
         ------
         True si l'inscription est réussie, False si le nom d'utilisateur existe déjà.
         """
-
+        classe = UserDAO()
+        inscrit = classe.rajouter_utilisateur (newlogin,newpassword)
+        if inscrit is False :
+            return "Nom d'utilisateur déjà utilisé"
 
 
     def connexion(self, login, password):
@@ -76,7 +61,8 @@ class Connexion_services():
         cursor.execute("SELECT password, isadmin FROM utilisateur WHERE login = ?", (login,))
 
         real_password, isadmin = cursor.fetchone()
-        test_password = self.hached(login, password)
+        hachage = UserDAO()
+        test_password = hachage.hached(login, password)
 
         cursor.close()
         conn.close()
@@ -88,9 +74,9 @@ class Connexion_services():
         return ("failed")
 
 
-# D = Connexion_services('data/database.db')
+D = Connexion_services('data/database.db')
 
-# print(D.inscription('teemo', 'lemdpkitue'))
+print(D.inscription('teemo_ultime', 'lemdpkitue'))
 
 # D.inscription('teemo', 'unmdpnul')
 

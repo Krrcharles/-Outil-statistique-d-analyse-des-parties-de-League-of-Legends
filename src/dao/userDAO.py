@@ -86,6 +86,7 @@ class UserDAO :
             conn.commit()
             cursor.close()
             conn.close()
+        return not verif
 
-"""a=UserDAO()
-print(a.verifier_utilisateur('bama'))"""
+a=UserDAO()
+print(a.rajouter_utilisateur('best_user','mdpasse'))
