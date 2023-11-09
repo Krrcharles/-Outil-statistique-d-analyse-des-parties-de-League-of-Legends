@@ -11,7 +11,7 @@ class StartView(AbstractView):
             {
                 "type": "list",
                 "name": "choix",
-                "message": f"Hello {Session().user_identifiant}",
+                "message": "Hello",
                 "choices": [
                     "Create",
                     "Invite",
