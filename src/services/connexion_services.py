@@ -59,7 +59,7 @@ class Connexion_services():
         connexion = False
         classe = UserDAO()
         test_password = classe.hached(login, password)
-        utilisateur = classe.recuperer_mdp(login,password)
+        utilisateur = classe.recuperer_mdp(login)
 
         if test_password == utilisateur[0]:
             connexion = True
