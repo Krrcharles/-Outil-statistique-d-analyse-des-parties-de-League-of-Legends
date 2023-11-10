@@ -135,18 +135,31 @@ class ParticipantDAO(metaclass=Singleton):
                     """
             cursor.execute(query)       
             results = cursor.fetchall()   # Récupérer les résultats de la requête
+            
             #statother: list[str] = []  # Pour stocker les statistiques
             # Pour chaque résultat, créer une chaîne de statistiques et l'ajouter à la liste
+            """
             for result in results:
-
-
-                """
+                
                     champion_name, total_parties, total_gold, total_minions_killed = result
                     stat_str = f"Champion: {champion_name}, Total Parties: {total_parties}, Total Golds: {total_gold}, Total minions killed: {total_minions_killed}"
                     statother.append(stat_str)
-                """
-
+                
             return statother  # Retourner la liste des statistiques
+            """
+            df=pd.DataFrame(columns=["Champion", "Total_games", "Total_gold", "Total_minions_killed"])
+            for res in results:
+                data = [
+                    res[0],
+                    res[1],
+                    res[2],
+                    res[3]
+                ]
+                df=df.append(pd.Series(data, index=df.columns), ignore_index=True)
+                #statother=df.transpose()
+
+
+            print(tabulate(df, headers="keys", tablefmt="pretty"))
 
     
 
@@ -181,18 +194,19 @@ class ParticipantDAO(metaclass=Singleton):
 
 
             print(tabulate(participant, headers=["Champion","Total_games","Winrate","KDA","Golds_per_minute"], tablefmt="pretty"))
-            
+
         else:
             print("Champion not found.")
 
 
 #Exemple d'utilisation
-    #particip_dao = participantDAO()
-    #result = particip_dao.find_best_champ("Per_gold")
-    #print(result)
-
+particip_dao = ParticipantDAO()
+result = particip_dao.find_best_champ("Per_other_stat")
+print(result)
+"""
 champion_name = "Sylas"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
+"""
 
 
