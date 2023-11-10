@@ -3,7 +3,7 @@ from typing import List
 from src.utils.singleton import Singleton
 import os
 
-class participantDAO(metaclass=Singleton):
+class ParticipantDAO(metaclass=Singleton):
     """
     Communicate with the participant table
     """
@@ -19,19 +19,19 @@ class participantDAO(metaclass=Singleton):
         self.db_file = db_file
 
 
-    def find_best_champ(self,critere) -> List[str]:
+    def find_best_champ(self, critere) -> List[str]:
         """
         Get all champions by winrate return a list
         
         :return: A list of winrate for champions
         :rtype: List of str
         """
-        critere_affichage=["Per_game","Per_winrate","Per_KDA","Per_gold","Per_lane","Per_other_stat"]
+        critere_affichage=["Per_game", "Per_winrate", "Per_KDA",  "Per_gold", "Per_lane", "Per_other_stat"]
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
         if critere==critere_affichage[0]:   
-        #Liste des champions classés par popularité (nombre total de games joués)
+            #Liste des champions classés par popularité (nombre total de games joués)
             query=  """ SELECT championName as Champion, COUNT(*) AS total_parties       
                         FROM participant                  
                         GROUP BY championName              
@@ -142,8 +142,40 @@ class participantDAO(metaclass=Singleton):
 
             return statother  # Retourner la liste des statistiques
 
+    
+
+    def stat_champ_by_name(self, name:str):
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
+
+        query = """SELECT 
+                        championName AS name,
+                        COUNT(*) AS total_games,
+                        ROUND((SUM(win) * 1.0 / COUNT(*)),3)*100 AS winrate,
+                        ROUND((kills + assists) / deaths,2) AS kda,
+                        ROUND(goldEarned / gameDuration,2) AS golds_per_minute
+                    FROM participant
+                    WHERE championName = ?
+                    """
+      
+        cursor.execute(query, (name,))
+        
+        res = cursor.fetchone()
+
+        participant: list[str] = []
+
+        if res:
+            name,total_games,winrate,kda,golds_per_minute=res
+            participant = f"Champion: {name}, Total_games: {total_games}, Winrate: {winrate}, KDA: {kda}, Golds_per_minute: {golds_per_minute}"
+        return participant
+
 
 #Exemple d'utilisation
-particip_dao = participantDAO()
-result = particip_dao.find_best_champ("Per_gold")
+    #particip_dao = participantDAO()
+    #result = particip_dao.find_best_champ("Per_gold")
+    #print(result)
+
+champion_name = "Sylas"
+participant_dao = ParticipantDAO()
+result = participant_dao.stat_champ_by_name(champion_name)
 print(result)
