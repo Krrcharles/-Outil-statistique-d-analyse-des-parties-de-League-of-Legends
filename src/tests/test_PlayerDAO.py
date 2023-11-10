@@ -1,4 +1,4 @@
-import unittest
+from unittest import TestCase, TextTestRunner, TestLoader
 from src.dao.playerDAO import PlayerDAO
 
 class TestPlayerDAO() : 
