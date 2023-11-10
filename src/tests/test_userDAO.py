@@ -18,8 +18,8 @@ class TestUserDAO() :
         # Common teardown code for both test methods
         pass
 
-    @patch("your_module.sqlite3.connect")
-    @patch("your_module.UserDAO.verifier_utilisateur")
+    @patch("UserDAO.sqlite3.connect")
+    @patch("userDAO.UserDAO.verifier_utilisateur")
 
 
     def test_verifier_utilisateur_userDAO (self, mock_connect) :
