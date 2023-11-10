@@ -1,4 +1,3 @@
-from typing import List, Union
 from src.utils.singleton import Singleton
 from src.dao.participantDAO import participantDAO
 
@@ -11,7 +10,7 @@ class ChampionService(metaclass=Singleton) :
         Critère = ["Per_game","Per_winrate","Per_KDA","Per_gold","Per_lane","Per_other_stat"]
         """
         if critere == "Per_game":
-            classement = participantDAO().find_best_champ()
+            classement = participantDAO().find_best_champ(critere)
             affichage = "| Voici le classement des champions par parties jouées |"
 
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
@@ -30,7 +29,7 @@ class ChampionService(metaclass=Singleton) :
             affichage_finale = f"{affichage_finale}\n{separateur}"
 
         elif critere == "Per_winrate":
-            classement = participantDAO().find_champ_winrate()
+            classement = participantDAO().find_best_champ(critere)
             affichage = "| Voici le classement des champions par winrate |"
 
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
@@ -47,8 +46,26 @@ class ChampionService(metaclass=Singleton) :
                 affichage_finale = f"{affichage_finale}\n{nouvelle_ligne}"
             affichage_finale = f"{affichage_finale}\n{separateur}"
 
+        elif critere == "Per_KDA":
+            classement = participantDAO().find_best_champ(critere)
+            affichage = "| Voici le classement des champions par KDA |"
+
+            separateur = "+" + "-" * (len(affichage) - 2) + "+"
+            affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
+
+            for i in range(0,9):
+                champion_info = classement[i].split(', ')
+                champion_nom = champion_info[0].split(': ')[1]
+                champion_critere = champion_info[1].split(': ')[1]
+
+                espaces_debut = (len(affichage) - len(f"| {champion_nom} : {champion_critere} de KDA")) // 2
+                espaces_fin = len(affichage) - len(f"| {champion_nom} : {champion_critere} de KDA") - espaces_debut
+                nouvelle_ligne = f"|{' ' * espaces_debut}{champion_nom} : {champion_critere} de KDA{' ' * espaces_fin}|"
+                affichage_finale = f"{affichage_finale}\n{nouvelle_ligne}"
+            affichage_finale = f"{affichage_finale}\n{separateur}"
+
         elif critere == "Per_gold":
-            classement = participantDAO().find_champ_other()
+            classement = participantDAO().find_best_champ(critere)
             affichage = "| Voici le classement des champions par gold gagnés |"
 
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
@@ -57,11 +74,11 @@ class ChampionService(metaclass=Singleton) :
             for i in range(0,9):
                 champion_info = classement[i].split(', ')
                 champion_nom = champion_info[0].split(': ')[1]
-                champion_critere = champion_info[2].split(': ')[1]
+                champion_critere = champion_info[1].split(': ')[1]
 
-                espaces_debut = (len(affichage) - len(f"| {champion_nom} : {champion_critere} gold gagnés")) // 2
-                espaces_fin = len(affichage) - len(f"| {champion_nom} : {champion_critere} gold gagnés") - espaces_debut
-                nouvelle_ligne = f"|{' ' * espaces_debut}{champion_nom} : {champion_critere} gold gagnés{' ' * espaces_fin}|"
+                espaces_debut = (len(affichage) - len(f"| {champion_nom} : {champion_critere} golds par minute")) // 2
+                espaces_fin = len(affichage) - len(f"| {champion_nom} : {champion_critere} golds par minute") - espaces_debut
+                nouvelle_ligne = f"|{' ' * espaces_debut}{champion_nom} : {champion_critere} golds par minute{' ' * espaces_fin}|"
                 affichage_finale = f"{affichage_finale}\n{nouvelle_ligne}"
             affichage_finale = f"{affichage_finale}\n{separateur}"
 
@@ -74,4 +91,5 @@ class ChampionService(metaclass=Singleton) :
 
 #ChampionService().classement_champion("Per_game")
 #ChampionService().classement_champion("Per_winrate")
+#ChampionService().classement_champion("Per_KDA")
 #ChampionService().classement_champion("Per_gold")

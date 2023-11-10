@@ -1,11 +1,11 @@
 from InquirerPy import prompt
 from InquirerPy.separator import Separator
-from services.player_service import PlayerService
-from services.champion_service import ChampionService
+from src.services.player_service import PlayerService
+from src.services.champion_service import ChampionService
 
 
-from view.abstract_view import AbstractView
-from view.session import Session
+from src.view.abstract_view import AbstractView
+from src.view.session import Session
 
 
 class InviteView(AbstractView):
@@ -27,72 +27,25 @@ class InviteView(AbstractView):
                 "choices": self.infos_option,
             }
         ]
-        self.__champion_question = [
-            {
-                "type": "list",
-                "name": "choix",
-                "message": "What are you looking for",
-                "choices": "Name Champion",
-            }
-        ]
-        self.__rank_champion_question = [
-            {
-                "type": "list",
-                "name": "choix",
-                "message": "What are you looking for",
-                "choices": "Name Champion",
-            }
-        ]
-        self.__player_question = [
-            {
-                "type": "list",
-                "name": "Name Player",
-                "message": "What are you looking for",
-            }
-        ]
-        
 
     def display_info(self):
         print(f"") # a def
 
     def make_choice(self): 
+        answer = prompt(self.__question)
 
-        while True:
-            answer = prompt(self.__question)
+        if answer['choix'] == "Stats Champion" :
+            from src.view.stats_champion import StatsChampion
 
-            if answer['choix'] == "Stats Champion" :
-                instance = ChampionService()
+            return StatsChampion()
 
-                rep = prompt[self.__champion_question]
-                # stats_champion = rep['choix']
-                # stats_champion = instance.afficher_stat_player(stats_champion)
-                # print (stats_champion)
 
-            elif answer['choix'] == "Ranking Champion" :
-                print ("RC")
+        elif answer['choix'] == "Ranking Champion" :
+            from src.view.stats_ranking_champion import RankingChampion
 
-            else :
-                instance = PlayerService()
+            return RankingChampion()
 
-                rep = prompt(self.__player_question)
-                # stats_player = rep['Name Player']
-                # stats_player = instance.afficher_stat_player(stats_player)
-                # print (stats_player)
+        else :
+            from src.view.stats_player import StatsPlayer
 
-            self.display_info()  # Appelez la fonction display_info pour afficher les informations
-
-            another_infos = prompt(
-                [
-                    {
-                        "type": "confirm",
-                        "name": "continue",
-                        "message": "Another Information ?",
-                        "default": True,
-                    }
-                ]
-            )
-
-            if not another_infos["continue"]:
-                from view.start_view import StartView
-
-                return StartView()
+            return StatsPlayer()

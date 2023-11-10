@@ -44,6 +44,10 @@ class PlayerDAO:
 
         return player
 
+
+        def create_player (self, nom) :
+            pass
+
 # Example usage:
 player_name = "TwTv Raideru"
 player_dao = PlayerDAO()

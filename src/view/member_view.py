@@ -1,12 +1,12 @@
 from InquirerPy import prompt
 from InquirerPy.separator import Separator
 
-from services.connexion_services import Connexion_services
-from services.player_service import PlayerService
-from services.champion_service import ChampionService
+from src.services.connexion_services import Connexion_services
+from src.services.player_service import PlayerService
+from src.services.champion_service import ChampionService
 
-from view.invite_view import InviteView
-from view.session import Session
+from src.view.invite_view import InviteView
+from src.view.session import Session
 
 
 class MemberView(InviteView):
