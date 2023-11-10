@@ -71,15 +71,13 @@ class TestUserDAO() :
         mock_cursor = mock_connect.return_value.cursor.return_value
 
         # When
-
         result = self.dao.UserDAO.recuperer_mdp(self,login)
 
         # Then 
-        
         mock_cursor.execute.assert_called_once_with("SELECT password, isadmin FROM utilisateur WHERE login = ?", (self.login,))
         mock_cursor.fetchone.assert_called_once()
 
-        expected_result = (self.login, 0)
+        expected_result = (self.expected_mdp, 0)
         self.assertEqual(result, expected_result)
 
 
