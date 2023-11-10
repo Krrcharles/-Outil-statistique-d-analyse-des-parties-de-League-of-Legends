@@ -1,6 +1,8 @@
 import sqlite3
 from typing import List
 from src.utils.singleton import Singleton
+from tabulate import tabulate
+import pandas as pd
 import os
 
 class ParticipantDAO(metaclass=Singleton):
@@ -133,12 +135,16 @@ class ParticipantDAO(metaclass=Singleton):
                     """
             cursor.execute(query)       
             results = cursor.fetchall()   # Récupérer les résultats de la requête
-            statother: list[str] = []  # Pour stocker les statistiques
+            #statother: list[str] = []  # Pour stocker les statistiques
             # Pour chaque résultat, créer une chaîne de statistiques et l'ajouter à la liste
             for result in results:
+
+
+                """
                     champion_name, total_parties, total_gold, total_minions_killed = result
                     stat_str = f"Champion: {champion_name}, Total Parties: {total_parties}, Total Golds: {total_gold}, Total minions killed: {total_minions_killed}"
                     statother.append(stat_str)
+                """
 
             return statother  # Retourner la liste des statistiques
 
@@ -162,12 +168,22 @@ class ParticipantDAO(metaclass=Singleton):
         
         res = cursor.fetchone()
 
-        participant: list[str] = []
-
         if res:
-            name,total_games,winrate,kda,golds_per_minute=res
-            participant = f"Champion: {name}, Total_games: {total_games}, Winrate: {winrate}, KDA: {kda}, Golds_per_minute: {golds_per_minute}"
-        return participant
+            data = [
+                [res[0]],
+                [res[1]],
+                [res[2]],
+                [res[3]],
+                [res[4]]
+            ]
+            df=pd.DataFrame(data)
+            participant=df.transpose()
+
+
+            print(tabulate(participant, headers=["Champion","Total_games","Winrate","KDA","Golds_per_minute"], tablefmt="pretty"))
+            
+        else:
+            print("Champion not found.")
 
 
 #Exemple d'utilisation
@@ -178,4 +194,5 @@ class ParticipantDAO(metaclass=Singleton):
 champion_name = "Sylas"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
-print(result)
+
+
