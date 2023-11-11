@@ -1,6 +1,6 @@
 from src.business.player.player import Player
 from src.dao.playerDAO import PlayerDAO
-from src.dao.participantDAO import participantDAO
+from src.dao.participantDAO import ParticipantDAO
 
 class PlayerService(): 
     def afficher_parties(self, player: Player):
@@ -12,7 +12,7 @@ class PlayerService():
         player : Player
             Un objet Player représentant le joueur.
         """
-        liste_parties = participantDAO().getpartie(player.summonerID)
+        liste_parties = ParticipantDAO().getpartie(player.summonerID)
 
         for partie in liste_parties:
             kda = (partie.kills + partie.assists) / partie.deaths
