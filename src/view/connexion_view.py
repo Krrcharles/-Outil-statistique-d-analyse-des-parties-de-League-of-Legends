@@ -28,9 +28,6 @@ class ConnexionView(AbstractView):
     def make_choice(self):
         answers = prompt(self.__questions)
 
-        Session().user_identifiant = answers["identifiant"]
-        Session().user_mdp = answers["password"]
-
         user_identifiant = answers["identifiant"]
         password = answers["password"]
         
@@ -46,10 +43,14 @@ class ConnexionView(AbstractView):
 
         elif resultat == "admin":
             from view.admin_view import AdminView
+            Session().user_identifiant = answers["identifiant"]
+            Session().user_mdp = answers["password"]
 
             return AdminView()
 
         else : 
             from view.member_view import MemberView
+            Session().user_identifiant = answers["identifiant"]
+            Session().user_mdp = answers["password"]
 
             return MemberView()
