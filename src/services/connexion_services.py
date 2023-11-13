@@ -1,7 +1,4 @@
-import sqlite3
-import hashlib
 from src.dao.userDAO import UserDAO
-
 
 
 class Connexion_services():
@@ -35,11 +32,18 @@ class Connexion_services():
         ------
         True si l'inscription est réussie, False si le nom d'utilisateur existe déjà.
         """
-        classe = UserDAO()
-        inscrit = classe.rajouter_utilisateur (newlogin,newpassword)
-        if inscrit is False :
-            return "Nom d'utilisateur déjà utilisé"
+        if not isinstance(newlogin, str):
+            print("Le login n'est pas une chaine de caractère")
+            return False
 
+        if not isinstance(newpassword, str):
+            print("Le mot de passe n'est pas une chaine de caractère")
+            return False
+
+        classe = UserDAO()
+        inscrit = classe.rajouter_utilisateur(newlogin, newpassword)
+        if inscrit is False:
+            return "Nom d'utilisateur déjà utilisé"
 
     def connexion(self, login, password):
         """
@@ -56,6 +60,14 @@ class Connexion_services():
         ------
         True si l'authentification est réussie, False sinon.
         """
+        if not isinstance(login, str):
+            print("Le login n'est pas une chaine de caractère")
+            return False
+
+        if not isinstance(password, str):
+            print("Le mot de passe n'est pas une chaine de caractère")
+            return False
+
         connexion = False
         classe = UserDAO()
         test_password = classe.hached(login, password)
@@ -71,11 +83,11 @@ class Connexion_services():
 
 # D = Connexion_services('data/database.db')
 
-#print(D.inscription('teemo_ultime', 'lemdpkitue'))
+# print(D.inscription('teemo_ultime', 'lemdpkitue'))
 
 # D.inscription('teemo', 'unmdpnul')
 
-#print(D.connexion('teemo', 'lemdpkitue'))
+# print(D.connexion('teemo', 'lemdpkitue'))
 
 # print(D.connexion('admin', 'admin'))
 

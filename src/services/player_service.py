@@ -2,17 +2,22 @@ from src.business.player.player import Player
 from src.dao.playerDAO import PlayerDAO
 from src.dao.participantDAO import ParticipantDAO
 
-class PlayerService(): 
-    def afficher_parties(self, player: Player):
+
+class PlayerService():
+    def afficher_parties(self, player):
         """
         Affiche les informations des parties d'un joueur.
 
         Parameters
         ----------
-        player : Player
-            Un objet Player représentant le joueur.
+        player : str
+            Le nom du joueur.
         """
-        liste_parties = ParticipantDAO().getpartie(player.summonerID)
+        if not isinstance(player, str):
+            print("Le critère n'est pas une chaine de caractère")
+            return False
+
+        liste_parties = ParticipantDAO().getpartie(player)
 
         for partie in liste_parties:
             kda = (partie.kills + partie.assists) / partie.deaths
@@ -43,14 +48,22 @@ class PlayerService():
         player : str
             Le nom du joueur.
         """
+        if not isinstance(player, str):
+            print("Le critère n'est pas une chaine de caractère")
+            return False
+
         P = PlayerDAO().find_player_by_name(player)
+
+        if P is None:
+            print("Le pseudo n'est pas dans la base de données.")
+            return False
 
         winrate = round(P._win / (P._win + P._losses) * 100)
         if P._rank == "I":
             rank = "Challenger"
 
         affichage_top = f"{P._name} - Level {P._level} - {rank}"
-        affichage_bot= f"\t{P._win} Victoires / {P._losses} Défaite ({winrate}%)"
+        affichage_bot = f"\t{P._win} Victoires / {P._losses} Défaite ({winrate}%)"
 
         max_lenght = max(len(affichage_top), len(affichage_bot) + 8)
         separateur = "+" + "-" * max_lenght + "+"

@@ -1,22 +1,30 @@
 from src.utils.singleton import Singleton
-from src.dao.participantDAO import participantDAO
+from src.dao.participantDAO import ParticipantDAO
 
 
-class ChampionService(metaclass=Singleton) : 
-
+class ChampionService(metaclass=Singleton):
     def classement_champion(self, critere):
         """
-        Renvoyer un classement des meilleurs champions
-        Critère = ["Per_game","Per_winrate","Per_KDA","Per_gold","Per_lane","Per_other_stat"]
+        Renvoie un classement des meilleurs champions selon un critère.
+
+        Parameters
+        ----------
+        critere : str
+            Critère selectionable parmis "Per_game", "Per_winrate", "Per_KDA",
+            "Per_gold","Per_lane","Per_other_stat"
         """
+        if not isinstance(critere, str):
+            print("Le critère n'est pas une chaine de caractère")
+            return False
+
         if critere == "Per_game":
-            classement = participantDAO().find_best_champ(critere)
+            classement = ParticipantDAO().find_best_champ(critere)
             affichage = "| Voici le classement des champions par parties jouées |"
 
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0,9):
+            for i in range(0, 9):
                 champion_info = classement[i].split(', ')
                 champion_nom = champion_info[0].split(': ')[1]
                 champion_critere = champion_info[1].split(': ')[1]
@@ -29,13 +37,13 @@ class ChampionService(metaclass=Singleton) :
             affichage_finale = f"{affichage_finale}\n{separateur}"
 
         elif critere == "Per_winrate":
-            classement = participantDAO().find_best_champ(critere)
+            classement = ParticipantDAO().find_best_champ(critere)
             affichage = "| Voici le classement des champions par winrate |"
 
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0,9):
+            for i in range(0, 9):
                 champion_info = classement[i].split(', ')
                 champion_nom = champion_info[0].split(': ')[1]
                 champion_critere = champion_info[3].split(': ')[1]
@@ -47,13 +55,13 @@ class ChampionService(metaclass=Singleton) :
             affichage_finale = f"{affichage_finale}\n{separateur}"
 
         elif critere == "Per_KDA":
-            classement = participantDAO().find_best_champ(critere)
+            classement = ParticipantDAO().find_best_champ(critere)
             affichage = "| Voici le classement des champions par KDA |"
 
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0,9):
+            for i in range(0, 9):
                 champion_info = classement[i].split(', ')
                 champion_nom = champion_info[0].split(': ')[1]
                 champion_critere = champion_info[1].split(': ')[1]
@@ -65,13 +73,13 @@ class ChampionService(metaclass=Singleton) :
             affichage_finale = f"{affichage_finale}\n{separateur}"
 
         elif critere == "Per_gold":
-            classement = participantDAO().find_best_champ(critere)
+            classement = ParticipantDAO().find_best_champ(critere)
             affichage = "| Voici le classement des champions par gold gagnés |"
 
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0,9):
+            for i in range(0, 9):
                 champion_info = classement[i].split(', ')
                 champion_nom = champion_info[0].split(': ')[1]
                 champion_critere = champion_info[1].split(': ')[1]
@@ -89,7 +97,7 @@ class ChampionService(metaclass=Singleton) :
         print(affichage_finale)
         return False
 
-#ChampionService().classement_champion("Per_game")
-#ChampionService().classement_champion("Per_winrate")
-#ChampionService().classement_champion("Per_KDA")
-#ChampionService().classement_champion("Per_gold")
+# ChampionService().classement_champion("Per_game")
+# ChampionService().classement_champion("Per_winrate")
+# ChampionService().classement_champion("Per_KDA")
+# ChampionService().classement_champion("Per_gold")
