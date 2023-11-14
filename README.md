@@ -1,14 +1,27 @@
-## Installation
-
-Install the required packages with the following bash commands :
-
+## Installation with docker (recommended)
+Get the image      
 ```bash
-pip install -r requirements.txt     # install all packages listed in the file
-pip list                            # to list all installed packages
+docker pull krrcharles/po.gg
 ```
 
-## Créer la base de données
-- lancer le script data/creer_db.py
+Run the image
+```bash
+docker run krrcharles/po.gg
+```
 
-## Remplir la base de données
-- lancer le script data/fill_database.py
+## Installation with local python environement
+
+Clone this repository locally
+```bash
+git clone https://github.com/Krrcharles/Outil-statistique-d-analyse-des-parties-de-League-of-Legends.git 
+```
+
+Install required packages
+```bash
+pip install -r requirements.txt     # install all packages listed in the file
+```
+
+Run the app
+```bash
+python your\path\Outil-statistique-d-analyse-des-parties-de-League-of-Legends\__main__.py
+```
