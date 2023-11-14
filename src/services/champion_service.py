@@ -24,7 +24,7 @@ class ChampionService(metaclass=Singleton):
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0, 9):
+            for i in range(0, 10):
                 champion_info = classement[i].split(', ')
                 champion_nom = champion_info[0].split(': ')[1]
                 champion_critere = champion_info[1].split(': ')[1]
@@ -43,7 +43,7 @@ class ChampionService(metaclass=Singleton):
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0, 9):
+            for i in range(0, 10):
                 champion_info = classement[i].split(', ')
                 champion_nom = champion_info[0].split(': ')[1]
                 champion_critere = champion_info[3].split(': ')[1]
@@ -61,7 +61,7 @@ class ChampionService(metaclass=Singleton):
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0, 9):
+            for i in range(0, 10):
                 champion_info = classement[i].split(', ')
                 champion_nom = champion_info[0].split(': ')[1]
                 champion_critere = champion_info[1].split(': ')[1]
@@ -79,7 +79,7 @@ class ChampionService(metaclass=Singleton):
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0, 9):
+            for i in range(0, 10):
                 champion_info = classement[i].split(', ')
                 champion_nom = champion_info[0].split(': ')[1]
                 champion_critere = champion_info[1].split(': ')[1]
@@ -97,7 +97,8 @@ class ChampionService(metaclass=Singleton):
         print(affichage_finale)
         return False
 
-# ChampionService().classement_champion("Per_game")
-# ChampionService().classement_champion("Per_winrate")
-# ChampionService().classement_champion("Per_KDA")
-# ChampionService().classement_champion("Per_gold")
+
+#ChampionService().classement_champion("Per_game")
+#ChampionService().classement_champion("Per_winrate")
+#ChampionService().classement_champion("Per_KDA")
+#ChampionService().classement_champion("Per_gold")
