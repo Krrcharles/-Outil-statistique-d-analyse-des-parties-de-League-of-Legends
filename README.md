@@ -1,4 +1,4 @@
-## Required packages
+##Installation
 
 Install the required packages with the following bash commands :
 
