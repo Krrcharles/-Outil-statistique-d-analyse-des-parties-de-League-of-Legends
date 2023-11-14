@@ -28,4 +28,4 @@ class AdminService():
         print(league_data)
         
 c = AdminService()
-c.add_player('liony22', 'RGAPI-58ba1319-3059-4d17-8eca-8f71cd80b933')
+c.add_player('liony22', 'RGAPI-7f93a581-1dcb-46c8-ad09-19e88bf44fad')
