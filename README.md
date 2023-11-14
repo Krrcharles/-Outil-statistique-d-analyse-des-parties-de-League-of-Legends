@@ -1,9 +1,9 @@
 ## Installation (with docker)
 
-'''bash
+```bash
 docker pull krrcharles/po.gg
 docker run krrcharles/po.gg
-'''
+```
 
 ## Installation (with local python environement)
 
