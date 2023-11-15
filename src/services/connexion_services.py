@@ -76,8 +76,7 @@ class Connexion_services():
         if test_password == utilisateur[0]:
             connexion = True
             if utilisateur[1] == 1:
-                print("admin")
-                connexion = False
+                connexion = 'admin'
         return connexion
 
 

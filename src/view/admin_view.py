@@ -1,11 +1,11 @@
 from InquirerPy import prompt
 from InquirerPy.separator import Separator
 
-from services.player_service import PlayerService
-from services.champion_service import ChampionService
+from src.services.player_service import PlayerService
+from src.services.champion_service import ChampionService
 
-from view.member_view import MemberView
-from view.session import Session
+from src.view.member_view import MemberView
+from src.view.session import Session
 
 
 class AdminView(MemberView):
@@ -40,8 +40,10 @@ class AdminView(MemberView):
 
             return RankingChampion()
 
-        elif answer['choix'] == "Ajouter un joueur à la base de données" :
+        elif answer['choix'] == "Modification" :
             from src.services.admin_service import AdminService
+            new_player_name = input("Rentrez un nom d'invocateur : ")
+            
             AdminService().add_player('liony22', 'RGAPI-7f93a581-1dcb-46c8-ad09-19e88bf44fad')
             return AdminView()
 
