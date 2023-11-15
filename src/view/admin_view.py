@@ -40,9 +40,10 @@ class AdminView(MemberView):
 
             return RankingChampion()
 
-        elif answer['choix'] == "Stats Champion" :
-            from src.view.stats_champion import StatsChampion
-            return StatsChampion()
+        elif answer['choix'] == "Ajouter un joueur à la base de données" :
+            from src.services.admin_service import AdminService
+            AdminService().add_player('liony22', 'RGAPI-7f93a581-1dcb-46c8-ad09-19e88bf44fad')
+            return AdminView()
 
         else :
             from src.view.modification import Modification

@@ -48,8 +48,8 @@ class PlayerDAO:
         def create_player (self, nom) :
             pass
 
-# Example usage:
+"""# Example usage:
 player_name = "TwTv Raideru"
 player_dao = PlayerDAO()
 result = player_dao.find_player_by_name(player_name)
-print(result)
+print(result)"""

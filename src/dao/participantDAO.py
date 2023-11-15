@@ -199,10 +199,10 @@ class ParticipantDAO(metaclass=Singleton):
             print("Champion not found.")
 
 
-#Exemple d'utilisation
+"""#Exemple d'utilisation
 particip_dao = ParticipantDAO()
 result = particip_dao.find_best_champ("Per_other_stat")
-print(result)
+print(result)"""
 """
 champion_name = "Sylas"
 participant_dao = ParticipantDAO()

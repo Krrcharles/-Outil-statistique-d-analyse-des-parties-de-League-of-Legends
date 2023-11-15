@@ -1,4 +1,5 @@
 import requests, json
+from src.business.player.player import Player
 
 class AdminService():
     def __init__(self):
@@ -23,9 +24,7 @@ class AdminService():
             
         if not is_ranked:
             return 'unranked'
-        
-        
+
+  
         print(league_data)
-        
-c = AdminService()
-c.add_player('liony22', 'RGAPI-7f93a581-1dcb-46c8-ad09-19e88bf44fad')
+

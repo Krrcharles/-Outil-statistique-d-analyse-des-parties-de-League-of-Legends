@@ -42,14 +42,14 @@ class ConnexionView(AbstractView):
             return ConnexionView()
 
         elif resultat == "admin":
-            from view.admin_view import AdminView
+            from src.view.admin_view import AdminView
             Session().user_identifiant = answers["identifiant"]
             Session().user_mdp = answers["password"]
 
             return AdminView()
 
         else : 
-            from view.member_view import MemberView
+            from src.view.member_view import MemberView
             Session().user_identifiant = answers["identifiant"]
             Session().user_mdp = answers["password"]
 
