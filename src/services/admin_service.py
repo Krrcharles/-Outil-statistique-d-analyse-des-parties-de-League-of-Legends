@@ -1,5 +1,6 @@
 import requests, json
 from src.business.player.player import Player
+from src.dao.playerDAO import PlayerDAO
 
 class AdminService:
     def __init__(self):
@@ -18,11 +19,14 @@ class AdminService:
         league_data = requests.get(league_url).json()
 
         is_ranked = False
-        for queue in league_data:
-            if queue['queueType'] == 'RANKED_SOLO_5x5':
-                league_data = queue
-                is_ranked = True
-                break
+        try :
+            for queue in league_data:
+                if queue['queueType'] == 'RANKED_SOLO_5x5':
+                    league_data = queue
+                    is_ranked = True
+                    break
+        except:
+            return 'Player not found'
 
         if not is_ranked:
             return 'unranked'
@@ -37,6 +41,7 @@ class AdminService:
             losses=league_data['losses'],
             level=level
         )
+        
         print(new_player)
 
 

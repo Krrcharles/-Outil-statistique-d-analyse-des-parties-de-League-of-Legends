@@ -43,8 +43,8 @@ class AdminView(MemberView):
         elif answer['choix'] == "Modification" :
             from src.services.admin_service import AdminService
             new_player_name = input("Rentrez un nom d'invocateur : ")
-            
-            AdminService().add_player('liony22', 'RGAPI-7f93a581-1dcb-46c8-ad09-19e88bf44fad')
+            api_key = input("Rentrez votre API KEY : ")
+            AdminService().add_player(new_player_name, api_key)
             return AdminView()
 
         else :
