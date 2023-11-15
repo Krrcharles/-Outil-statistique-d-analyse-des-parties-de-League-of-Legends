@@ -48,7 +48,8 @@ class PlayerDAO:
     def add_player (self, nom) :
         conn = sqlite3.connect('data/database.db')
         cursor = conn.cursor()
-
+        #######C4EST DU COPIER COLLER POUR LE MOMEMNBT
+        ###Je me suis souvenu que yavais les game a recup aussi oskour mais ca va arriver
         cursor.execute('INSERT INTO player (id, login, password, isadmin) VALUES (?,?,?,?)', (0, 'teemo', hashlib.pbkdf2_hmac('sha256', '1234'.encode('utf-8'), 'teemo'.encode('utf-8'), 100), 0))
         conn.commit()
         cursor.execute('INSERT INTO utilisateur (id, login, password, isadmin) VALUES (?,?,?,?)', (1, 'admin', hashlib.pbkdf2_hmac('sha256', 'admin'.encode('utf-8'), 'admin'.encode('utf-8'), 100), 1))
