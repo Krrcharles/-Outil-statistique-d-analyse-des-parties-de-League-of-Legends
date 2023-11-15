@@ -1,6 +1,6 @@
 import sqlite3, requests, json, time, hashlib
 import pandas as pd
-from componants import extract_participant_info
+from data.componants import extract_participant_info
 
 def fill():
 

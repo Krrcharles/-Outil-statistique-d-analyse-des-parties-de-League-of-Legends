@@ -13,8 +13,10 @@ if __name__ == "__main__":
     #il n'a pas de DB de constitué et donc il faut l'initaliser
     #pour le moment j'admet que ca marche psk ca marche quand je teste a la main
     if not os.path.exists(os.path.exists(os.path.join(os.getcwd(),'databse.db'))):
+        print('Base de données non trouvée,\n initialisation ...')
         creer_database()
         fill()
+        
     
     # run the Start View
     current_view = StartView()
