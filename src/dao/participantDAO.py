@@ -74,7 +74,7 @@ class ParticipantDAO(metaclass=Singleton):
 
         #Liste des champions suivant l'ordre décroissant de leur KDA (kills+assists)/deaths sur toutes leurs parties jouées
         elif critere==critere_affichage[2]:
-            query= """SELECT championName , AVG((kills + assists) / deaths) AS kda
+            query= """SELECT championName , ROUND(AVG((kills + assists) / deaths), 2) AS kda
                     FROM participant 
                     GROUP BY championName 
                     ORDER BY kda DESC  
