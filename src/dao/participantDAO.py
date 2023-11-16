@@ -92,7 +92,7 @@ class ParticipantDAO(metaclass=Singleton):
         
         #Liste des champions suivant l'ordre décroissant de leur gold par minute par partie 
         elif critere==critere_affichage[3]:
-            query= """ SELECT championName, ROUND(goldEarned / gameDuration,2) AS golds_per_minute
+            query= """ SELECT championName, ROUND(goldEarned / gameDuration,3) AS golds_per_minute
                     FROM participant
                     GROUP BY championName 
                     ORDER BY golds_per_minute DESC
