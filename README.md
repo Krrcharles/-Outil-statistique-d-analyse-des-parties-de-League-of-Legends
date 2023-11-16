@@ -1,7 +1,7 @@
 ## Installation with docker (recommended)
 Get the image      
 ```bash
-docker pull krrcharles/po.gg
+docker pull krrcharles/po.gg:latest
 ```
 
 Run the image
