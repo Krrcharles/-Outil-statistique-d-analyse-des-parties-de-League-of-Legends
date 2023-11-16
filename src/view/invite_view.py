@@ -15,8 +15,6 @@ class InviteView(AbstractView):
             "Stats Champion",
             Separator("👑"),
             "Ranking Champion",
-            Separator("🎮"),
-            "Stats Player",
         ]
         self.infos_option = infos_option
         self.infos_option.append(Separator("🚪"))
@@ -47,10 +45,6 @@ class InviteView(AbstractView):
 
             return RankingChampion()
 
-        elif answer['choix'] == "Ranking Champion" :
-            from src.view.stats_player import StatsPlayer
-
-            return StatsPlayer()
 
         else : 
             from src.view.start_view import StartView
