@@ -1,5 +1,6 @@
 from src.business.player.player import Player
 import sqlite3
+import hashlib
 
 class PlayerDAO:
 
