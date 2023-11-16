@@ -10,6 +10,7 @@ class AdminService:
         # Retrieve summoner data
         summoner_url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key={api_key}'
         summoner_data = requests.get(summoner_url).json()
+        print(summoner_data)
         puuid = summoner_data['puuid']
         level = summoner_data['summonerLevel']
         summonerId = summoner_data['id']
@@ -42,6 +43,9 @@ class AdminService:
             level=level
         )
         
-        print(new_player)
+        matches_url = 'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/' + puuid +'/ids?type=ranked&start=0&count=20&api_key=' + api_key
+        matches_id = requests.get(matches_url).json()
+        print(new_player, matches_id)
+
 
 
