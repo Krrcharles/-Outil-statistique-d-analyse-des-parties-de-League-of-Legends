@@ -74,10 +74,10 @@ class ParticipantDAO(metaclass=Singleton):
 
         #Liste des champions suivant l'ordre décroissant de leur KDA (kills+assists)/deaths sur toutes leurs parties jouées
         elif critere==critere_affichage[2]:
-            query= """SELECT championName , ROUND((kills + assists) / deaths,1) AS kda
+            query= """SELECT championName , ROUND(AVG((kills + assists) / deaths), 2) AS kda
                     FROM participant 
                     GROUP BY championName 
-                    ORDER BY kda DESC 
+                    ORDER BY kda DESC  
                 """
             cursor.execute(query)       
             results = cursor.fetchall()   # Récupérer les résultats de la requête
@@ -92,7 +92,7 @@ class ParticipantDAO(metaclass=Singleton):
         
         #Liste des champions suivant l'ordre décroissant de leur gold par minute par partie 
         elif critere==critere_affichage[3]:
-            query= """ SELECT championName, ROUND(goldEarned / gameDuration,2) AS golds_per_minute
+            query= """ SELECT championName, ROUND(goldEarned / gameDuration,3) AS golds_per_minute
                     FROM participant
                     GROUP BY championName 
                     ORDER BY golds_per_minute DESC
