@@ -43,7 +43,8 @@ class Connexion_services():
         classe = UserDAO()
         inscrit = classe.rajouter_utilisateur(newlogin, newpassword)
         if inscrit is False:
-            return "Nom d'utilisateur déjà utilisé"
+            print("Nom d'utilisateur déjà utilisé")
+            return False
 
     def connexion(self, login, password):
         """
