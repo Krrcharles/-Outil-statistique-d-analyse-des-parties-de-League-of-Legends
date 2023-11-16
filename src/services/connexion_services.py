@@ -71,14 +71,22 @@ class Connexion_services():
 
         connexion = "failed"
         classe = UserDAO()
-        test_password = classe.hached(login, password)
-        utilisateur = classe.recuperer_mdp(login)
 
-        if test_password == utilisateur[0]:
-            connexion = True
-            if utilisateur[1] == 1:
-                connexion = 'admin' """C'est ici le prob, si admin se co avec un mauvais mdp ca renvoi admin et donc un valeur non nul donc ca connecte"""
-        return connexion
+        if classe.verifier_utilisateur(login) is True:
+            test_password = classe.hached(login, password)
+            utilisateur = classe.recuperer_mdp(login)
+
+            if test_password == utilisateur[0]:
+                connexion = True
+                if utilisateur[1] == 1:
+                    connexion = 'admin'
+                    return connexion
+                return connexion
+            print("Mauvais mot de passe.")
+            return connexion
+        else:
+            print("Le login n'est pas enregistré")
+            return connexion
 
 
 D = Connexion_services('data/database.db')
