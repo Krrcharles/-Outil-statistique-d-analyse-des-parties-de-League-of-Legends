@@ -68,7 +68,7 @@ class Connexion_services():
             print("Le mot de passe n'est pas une chaine de caractère")
             return False
 
-        connexion = False
+        connexion = "failed"
         classe = UserDAO()
         test_password = classe.hached(login, password)
         utilisateur = classe.recuperer_mdp(login)
@@ -80,7 +80,7 @@ class Connexion_services():
         return connexion
 
 
-# D = Connexion_services('data/database.db')
+D = Connexion_services('data/database.db')
 
 # print(D.inscription('teemo_ultime', 'lemdpkitue'))
 
@@ -88,6 +88,6 @@ class Connexion_services():
 
 # print(D.connexion('teemo', 'lemdpkitue'))
 
-# print(D.connexion('admin', 'admin'))
+print(D.connexion('admin', 'adminddd'))
 
 # print(D.connexion('teemo', '" or 1=1; -- '))
