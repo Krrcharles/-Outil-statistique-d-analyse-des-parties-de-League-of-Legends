@@ -14,8 +14,6 @@ class MemberView(InviteView):
         super().__init__()
         self.infos_option.append(Separator("🔍"))
         self.infos_option.append("Stats Account")
-        self.infos_option.append(Separator("🚪"))
-        self.infos_option.append("Disconnect")
         self.__question = [{
                 "type": "list",
                 "name": "choix",
