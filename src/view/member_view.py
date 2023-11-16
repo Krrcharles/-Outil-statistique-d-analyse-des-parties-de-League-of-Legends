@@ -14,6 +14,8 @@ class MemberView(InviteView):
         super().__init__()
         self.infos_option.append(Separator("🔍"))
         self.infos_option.append("Stats Account")
+        self.infos_option.append(Separator("🚪"))
+        self.infos_option.append("Disconnect")
         self.__question = [{
                 "type": "list",
                 "name": "choix",
@@ -21,7 +23,6 @@ class MemberView(InviteView):
                 "choices": self.infos_option,
             },
         ]
-
 
     def display_info(self):
         print(f"") # a def
@@ -39,16 +40,18 @@ class MemberView(InviteView):
 
         elif answer['choix'] == "Stats Player" :
             from src.view.stats_player import StatsPlayer
-            # question : est-ce qu'on rédirige vers la vue classique stats_player
-            #  ou on en créer une nouvelle afin de revenir sur la vue membre après ? 
-            # (de même pour admin)
             return StatsPlayer()
             
-        else :
+        elif answer['choix'] == "Stats Account" :
             instance = PlayerService()
             name_account = Session().user_identifiant
             stats_player = instance.afficher_stat_player(name_account)
             print(stats_player)
+
+        else : 
+            from src.view.start_view import StartView
+
+            return StartView()
 
 
         self.display_info()  # Appelez la fonction display_info pour afficher les informations
@@ -57,17 +60,24 @@ class MemberView(InviteView):
                 [
                     {
                         "type": "confirm",
-                        "name": "continue",
+                        "name": "no",
                         "message": "Another Information ?",
                         "default": True,
                     }
                 ]
             )
 
-        if not another_infos["continue"]:
+        if another_infos["no"]:
             from view.start_view import StartView
 
             return StartView()
+        
+        else : 
+            Session().user_identifiant
+
+            from src.view.member_view import MemberView
+
+            return MemberView()
 
 
 

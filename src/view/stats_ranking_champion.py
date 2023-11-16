@@ -16,11 +16,7 @@ class RankingChampion(AbstractView):
             Separator("🔪"),
             "Per_KDA",
             Separator("💰"),
-            "Per_gold",    
-            Separator("🌴"),
-            "Per_lane",   
-            Separator("💨"),
-            "Per_other_stat",    
+            "Per_gold",        
         ]
         self.__question = [
             {
@@ -54,6 +50,7 @@ class RankingChampion(AbstractView):
             ]
         )
 
+
         if choice["yes"]:
             from src.view.stats_ranking_champion import RankingChampion
 
@@ -61,5 +58,16 @@ class RankingChampion(AbstractView):
 
         else:
             from src.view.invite_view import InviteView
+            from src.view.member_view import MemberView
 
-            return InviteView()
+            if Session().user_identifiant == "unknown" :
+
+                return InviteView()
+            
+            else : 
+                Session().user_identifiant
+                
+                return MemberView()
+
+
+        

@@ -19,6 +19,8 @@ class InviteView(AbstractView):
             "Stats Player",
         ]
         self.infos_option = infos_option
+        self.infos_option.append(Separator("🚪"))
+        self.infos_option.append("Disconnect")
         self.__question = [
             {
                 "type": "list",
@@ -45,7 +47,13 @@ class InviteView(AbstractView):
 
             return RankingChampion()
 
-        else :
+        elif answer['choix'] == "Ranking Champion" :
             from src.view.stats_player import StatsPlayer
 
             return StatsPlayer()
+
+        else : 
+            from src.view.start_view import StartView
+
+            return StartView()
+
