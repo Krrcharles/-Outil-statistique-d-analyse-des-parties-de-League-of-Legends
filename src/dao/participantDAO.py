@@ -198,6 +198,24 @@ class ParticipantDAO(metaclass=Singleton):
         else:
             print("Champion not found.")
 
+    def getpartie(self, player):
+        """
+        """
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
+
+        query = """ SELECT championName, lane, win, kills, deaths, assists,
+                            totalDamageDone, ROUND(goldEarned/gameDuration, 2) AS gold_min
+                    FROM participant
+                    JOIN joueur ON joueur.puuid = participant.puuid
+                    WHERE joueur.summonerName = ?
+                    ORDER BY participant.gameDuration DESC
+                    LIMIT 10;"""
+
+        cursor.execute(query, (player,))
+        res = cursor.fetchone()
+
+        return res
 
 """#Exemple d'utilisation
 particip_dao = ParticipantDAO()
@@ -208,5 +226,6 @@ champion_name = "Sylas"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
 """
-
-
+particip_dao = ParticipantDAO()
+result = particip_dao.getpartie("VIVE Serendrip")
+print(result)
