@@ -57,17 +57,23 @@ class RankingChampion(AbstractView):
             return RankingChampion()
 
         else:
-            from src.view.invite_view import InviteView
-            from src.view.member_view import MemberView
+            if Session().user_identifiant != "unknown" :
+                if Session().not_admin == "no" :
+                    from src.view.admin_view import AdminView
+                    Session().user_identifiant
 
-            if Session().user_identifiant == "unknown" :
-
-                return InviteView()
-            
-            else : 
-                Session().user_identifiant
+                    return AdminView()
                 
-                return MemberView()
+                else :
+                    from src.view.member_view import MemberView
+                    Session().user_identifiant
+
+                    return MemberView()
+            
+            else :
+                from src.view.invite_view import InviteView
+                
+                return InviteView()
 
 
         

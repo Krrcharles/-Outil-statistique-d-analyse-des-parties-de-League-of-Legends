@@ -11,3 +11,4 @@ class Session(metaclass=Singleton):
         """
         self.user_identifiant: str = "unknown"
         self.user_mdp: str = "unknown"
+        self.not_admin: str = "yes"

@@ -28,6 +28,7 @@ class AdminView(MemberView):
 
     def make_choice(self):
         answer = prompt(self.__question)
+        Session().not_admin == "no"
 
         if answer['choix'] == "Stats Champion" :
             from src.view.stats_champion import StatsChampion

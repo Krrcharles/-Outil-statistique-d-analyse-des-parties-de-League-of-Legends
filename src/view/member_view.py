@@ -29,7 +29,9 @@ class MemberView(InviteView):
         answer = prompt(self.__question)
 
         if answer['choix'] == "Stats Champion" :
-            print("?")
+            from src.view.stats_champion import StatsChampion
+
+            return StatsChampion()
 
         elif answer['choix'] == "Ranking Champion" :
             from src.view.stats_ranking_champion import RankingChampion
