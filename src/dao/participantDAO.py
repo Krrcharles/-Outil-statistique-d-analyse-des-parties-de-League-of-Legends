@@ -3,7 +3,7 @@ from typing import List
 from src.utils.singleton import Singleton
 from tabulate import tabulate
 import pandas as pd
-import os
+from src.dao.playerDAO import PlayerDAO
 
 class ParticipantDAO(metaclass=Singleton):
     """
@@ -208,23 +208,32 @@ class ParticipantDAO(metaclass=Singleton):
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
+        puuid = PlayerDAO().find_player_by_name(player)._puuid
+        print(puuid)
         query = """ SELECT championName, lane, win, kills, deaths, assists,
-                            totalDamageDone, ROUND(goldEarned/gameDuration, 2) AS gold_min
+                            totalDamageDone, goldEarned/gameDuration
                     FROM participant
-                    JOIN joueur ON joueur.puuid = participant.puuid
-                    WHERE joueur.summonerName = ?
-                    ORDER BY participant.gameDuration DESC
-                    LIMIT 10;"""
+                    WHERE puuid = ?
+                    LIMIT 10;
+                    """
 
-        cursor.execute(query, (player,))
-        res = cursor.fetchone()
+        cursor.execute(query, (puuid,))
+        res = cursor.fetchall()
 
         return res
 
+<<<<<<< HEAD
 #Exemple d'utilisation
 """
 particip_dao = ParticipantDAO()
 result = particip_dao.find_best_champ("Per_game")
+=======
+
+"""
+#Exemple d'utilisation
+particip_dao = ParticipantDAO()
+result = particip_dao.find_best_champ("Per_other_stat")
+>>>>>>> 2aa212489064e1ced35ed7e55f36ac08537f62fd
 print(result)
 """
 """
@@ -235,6 +244,11 @@ result = participant_dao.stat_champ_by_name(champion_name)
 
 """
 particip_dao = ParticipantDAO()
+<<<<<<< HEAD
 result = particip_dao.getpartie("VIVE Serendrip")
 print(result)
 """
+=======
+result = particip_dao.getpartie("TwTv Raideru")
+print(result)
+>>>>>>> 2aa212489064e1ced35ed7e55f36ac08537f62fd
