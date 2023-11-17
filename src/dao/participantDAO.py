@@ -100,7 +100,7 @@ class ParticipantDAO(metaclass=Singleton):
 
         #Liste des champions suivant l'ordre décroissant de leur gold par minute par partie 
         elif critere==critere_affichage[3]:
-            query= """ SELECT championName, ROUND(goldEarned / gameDuration,3) AS golds_per_minute
+            query= """ SELECT championName, ROUND(AVG(goldEarned / gameDuration),2) AS golds_per_minute
                     FROM participant
                     GROUP BY championName 
                     ORDER BY golds_per_minute DESC
@@ -222,18 +222,10 @@ class ParticipantDAO(metaclass=Singleton):
 
         return res
 
-<<<<<<< HEAD
 #Exemple d'utilisation
 """
 particip_dao = ParticipantDAO()
-result = particip_dao.find_best_champ("Per_game")
-=======
-
-"""
-#Exemple d'utilisation
-particip_dao = ParticipantDAO()
-result = particip_dao.find_best_champ("Per_other_stat")
->>>>>>> 2aa212489064e1ced35ed7e55f36ac08537f62fd
+result = particip_dao.find_best_champ("Per_gold")
 print(result)
 """
 """
@@ -244,11 +236,6 @@ result = participant_dao.stat_champ_by_name(champion_name)
 
 """
 particip_dao = ParticipantDAO()
-<<<<<<< HEAD
 result = particip_dao.getpartie("VIVE Serendrip")
 print(result)
 """
-=======
-result = particip_dao.getpartie("TwTv Raideru")
-print(result)
->>>>>>> 2aa212489064e1ced35ed7e55f36ac08537f62fd

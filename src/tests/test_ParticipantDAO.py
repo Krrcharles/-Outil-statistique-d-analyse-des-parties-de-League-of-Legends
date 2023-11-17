@@ -6,6 +6,15 @@ from src.dao.participantDAO import ParticipantDAO
 
 class testParticipantDAO ():
     
+    @classmethod
+    def setUpClass(cls):
+        # Initialisez la base de données avec des données de test si nécessaire
+        # Cela pourrait être utilisé pour ajouter des données temporaires pour les tests
+        # Par exemple, en utilisant un fichier de script SQL de test.
+        cls.dao = ParticipantDAO(db_file=':memory:')
+        #cls.dao.insert_temporary_champion("ChampionTest1", win=10, total_parties=20)
+        #cls.dao.insert_temporary_champion("ChampionTest2", win=15, total_parties=25)
+
     def setUp(self):
 
         pass
@@ -13,10 +22,47 @@ class testParticipantDAO ():
 
     ###Tests pour find_best_champ: Appel à la méthode avec critère valide (Per_game, Per_lane,...)
 
-    #def test_find_best_champ(self):
+    def test_find_best_champ_per_game(self):
 
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.dao.find_best_champ("Per_game")
+        result = mock_stdout.getvalue().strip()
 
+    
+    def test_find_best_champ_per_winrate(self):
 
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.dao.find_best_champ("Per_winrate")
+        result = mock_stdout.getvalue().strip()
+
+    
+    def test_find_best_champ_per_KDA(self):
+
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.dao.find_best_champ("Per_KDA")
+        result = mock_stdout.getvalue().strip()
+
+    
+    def test_find_best_champ_per_gold(self):
+
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.dao.find_best_champ("Per_gold")
+        result = mock_stdout.getvalue().strip()
+
+    
+    def test_find_best_champ_per_lane(self):
+
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.dao.find_best_champ("Per_lane")
+        result = mock_stdout.getvalue().strip()
+    
+
+    def test_find_best_champ_per_other_stat(self):
+
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.dao.find_best_champ("Per_other_stat")
+        result = mock_stdout.getvalue().strip()
+  
 
     ###Test pour stat_champ_name: S'assurer que le champion entré existe vraiment ou que le nom du champion est valide
     def test_champion_exists(self):
