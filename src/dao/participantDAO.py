@@ -209,7 +209,6 @@ class ParticipantDAO(metaclass=Singleton):
                     FROM participant
                     JOIN joueur ON joueur.puuid = participant.puuid
                     WHERE joueur.summonerName = ?
-                    ORDER BY participant.gameDuration DESC
                     LIMIT 10;"""
 
         cursor.execute(query, (player,))
@@ -220,12 +219,15 @@ class ParticipantDAO(metaclass=Singleton):
 """#Exemple d'utilisation
 particip_dao = ParticipantDAO()
 result = particip_dao.find_best_champ("Per_other_stat")
-print(result)"""
+print(result)
+"""
 """
 champion_name = "Sylas"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
 """
+"""
 particip_dao = ParticipantDAO()
-result = particip_dao.getpartie("VIVE Serendrip")
+result = particip_dao.getpartie("Dealersz")
 print(result)
+"""
