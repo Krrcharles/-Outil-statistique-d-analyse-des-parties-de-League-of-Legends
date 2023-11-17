@@ -71,5 +71,4 @@ class PlayerService():
         affichage_bot = "|" + affichage_bot + " " * (max_lenght - len(affichage_bot) - 6) + "|"
 
         affichage_finale = f"{separateur}\n{affichage_top}\n{affichage_bot}\n{separateur}"
-        print(affichage_finale)
-        return False
+        return(affichage_finale)
