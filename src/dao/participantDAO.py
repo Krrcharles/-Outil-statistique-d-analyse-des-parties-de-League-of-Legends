@@ -228,11 +228,11 @@ particip_dao = ParticipantDAO()
 result = particip_dao.find_best_champ("Per_gold")
 print(result)
 """
-"""
-champion_name = "Sylo"
+
+champion_name = "Sylas"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
-"""
+
 
 """
 particip_dao = ParticipantDAO()
