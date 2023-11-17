@@ -5,11 +5,11 @@
 
 ## Présentation
 
-"League of Legends (LOL) is a popular video game in the Multiplayer Online Battle Arena (MOBA) genre, developed by Riot Games. With over 100 million active players in 2022, LOL's popularity continues to soar. To keep up with this interest, Riot consistently innovates by introducing new champions and items, as well as balancing the game through regular updates. These developments make quick and efficient analysis tools particularly valuable for players, aiding them in their strategic choices.
+League of Legends (LOL) is a popular video game in the Multiplayer Online Battle Arena (MOBA) genre, developed by Riot Games. With over 100 million active players in 2022, LOL's popularity continues to soar. To keep up with this interest, Riot consistently innovates by introducing new champions and items, as well as balancing the game through regular updates. These developments make quick and efficient analysis tools particularly valuable for players, aiding them in their strategic choices.
 
 Our project aims to create a solution that will provide players with essential and immediate analyses. We plan to utilize a comprehensive historical dataset of game matches for these analyses. The solution is designed with a continuous improvement approach, emphasizing well-documented, object-oriented programming.
 
-Riot Games offers an accessible API that allows the use of their data for such initiatives. Although an introduction to the workings of the LOL API (https://developer.riotgames.com/) will be provided, we will also have a set of pre-collected data available to jumpstart the project."
+Riot Games offers an accessible API that allows the use of their data for such initiatives (https://developer.riotgames.com/)
 
 
 ## Installation with docker (recommended)
