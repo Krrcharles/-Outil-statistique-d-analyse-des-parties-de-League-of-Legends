@@ -47,9 +47,13 @@ class PlayerService():
             affichage_finale = ""
 
             for partie in liste_parties:
-                kda = (float(partie[3]) + float(partie[5])) / float(partie[4])
+                kda = round((float(partie[3]) + float(partie[5])) / float(partie[4]), 2)
+                if partie[2] == 1:
+                    win = "Victoire"
+                else:
+                    win = "Défaite"
 
-                affichage_top = f"{partie[0]} - {partie[1]} - {partie[2]}"
+                affichage_top = f"{partie[0]} - {partie[1]} - {win}"
                 affichage_mid = f"{partie[3]}/{partie[4]}/{partie[5]} ({kda} KDA) - {partie[6]} dégats"
                 affichage_bot = f"{partie[7]} gold par minutes"
 

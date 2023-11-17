@@ -3,7 +3,7 @@ from typing import List
 from src.utils.singleton import Singleton
 from tabulate import tabulate
 import pandas as pd
-import os
+from src.dao.playerDAO import PlayerDAO
 
 class ParticipantDAO(metaclass=Singleton):
     """
@@ -204,19 +204,23 @@ class ParticipantDAO(metaclass=Singleton):
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
+        puuid = PlayerDAO().find_player_by_name(player)._puuid
+        print(puuid)
         query = """ SELECT championName, lane, win, kills, deaths, assists,
-                            totalDamageDone, ROUND(goldEarned/gameDuration, 2) AS gold_min
+                            totalDamageDone, goldEarned/gameDuration
                     FROM participant
-                    JOIN joueur ON joueur.puuid = participant.puuid
-                    WHERE joueur.summonerName = ?
-                    LIMIT 10;"""
+                    WHERE puuid = ?
+                    LIMIT 10;
+                    """
 
-        cursor.execute(query, (player,))
-        res = cursor.fetchone()
+        cursor.execute(query, (puuid,))
+        res = cursor.fetchall()
 
         return res
 
-"""#Exemple d'utilisation
+
+"""
+#Exemple d'utilisation
 particip_dao = ParticipantDAO()
 result = particip_dao.find_best_champ("Per_other_stat")
 print(result)
@@ -226,8 +230,7 @@ champion_name = "Sylas"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
 """
-"""
+
 particip_dao = ParticipantDAO()
-result = particip_dao.getpartie("Dealersz")
+result = particip_dao.getpartie("TwTv Raideru")
 print(result)
-"""
