@@ -1,4 +1,3 @@
-from src.business.player.player import Player
 from src.dao.playerDAO import PlayerDAO
 from src.dao.participantDAO import ParticipantDAO
 
@@ -105,5 +104,5 @@ class PlayerService():
         return False
 
 
-P = PlayerService()
-print(P.afficher_parties("Iuger"))
+# P = PlayerService()
+# print(P.afficher_parties("Iuger"))
