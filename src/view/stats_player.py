@@ -42,14 +42,14 @@ class StatsPlayer(AbstractView):
             instance = PlayerService()
             player = Player(name_player)
 
-            print (instance.afficher_parties(player))
+            print(instance.afficher_parties(player))
         
         else :
             # problème : comment créer une instance de Player avec les données d'un player de la base
             name_player = answer['Name Player']
             instance = PlayerService()
 
-            print (instance.afficher_stat_player(name_player))
+            print(instance.afficher_stat_player(name_player))
 
         choice = prompt(
             [
@@ -63,14 +63,28 @@ class StatsPlayer(AbstractView):
         )
 
         if choice["yes"]:
-            from src.view.invite_view import InviteView
+            from src.view.stats_player import StatsPlayer
 
-            return InviteView()
+            return StatsPlayer()
 
         else:
-            from src.view.invite_view import InviteView
+            if Session().user_identifiant != "unknown" :
+                if Session().not_admin == "no" :
+                    from src.view.admin_view import AdminView
+                    Session().user_identifiant
 
-            return InviteView()
+                    return AdminView()
+                
+                else :
+                    from src.view.member_view import MemberView
+                    Session().user_identifiant
+
+                    return MemberView()
+            
+            else :
+                from src.view.invite_view import InviteView
+                
+                return InviteView()
 
 
 

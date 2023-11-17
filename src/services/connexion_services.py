@@ -97,6 +97,6 @@ D = Connexion_services('data/database.db')
 
 # print(D.connexion('teemo', 'lemdpkitue'))
 
-print(D.connexion('admin', 'adminddd'))
+"""print(D.connexion('admin', 'adminddd'))"""
 
 # print(D.connexion('teemo', '" or 1=1; -- '))

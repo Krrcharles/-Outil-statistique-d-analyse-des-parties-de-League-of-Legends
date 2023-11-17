@@ -45,7 +45,7 @@ class ConnexionView(AbstractView):
             from src.view.admin_view import AdminView
             Session().user_identifiant = answers["identifiant"]
             Session().user_mdp = answers["password"]
-
+            Session().not_admin = "no"
             return AdminView()
 
         else : 
