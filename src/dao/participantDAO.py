@@ -156,11 +156,16 @@ particip_dao = ParticipantDAO()
 result = particip_dao.find_best_champ("Per_KDA")
 print(result)
 """
-"""
-champion_name = "Sylo"
+
+champion_name = "Sylas"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
+<<<<<<< HEAD
+
+
+=======
 """
+>>>>>>> 08b1ea57cfe64ffb1b9e551e82c1cfc402d538b8
 """
 particip_dao = ParticipantDAO()
 result = particip_dao.getpartie("VIVE Serendrip")
