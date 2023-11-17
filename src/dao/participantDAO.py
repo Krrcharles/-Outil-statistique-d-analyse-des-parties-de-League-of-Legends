@@ -222,15 +222,17 @@ class ParticipantDAO(metaclass=Singleton):
         return res
 
 #Exemple d'utilisation
+"""
 particip_dao = ParticipantDAO()
 result = particip_dao.find_best_champ("Per_game")
 print(result)
-
 """
-champion_name = "Sylas"
+"""
+champion_name = "Sylo"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
 """
+
 """
 particip_dao = ParticipantDAO()
 result = particip_dao.getpartie("VIVE Serendrip")
