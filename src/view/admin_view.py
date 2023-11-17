@@ -11,7 +11,7 @@ from src.view.session import Session
 class AdminView(MemberView):
     def __init__(self):
         super().__init__()
-        self.infos_option.append(Separator("🛠️"))
+        self.infos_option.append(Separator("⚙️"))
         self.infos_option.append("Modification") 
         self.__question = [
             {
@@ -40,6 +40,16 @@ class AdminView(MemberView):
 
             return RankingChampion()
 
+        elif answer['choix'] == "Stats Player" :
+            from src.view.stats_player import StatsPlayer
+            return StatsPlayer()
+            
+        elif answer['choix'] == "Stats Account" :
+            instance = PlayerService()
+            name_account = Session().user_identifiant
+            stats_player = instance.afficher_stat_player(name_account)
+            print(stats_player)
+
         elif answer['choix'] == "Modification" :
             from src.services.admin_service import AdminService
             new_player_name = input("Rentrez un nom d'invocateur : ")
@@ -48,9 +58,9 @@ class AdminView(MemberView):
             return AdminView()
 
         else :
-            from src.view.modification import Modification
+            from src.view.start_view import StartView
 
-            return Modification()
+            return StartView()
 
 
        
