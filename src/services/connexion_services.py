@@ -89,7 +89,7 @@ class Connexion_services():
             return connexion
 
 
-D = Connexion_services('data/database.db')
+#D = Connexion_services('data/database.db')
 
 # print(D.inscription('teemo_ultime', 'lemdpkitue'))
 

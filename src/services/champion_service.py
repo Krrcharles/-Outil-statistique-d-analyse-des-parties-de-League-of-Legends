@@ -25,9 +25,8 @@ class ChampionService(metaclass=Singleton):
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
             for i in range(0, 10):
-                champion_info = classement[i].split(', ')
-                champion_nom = champion_info[0].split(': ')[1]
-                champion_critere = champion_info[1].split(': ')[1]
+                champion_nom = classement[i][0]
+                champion_critere = classement[i][1]
 
                 espaces_debut = (len(affichage) - len(f"| {champion_nom} : {champion_critere} parties jouées")) // 2
                 espaces_fin = len(affichage) - len(f"| {champion_nom} : {champion_critere} parties jouées") - espaces_debut
@@ -44,9 +43,8 @@ class ChampionService(metaclass=Singleton):
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
             for i in range(0, 10):
-                champion_info = classement[i].split(', ')
-                champion_nom = champion_info[0].split(': ')[1]
-                champion_critere = champion_info[3].split(': ')[1]
+                champion_nom = classement[i][0]
+                champion_critere = classement[i][3]
 
                 espaces_debut = (len(affichage) - len(f"| {champion_nom} : {champion_critere}% de parties gagnés")) // 2
                 espaces_fin = len(affichage) - len(f"| {champion_nom} : {champion_critere}% de parties gagnés") - espaces_debut
@@ -62,9 +60,8 @@ class ChampionService(metaclass=Singleton):
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
             for i in range(0, 10):
-                champion_info = classement[i].split(', ')
-                champion_nom = champion_info[0].split(': ')[1]
-                champion_critere = champion_info[1].split(': ')[1]
+                champion_nom = classement[i][0]
+                champion_critere = classement[i][1]
 
                 espaces_debut = (len(affichage) - len(f"| {champion_nom} : {champion_critere} de KDA")) // 2
                 espaces_fin = len(affichage) - len(f"| {champion_nom} : {champion_critere} de KDA") - espaces_debut
@@ -80,9 +77,8 @@ class ChampionService(metaclass=Singleton):
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
             for i in range(0, 10):
-                champion_info = classement[i].split(', ')
-                champion_nom = champion_info[0].split(': ')[1]
-                champion_critere = champion_info[1].split(': ')[1]
+                champion_nom = classement[i][0]
+                champion_critere = classement[i][1]
 
                 espaces_debut = (len(affichage) - len(f"| {champion_nom} : {champion_critere} golds par minute")) // 2
                 espaces_fin = len(affichage) - len(f"| {champion_nom} : {champion_critere} golds par minute") - espaces_debut
