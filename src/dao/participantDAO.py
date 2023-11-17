@@ -230,7 +230,8 @@ champion_name = "Sylas"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
 """
-
+"""
 particip_dao = ParticipantDAO()
 result = particip_dao.getpartie("TwTv Raideru")
 print(result)
+"""
