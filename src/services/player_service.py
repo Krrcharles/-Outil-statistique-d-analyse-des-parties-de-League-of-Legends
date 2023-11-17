@@ -103,6 +103,3 @@ class PlayerService():
         print(affichage_finale)
         return False
 
-
-# P = PlayerService()
-# print(P.afficher_parties("Iuger"))

@@ -97,8 +97,30 @@ class ChampionService(metaclass=Singleton):
         print(affichage_finale)
         return False
 
+    def stat_champion(self, champ):
+        """
+        """
+        if not isinstance(champ, str):
+            print("Le champion n'est pas une chaine de caractère")
+            return False
+
+        champion = ParticipantDAO().stat_champ_by_name(champ)
+
+        if champion is None:
+            print("Le champion n'éxiste pas")
+            return False
+
+        affichage = f"| {champion[0]} {round(champion[2],2)}% WIN - {champion[3]} KDA - {champion[4]} Golds/min |"
+
+        separateur = "+" + "-" * (len(affichage) - 2) + "+"
+        affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
+
+        print(affichage_finale)
+        return False
+
 
 #ChampionService().classement_champion("Per_game")
 #ChampionService().classement_champion("Per_winrate")
 #ChampionService().classement_champion("Per_KDA")
 #ChampionService().classement_champion("Per_gold")
+#ChampionService().stat_champion("Velkoz")

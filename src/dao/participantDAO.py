@@ -174,33 +174,17 @@ class ParticipantDAO(metaclass=Singleton):
         query = """SELECT 
                         championName AS name,
                         COUNT(*) AS total_games,
-                        ROUND((SUM(win) * 1.0 / COUNT(*)),3)*100 AS winrate,
-                        ROUND((kills + assists) / deaths,2) AS kda,
-                        ROUND(goldEarned / gameDuration,2) AS golds_per_minute
+                        ROUND((SUM(win) * 1.0 / COUNT(*)), 3)*100 AS winrate,
+                        ROUND(AVG((kills + assists) / deaths),2) AS kda,
+                        ROUND(AVG(goldEarned / gameDuration),2) AS golds_per_minute
                     FROM participant
                     WHERE championName = ?
                     """
       
         cursor.execute(query, (name,))
-        
         res = cursor.fetchone()
 
-        if res:
-            data = [
-                [res[0]],
-                [res[1]],
-                [res[2]],
-                [res[3]],
-                [res[4]]
-            ]
-            df=pd.DataFrame(data)
-            participant=df.transpose()
-
-
-            print(tabulate(participant, headers=["Champion","Total_games","Winrate","KDA","Golds_per_minute"], tablefmt="pretty"))
-
-        else:
-            print("Champion not found.")
+        return res
 
     def getpartie(self, player):
         """
@@ -232,8 +216,12 @@ print(result)
 champion_name = "Sylas"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
+<<<<<<< HEAD
 
 
+=======
+"""
+>>>>>>> 08b1ea57cfe64ffb1b9e551e82c1cfc402d538b8
 """
 particip_dao = ParticipantDAO()
 result = particip_dao.getpartie("VIVE Serendrip")
