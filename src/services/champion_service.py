@@ -105,6 +105,11 @@ class ChampionService(metaclass=Singleton):
             return False
 
         champion = ParticipantDAO().stat_champ_by_name(champ)
+
+        if champion is None:
+            print("Le champion n'éxiste pas")
+            return False
+
         affichage = f"| {champion[0]} {round(champion[2],2)}% WIN - {champion[3]} KDA - {champion[4]} Golds/min |"
 
         separateur = "+" + "-" * (len(affichage) - 2) + "+"
