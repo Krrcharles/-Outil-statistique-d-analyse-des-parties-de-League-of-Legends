@@ -51,7 +51,8 @@ class ParticipantDAO(metaclass=Singleton):
 
         #List of champions ranked by winrate (number of games won/number of games played)
         elif critere==critere_affichage[1]:
-            query=  """SELECT championName, COUNT(*) AS total_parties, SUM(win) AS parties_gagnees, ROUND((SUM(win) * 1.0 / COUNT(*)),2)*100 AS winrate
+            query=  """SELECT championName, COUNT(*) AS total_parties, 
+                              SUM(win) AS parties_gagnees, ROUND((SUM(win) * 1.0 / COUNT(*)),2)*100 AS winrate
                     FROM participant                                 
                     GROUP BY championName                             
                     ORDER BY winrate DESC                           
