@@ -1,9 +1,8 @@
 import sqlite3
 from typing import List
 from src.utils.singleton import Singleton
-from tabulate import tabulate
-import pandas as pd
 from src.dao.playerDAO import PlayerDAO
+
 
 class ParticipantDAO(metaclass=Singleton):
     """
@@ -16,45 +15,41 @@ class ParticipantDAO(metaclass=Singleton):
         Initialize the class with the name of the SQLite database file.
 
         Parameters:
-        db_name (str): Name of the SQLite database file.
+        db_file (str): Name of the SQLite database file.
         """
         self.db_file = db_file
 
 
     def find_best_champ(self, critere) -> List[str]:
         """
-        Get all champions by winrate return a list
-        
-        :return: A list of winrate for champions
+        Get all champions by a specified criteria and return a list
+
+        :return: A list of statistics for champions
         :rtype: List of str
         """
-        critere_affichage=["Per_game", "Per_winrate", "Per_KDA",  "Per_gold", "Per_lane", "Per_other_stat"]
+
+        """
+        Defining the criteria
+        Per_game: Returns a list of total games played for champions
+        Per_winrate: Returns a list of winrate for champions
+        ... 
+        """
+        critere_affichage = ["Per_game", "Per_winrate", "Per_KDA",  "Per_gold", "Per_lane", "Per_other_stat"]
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
         if critere==critere_affichage[0]:   
-            #Liste des champions classés par popularité (nombre total de games joués)
+            #List of champions ranked by popularity (total number of games played)
             query=  """ SELECT championName as Champion, COUNT(*) AS total_parties       
                         FROM participant                  
                         GROUP BY championName              
                         ORDER BY total_parties DESC   
                         """ 
             cursor.execute(query)
-            results = cursor.fetchall()   # Récupérer les résultats de la requête
+            results = cursor.fetchall()   # Retrieving query results
+            return results
 
-            df=pd.DataFrame(columns=["Champion", "Total Parties"])
-            for res in results:
-                data = [
-                    res[0],
-                    res[1]
-                ]
-                new_row = pd.Series(data, index=df.columns)
-                df = pd.concat([df, new_row.to_frame().transpose()], ignore_index=True)
-
-            print(tabulate(df, headers="keys", tablefmt="pretty"))
-            
-
-        #Liste des champions classés par winrate (nombre de parties gagnées/nombre de parties jouées)
+        #List of champions ranked by winrate (number of games won/number of games played)
         elif critere==critere_affichage[1]:
             query=  """SELECT championName, COUNT(*) AS total_parties, SUM(win) AS parties_gagnees, ROUND((SUM(win) * 1.0 / COUNT(*)),2)*100 AS winrate
                     FROM participant                                 
@@ -62,22 +57,11 @@ class ParticipantDAO(metaclass=Singleton):
                     ORDER BY winrate DESC                           
                     """
             cursor.execute(query)
-            results = cursor.fetchall()   # Récupérer les résultats de la requête
+            results = cursor.fetchall()   # Retrieving query results
 
-            df=pd.DataFrame(columns=["Champion", "Total Parties", "Parties gagnées", "Winrate"])
-            for res in results:
-                data = [
-                    res[0],
-                    res[1],
-                    res[2],
-                    res[3]
-                ]
-                new_row = pd.Series(data, index=df.columns)
-                df = pd.concat([df, new_row.to_frame().transpose()], ignore_index=True)
+            return results
 
-            print(tabulate(df, headers="keys", tablefmt="pretty"))
-            
-        #Liste des champions suivant l'ordre décroissant de leur KDA (kills+assists)/deaths sur toutes leurs parties jouées
+        #Champions list in descending order of KDA (kills+assists)/deaths on all their games played
         elif critere==critere_affichage[2]:
             query= """SELECT championName , ROUND(AVG((kills + assists) / deaths), 2) AS kda
                     FROM participant 
@@ -85,20 +69,11 @@ class ParticipantDAO(metaclass=Singleton):
                     ORDER BY kda DESC  
                 """
             cursor.execute(query)       
-            results = cursor.fetchall()   # Récupérer les résultats de la requête
+            results = cursor.fetchall()   # Retrieving query results
 
-            df=pd.DataFrame(columns=["Champion", "KDA"])
-            for res in results:
-                data = [
-                    res[0],
-                    res[1]
-                ]
-                new_row = pd.Series(data, index=df.columns)
-                df = pd.concat([df, new_row.to_frame().transpose()], ignore_index=True)
+            return results
 
-            print(tabulate(df, headers="keys", tablefmt="pretty"))
-
-        #Liste des champions suivant l'ordre décroissant de leur gold par minute par partie 
+        #List of champions in descending order of gold per minute per game
         elif critere==critere_affichage[3]:
             query= """ SELECT championName, ROUND(AVG(goldEarned / gameDuration),2) AS golds_per_minute
                     FROM participant
@@ -106,20 +81,11 @@ class ParticipantDAO(metaclass=Singleton):
                     ORDER BY golds_per_minute DESC
                 """
             cursor.execute(query)       
-            results = cursor.fetchall()   # Récupérer les résultats de la requête
+            results = cursor.fetchall()   # Retrieving query results
             
-            df=pd.DataFrame(columns=["Champion", "Gold per minutes"])
-            for res in results:
-                data = [
-                    res[0],
-                    res[1]
-                ]
-                new_row = pd.Series(data, index=df.columns)
-                df = pd.concat([df, new_row.to_frame().transpose()], ignore_index=True)
+            return results
 
-            print(tabulate(df, headers="keys", tablefmt="pretty"))
-
-        #Liste des lane suivant l'ordre décroissant du winrate par lane
+        #List of lanes in descending order of total games played per lane
         elif critere==critere_affichage[4]:
             query= """ SELECT lane, COUNT(*) AS total_parties, ROUND((SUM(win) * 1.0 / COUNT(*)),2)*100 AS winrate
                     FROM participant                                    
@@ -127,22 +93,11 @@ class ParticipantDAO(metaclass=Singleton):
                     ORDER BY total_parties DESC                        
                     """
             cursor.execute(query)        
-            results = cursor.fetchall()   # Récupérer les résultats de la requête
+            results = cursor.fetchall()   # Retrieving query results
 
-            df=pd.DataFrame(columns=["Lane", "Total Parties", "Winrate"])
-            for res in results:
-                data = [
-                    res[0],
-                    res[1],
-                    res[2]
-                ]
-                new_row = pd.Series(data, index=df.columns)
-                df = pd.concat([df, new_row.to_frame().transpose()], ignore_index=True)
-
-            print(tabulate(df, headers="keys", tablefmt="pretty"))
-
+            return results
         
-        #Liste des champions et leur gold, totalminionkilled et l'ordre décroissant de leur total_games joués
+        #Champions list and their gold, totalminionkilled and descending order of total_games played
         elif critere==critere_affichage[5]:
             query=  """ SELECT championName, COUNT(*) AS total_parties, SUM(goldEarned) AS total_gold, SUM(totalMinionsKilled) AS total_minions_killed
                         FROM participant                                    
@@ -150,23 +105,15 @@ class ParticipantDAO(metaclass=Singleton):
                         ORDER BY total_parties DESC                      
                     """
             cursor.execute(query)       
-            results = cursor.fetchall()   # Récupérer les résultats de la requête
+            results = cursor.fetchall()   # Retrieving query results
 
-            df=pd.DataFrame(columns=["Champion", "Total_games", "Total_gold", "Total_minions_killed"])
-            for res in results:
-                data = [
-                    res[0],
-                    res[1],
-                    res[2],
-                    res[3]
-                ]
-                new_row = pd.Series(data, index=df.columns)
-                df = pd.concat([df, new_row.to_frame().transpose()], ignore_index=True)
-
-            print(tabulate(df, headers="keys", tablefmt="pretty"))
+            return results
 
     
-
+    """
+    Requesting the statistics of a champion given his name
+    Statistics that are returned are: the champion's name, his total games played, winrate, kda and golds per minute
+    """
     def stat_champ_by_name(self, name:str):
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
@@ -182,9 +129,17 @@ class ParticipantDAO(metaclass=Singleton):
                     """
       
         cursor.execute(query, (name,))
-        res = cursor.fetchone()
+        res = cursor.fetchone()           # Retrieving query results
 
         return res
+
+
+    """
+    The "getpartie" method displays all the games played by a player with statistics for each game, 
+    including the champion's name, lane, game result (won or lost), kills, deaths, assists, 
+    totalDamageDone and goldEarned/gameDuration.
+
+    """
 
     def getpartie(self, player):
         """
@@ -202,16 +157,19 @@ class ParticipantDAO(metaclass=Singleton):
                     """
 
         cursor.execute(query, (puuid,))
-        res = cursor.fetchall()
+        res = cursor.fetchall()           # Retrieving query results
+        parties = []
+        for participant in res:
+            parties.append(participant)
 
         return res
 
 #Exemple d'utilisation
-
+"""
 particip_dao = ParticipantDAO()
-result = particip_dao.find_best_champ("Per_gold")
+result = particip_dao.find_best_champ("Per_KDA")
 print(result)
-
+"""
 """
 
 champion_name = "Sylas"
@@ -225,3 +183,4 @@ particip_dao = ParticipantDAO()
 result = particip_dao.getpartie("VIVE Serendrip")
 print(result)
 """
+
