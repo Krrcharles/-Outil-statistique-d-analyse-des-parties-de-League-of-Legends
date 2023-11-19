@@ -133,9 +133,13 @@ class ParticipantDAO(metaclass=Singleton):
         cursor = conn.cursor()
 
         puuid = PlayerDAO().find_player_by_name(player)._puuid
-        print(puuid)
-        query = """ SELECT championName, lane, win, kills, deaths, assists,
-                            totalDamageDone, goldEarned/gameDuration
+        #query = """ SELECT championName, lane, win, kills, deaths, assists,
+                            #totalDamageDone, goldEarned/gameDuration
+                    #FROM participant
+                    #WHERE puuid = ?
+                    #LIMIT 10;
+                    #"""
+        query = """ SELECT *
                     FROM participant
                     WHERE puuid = ?
                     LIMIT 10;
@@ -145,10 +149,39 @@ class ParticipantDAO(metaclass=Singleton):
         res = cursor.fetchall()
         parties = []
         for participant in res:
-            parties.append()
-
-
-        return res
+            #parties.append(Participant(*participant))
+            print("début")
+            print(participant[1])
+            print(participant[0])
+            print(participant[3])
+            print(participant[4])
+            print(participant[5])
+            print(participant[7])
+            print(participant[8])
+            print(participant[6])
+            print(participant[9])
+            print(participant[10])
+            print(participant[11])
+            print(participant[12])
+            print(participant[13])
+            print(participant[2])
+            print("fin")
+            P = Participant(id_game=participant[1],
+                            puuid=participant[0],
+                            teamID=participant[3],
+                            totalDamageDealtToChampions=participant[4],
+                            win=participant[5],
+                            lane=participant[7],
+                            role=participant[8],
+                            totalMinionsKilled=participant[6],
+                            championName=participant[9],
+                            goldEarned=participant[10],
+                            death=participant[11],
+                            assists=participant[12],
+                            kills=participant[13],
+                            gameDuration=participant[2])
+            parties.append(P)
+        return parties
 
 #Exemple d'utilisation
 """
@@ -156,18 +189,12 @@ particip_dao = ParticipantDAO()
 result = particip_dao.find_best_champ("Per_KDA")
 print(result)
 """
-
+"""
 champion_name = "Sylas"
 participant_dao = ParticipantDAO()
 result = participant_dao.stat_champ_by_name(champion_name)
-<<<<<<< HEAD
-
-
-=======
 """
->>>>>>> 08b1ea57cfe64ffb1b9e551e82c1cfc402d538b8
-"""
+
 particip_dao = ParticipantDAO()
 result = particip_dao.getpartie("VIVE Serendrip")
-print(result)
-"""
+print(result[0]._death)
