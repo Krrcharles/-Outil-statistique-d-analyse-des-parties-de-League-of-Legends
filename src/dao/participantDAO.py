@@ -2,6 +2,7 @@ import sqlite3
 from typing import List
 from src.utils.singleton import Singleton
 from src.dao.playerDAO import PlayerDAO
+from src.business.participant.participant import Participant
 
 
 class ParticipantDAO(metaclass=Singleton):
@@ -149,12 +150,6 @@ class ParticipantDAO(metaclass=Singleton):
         cursor = conn.cursor()
 
         puuid = PlayerDAO().find_player_by_name(player)._puuid
-        #query = """ SELECT championName, lane, win, kills, deaths, assists,
-                            #totalDamageDone, goldEarned/gameDuration
-                    #FROM participant
-                    #WHERE puuid = ?
-                    #LIMIT 10;
-                    #"""
         query = """ SELECT *
                     FROM participant
                     WHERE puuid = ?
@@ -162,26 +157,10 @@ class ParticipantDAO(metaclass=Singleton):
                     """
 
         cursor.execute(query, (puuid,))
-        res = cursor.fetchall()           # Retrieving query results
+        res = cursor.fetchall()
         parties = []
+
         for participant in res:
-            #parties.append(Participant(*participant))
-            print("début")
-            print(participant[1])
-            print(participant[0])
-            print(participant[3])
-            print(participant[4])
-            print(participant[5])
-            print(participant[7])
-            print(participant[8])
-            print(participant[6])
-            print(participant[9])
-            print(participant[10])
-            print(participant[11])
-            print(participant[12])
-            print(participant[13])
-            print(participant[2])
-            print("fin")
             P = Participant(id_game=participant[1],
                             puuid=participant[0],
                             teamID=participant[3],

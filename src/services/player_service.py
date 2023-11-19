@@ -26,7 +26,7 @@ class PlayerService():
 
         for partie in liste_parties:
             kda = round((float(partie._kills[0]) + float(partie._assists[0])) / float(partie._death[0]), 2)
-            gold_min = round(partie._goldEarned[0] / partie._gameDuration)
+            gold_min = round(partie._goldEarned[0] / partie._gameDuration, 2)
             if partie._win[0] == 1:
                 win = "Victoire"
             else:
@@ -82,5 +82,3 @@ class PlayerService():
         affichage_finale = f"{separateur}\n{affichage_top}\n{affichage_bot}\n{separateur}"
         print(affichage_finale)
         return False
-
-PlayerService().afficher_parties("VIVE Serendrip")
