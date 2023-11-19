@@ -52,3 +52,9 @@ class Participant :
     ####################################
     #             Methods              #
     ####################################
+
+    def __str__(self):
+        """
+        Affichage d'un joueur
+        """
+        return f"ID: {self._id_game}, PUUID : {self._puuid}, \n win : {self._win}, totalDamageDealtToChampions :{self._totalDamageDealtToChampions}, lane : {self._lane}, \n totalMinionsKilled : {self._totaleMinionsKilled} "
