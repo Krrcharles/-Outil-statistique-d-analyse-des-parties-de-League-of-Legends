@@ -70,6 +70,8 @@ class PlayerService():
         winrate = round(P._win / (P._win + P._losses) * 100)
         if P._rank == "I":
             rank = "Challenger"
+        else:
+            rank = P._rank
 
         affichage_top = f"{P._name} - Level {P._level} - {rank}"
         affichage_bot = f"\t{P._win} Victoires / {P._losses} Défaite ({winrate}%)"

@@ -7,10 +7,11 @@ class AdminService:
         pass
 
     def add_player(self, name, api_key):
+        
+        api_key = "RGAPI-c2a57f81-82d1-410f-bc53-a4e9cbdf7b61"
         # Retrieve summoner data
         summoner_url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key={api_key}'
         summoner_data = requests.get(summoner_url).json()
-        print(summoner_data)
         puuid = summoner_data['puuid']
         level = summoner_data['summonerLevel']
         summonerId = summoner_data['id']
@@ -45,7 +46,11 @@ class AdminService:
         
         matches_url = 'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/' + puuid +'/ids?type=ranked&start=0&count=20&api_key=' + api_key
         matches_id = requests.get(matches_url).json()
+
+
         print(new_player, matches_id)
+
+        PlayerDAO().add_player(new_player, matches_id)
 
 
 

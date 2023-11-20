@@ -1,6 +1,6 @@
 from src.business.player.player import Player
 import sqlite3
-import hashlib
+import json
 
 class PlayerDAO:
 
@@ -46,14 +46,15 @@ class PlayerDAO:
         return player
 
 
-    def add_player (self, nom) :
+    def add_player (self, player: Player, matches_id: list) :
         conn = sqlite3.connect('data/database.db')
         cursor = conn.cursor()
-        #######C4EST DU COPIER COLLER POUR LE MOMEMNBT
-        ###Je me suis souvenu que yavais les game a recup aussi oskour mais ca va arriver
-        cursor.execute('INSERT INTO player (id, login, password, isadmin) VALUES (?,?,?,?)', (0, 'teemo', hashlib.pbkdf2_hmac('sha256', '1234'.encode('utf-8'), 'teemo'.encode('utf-8'), 100), 0))
-        conn.commit()
-        cursor.execute('INSERT INTO utilisateur (id, login, password, isadmin) VALUES (?,?,?,?)', (1, 'admin', hashlib.pbkdf2_hmac('sha256', 'admin'.encode('utf-8'), 'admin'.encode('utf-8'), 100), 1))
+        
+        if self.find_player_by_name(player._name):
+            cursor.execute('DELETE FROM joueur WHERE summonerName = ?', (player._name,))
+
+        cursor.execute('INSERT INTO joueur (summonerId, summonerName, rank, wins, losses, puuid, level, matches) VALUES (?,?,?,?,?,?,?,?)',
+                       (player._id, player._name, player._rank, player._win, player._losses, player._puuid, player._level, json.dumps(matches_id)))
         conn.commit()
         return False
     
