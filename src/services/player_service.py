@@ -23,7 +23,10 @@ class PlayerService():
         affichage_finale = ""
 
         for partie in liste_parties:
-            kda = round((float(partie._kills[0]) + float(partie._assists[0])) / float(partie._death[0]), 2)
+            if partie._death[0] == 0:
+                kda = "Perfect"
+            else:
+                kda = round((float(partie._kills[0]) + float(partie._assists[0])) / float(partie._death[0]), 2)
             gold_min = round(partie._goldEarned[0] / partie._gameDuration, 2)
             if partie._win[0] == 1:
                 win = "Victoire"
