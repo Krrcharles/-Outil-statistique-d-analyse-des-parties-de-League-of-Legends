@@ -102,7 +102,7 @@ class ChampionService(metaclass=Singleton):
 
         champion = ParticipantDAO().stat_champ_by_name(champ)
 
-        if champion is None:
+        if champion[0] is None:
             print("Le champion n'éxiste pas")
             return False
 
@@ -113,10 +113,3 @@ class ChampionService(metaclass=Singleton):
 
         print(affichage_finale)
         return False
-
-
-#ChampionService().classement_champion("Per_game")
-#ChampionService().classement_champion("Per_winrate")
-#ChampionService().classement_champion("Per_KDA")
-#ChampionService().classement_champion("Per_gold")
-#ChampionService().stat_champion("Velkoz")
