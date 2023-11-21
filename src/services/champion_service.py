@@ -14,8 +14,7 @@ class ChampionService(metaclass=Singleton):
             "Per_gold","Per_lane","Per_other_stat"
         """
         if not isinstance(critere, str):
-            print("Le critère n'est pas une chaine de caractère")
-            return False
+            return "Le critère n'est pas une chaine de caractère"
 
         if critere == "Per_game":
             classement = ParticipantDAO().find_best_champ(critere)
@@ -87,11 +86,9 @@ class ChampionService(metaclass=Singleton):
             affichage_finale = f"{affichage_finale}\n{separateur}"
 
         else:
-            print("Mauvais critère")
-            return False
+            return "Mauvais critère"
 
-        print(affichage_finale)
-        return False
+        return affichage_finale
 
     def stat_champion(self, champ):
         """
