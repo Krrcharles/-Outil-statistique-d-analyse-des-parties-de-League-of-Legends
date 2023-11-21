@@ -143,13 +143,17 @@ class ParticipantDAO(metaclass=Singleton):
 
     """
 
-    def getpartie(self, player):
+    def getpartie(self, name_player):
         """
         """
+        player = PlayerDAO().find_player_by_name(name_player)
+        if player is None:
+            return None
+        puuid = player._puuid
+
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
-        puuid = PlayerDAO().find_player_by_name(player)._puuid
         query = """ SELECT *
                     FROM participant
                     WHERE puuid = ?

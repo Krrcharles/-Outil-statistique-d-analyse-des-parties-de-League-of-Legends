@@ -13,14 +13,12 @@ class PlayerService():
             Le nom du joueur.
         """
         if not isinstance(player, str):
-            print("Le critère n'est pas une chaine de caractère")
-            return False
+            return "Le joueur n'est pas une chaine de caractère"
 
         liste_parties = ParticipantDAO().getpartie(player)
 
         if liste_parties is None:
-            print("Ce joueur n'a pas de partie dans la base de données")
-            return False
+            return "Ce joueur n'a pas de partie dans la base de données"
 
         affichage_finale = ""
 
@@ -45,8 +43,7 @@ class PlayerService():
 
             affichage_finale = f"{affichage_finale}\n{separateur}\n{affichage_top}\n{affichage_mid}\n{affichage_bot}\n{separateur}"
 
-        print(affichage_finale)
-        return False
+        return affichage_finale
 
     def afficher_stat_player(self, player):
         """
