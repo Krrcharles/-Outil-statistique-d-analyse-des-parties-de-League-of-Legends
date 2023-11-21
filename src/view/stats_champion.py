@@ -13,7 +13,7 @@ class StatsChampion(AbstractView):
         pass
     
     def make_choice(self): 
-        champ = input("Enter champion name")
+        champ = input("Enter champion name : ")
         ChampionService().stat_champion(champ)
 
         choice = prompt(
