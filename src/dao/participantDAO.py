@@ -201,7 +201,6 @@ class ParticipantDAO(metaclass=Singleton):
             participant._kills
         ]
 
-        print(participant_list)
         conn = sqlite3.connect('data/database.db')
         cursor = conn.cursor()
         cursor.execute('INSERT INTO participant VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', participant_list)

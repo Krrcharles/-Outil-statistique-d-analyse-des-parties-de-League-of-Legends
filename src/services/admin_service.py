@@ -68,7 +68,6 @@ class AdminService:
             participants = extract_participant_info(match_data)
 
             for participant in participants:
-                print(participant)
                 P = Participant(id_game=participant[1],
                 puuid=participant[0],
                 teamID=participant[3],
