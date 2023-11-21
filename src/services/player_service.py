@@ -58,14 +58,12 @@ class PlayerService():
             Le nom du joueur.
         """
         if not isinstance(player, str):
-            print("Le critère n'est pas une chaine de caractère")
-            return False
+            return "Le critère n'est pas une chaine de caractère"
 
         P = PlayerDAO().find_player_by_name(player)
 
         if P is None:
-            print("Le pseudo n'est pas dans la base de données.")
-            return False
+            return "Le pseudo n'est pas dans la base de données."
 
         winrate = round(P._win / (P._win + P._losses) * 100)
         if P._rank == "I":
@@ -80,5 +78,4 @@ class PlayerService():
         affichage_bot = "|" + affichage_bot + " " * (max_lenght - len(affichage_bot) - 6) + "|"
 
         affichage_finale = f"{separateur}\n{affichage_top}\n{affichage_bot}\n{separateur}"
-        print(affichage_finale)
-        return False
+        return affichage_finale

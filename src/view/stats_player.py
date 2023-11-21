@@ -40,9 +40,9 @@ class StatsPlayer(AbstractView):
         if answer['choix'] == "Games Infos" :
             name_player = answer['Name Player']
             instance = PlayerService()
-            player = Player(name_player)
+            #player = Player(name_player)
 
-            print(instance.afficher_parties(player))
+            print(instance.afficher_parties(name_player))
         
         else :
             # problème : comment créer une instance de Player avec les données d'un player de la base
