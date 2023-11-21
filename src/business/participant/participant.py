@@ -33,19 +33,19 @@ class Participant :
     #           Attributes             #
     ####################################
 
-        self._id_game = id_game,
-        self._puuid = puuid,
-        self._teamID = teamID,
-        self._totalDamageDealtToChampions = totalDamageDealtToChampions,
-        self._win = win,
-        self._lane = lane,
-        self._role = role,
-        self._totaleMinionsKilled = totalMinionsKilled,
-        self._championName = championName,
-        self._goldEarned = goldEarned,
-        self._death = death,
-        self._assists = assists,
-        self._kills = kills,
+        self._id_game = id_game
+        self._puuid = puuid
+        self._teamID = teamID
+        self._totalDamageDealtToChampions = totalDamageDealtToChampions
+        self._win = win
+        self._lane = lane
+        self._role = role
+        self._totaleMinionsKilled = totalMinionsKilled
+        self._championName = championName
+        self._goldEarned = goldEarned
+        self._death = death
+        self._assists = assists
+        self._kills = kills
         self._gameDuration = gameDuration
         
 

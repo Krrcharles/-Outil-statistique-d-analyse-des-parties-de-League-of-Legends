@@ -1,6 +1,12 @@
-import requests, json
+import requests
+import json
 from src.business.player.player import Player
+from src.business.participant.participant import Participant
 from src.dao.playerDAO import PlayerDAO
+from src.dao.participantDAO import ParticipantDAO
+import time
+from data.components import extract_participant_info
+
 
 class AdminService:
     def __init__(self):
@@ -14,7 +20,7 @@ class AdminService:
         if summoner_data.status_code != 200:
             return('Error occured, check your API key or API availabily')
         
-        summoner_data = summoner_data.json
+        summoner_data = summoner_data.json()
         puuid = summoner_data['puuid']
         level = summoner_data['summonerLevel']
         summonerId = summoner_data['id']
@@ -54,6 +60,34 @@ class AdminService:
         print(new_player, matches_id)
 
         PlayerDAO().add_player(new_player, matches_id)
+        time.sleep(1)
+
+        for matchId in matches_id[:10]:
+            match_url = "https://europe.api.riotgames.com/lol/match/v5/matches/" + matchId + '?api_key=' + api_key
+            match_data = requests.get(match_url).json()
+            participants = extract_participant_info(match_data)
+
+            for participant in participants:
+                print(participant)
+                P = Participant(id_game=participant[1],
+                puuid=participant[0],
+                teamID=participant[3],
+                totalDamageDealtToChampions=participant[4],
+                win=participant[5],
+                lane=participant[7],
+                role=participant[8],
+                totalMinionsKilled=participant[6],
+                championName=participant[9],
+                goldEarned=participant[10],
+                death=participant[11],
+                assists=participant[12],
+                kills=participant[13],
+                gameDuration=participant[2])
+
+                ParticipantDAO.add_participant(P)
+
+                
+
 
 
 
