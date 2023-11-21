@@ -30,6 +30,13 @@ class CreateAccountView(AbstractView):
         user_identifiant = answers["identifiant"]
         password = answers["password"]
         
+        if password == "" or user_identifiant == "":
+            print("Le pseudo et le mot de passe ne doivent pas être vide")
+
+            from src.view.create_account_view import CreateAccountView
+
+            return CreateAccountView()
+
         # Vérification que l'identifiant n'existe pas 
 
         instance = Connexion_services()
@@ -38,7 +45,7 @@ class CreateAccountView(AbstractView):
         if resultat == False :
             print(f"L'identifiant '{user_identifiant}' est déjà utilisé")
 
-            from view.create_account_view import CreateAccountView
+            from src.view.create_account_view import CreateAccountView
 
             return CreateAccountView()
 
