@@ -47,6 +47,9 @@ class MemberView(InviteView):
             name_account = Session().user_identifiant
             stats_player = instance.afficher_stat_player(name_account)
             print(stats_player)
+            
+            from src.view.member_view import MemberView
+            return MemberView()
 
         else : 
             from src.view.start_view import StartView
