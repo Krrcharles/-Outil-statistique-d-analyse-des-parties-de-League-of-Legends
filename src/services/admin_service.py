@@ -9,7 +9,12 @@ class AdminService:
     def add_player(self, name, api_key):
         # Retrieve summoner data
         summoner_url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key={api_key}'
-        summoner_data = requests.get(summoner_url).json()
+        summoner_data = requests.get(summoner_url)
+        
+        if summoner_data.status_code != 200:
+            return('Error occured, check your API key or API availabily')
+        
+        summoner_data = summoner_data.json
         puuid = summoner_data['puuid']
         level = summoner_data['summonerLevel']
         summonerId = summoner_data['id']
