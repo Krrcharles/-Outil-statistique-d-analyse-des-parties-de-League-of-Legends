@@ -41,13 +41,13 @@ class ChampionService(metaclass=Singleton):
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0, min(10,len(classement))):
+            for i in range(0, min(10, len(classement))):
                 champion_nom = classement[i][0]
                 champion_critere = classement[i][3]
 
-                espaces_debut = (len(affichage) - len(f"| {champion_nom} : {champion_critere}% de parties gagnés")) // 2
-                espaces_fin = len(affichage) - len(f"| {champion_nom} : {champion_critere}% de parties gagnés") - espaces_debut
-                nouvelle_ligne = f"|{' ' * espaces_debut}{champion_nom} : {champion_critere}% de parties gagnés{' ' * espaces_fin}|"
+                espaces_debut = (len(affichage) - len(f"| {champion_nom} : {champion_critere}% de parties gagnées")) // 2
+                espaces_fin = len(affichage) - len(f"| {champion_nom} : {champion_critere}% de parties gagnées") - espaces_debut
+                nouvelle_ligne = f"|{' ' * espaces_debut}{champion_nom} : {champion_critere}% de parties gagnées{' ' * espaces_fin}|"
                 affichage_finale = f"{affichage_finale}\n{nouvelle_ligne}"
             affichage_finale = f"{affichage_finale}\n{separateur}"
 
