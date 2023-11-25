@@ -167,18 +167,18 @@ class ParticipantDAO(metaclass=Singleton):
         for participant in res:
             P = Participant(id_game=participant[1],
                             puuid=participant[0],
-                            team_id=participant[3],
-                            total_damage_dealt_to_champions=participant[4],
+                            teamID=participant[3],
+                            totalDamageDealtToChampions=participant[4],
                             win=participant[5],
                             lane=participant[7],
                             role=participant[8],
-                            total_minions_killed=participant[6],
-                            champion_name=participant[9],
-                            gold_earned=participant[10],
+                            totalMinionsKilled=participant[6],
+                            championName=participant[9],
+                            goldEarned=participant[10],
                             death=participant[11],
                             assists=participant[12],
                             kills=participant[13],
-                            game_duration=participant[2])
+                            gameDuration=participant[2])
             parties.append(P)
         return parties
 

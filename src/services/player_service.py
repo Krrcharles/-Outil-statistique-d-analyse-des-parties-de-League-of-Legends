@@ -27,14 +27,14 @@ class PlayerService():
                 kda = "Perfect"
             else:
                 kda = round((float(partie._kills) + float(partie._assists)) / float(partie._death), 2)
-            gold_min = round(partie._gold_earned / partie._game_duration, 2)
+            gold_min = round(partie._goldEarned / partie._gameDuration, 2)
             if partie._win == 1:
                 win = "Victoire"
             else:
                 win = "Défaite"
 
-            affichage_top = f"{partie._champion_name} - {partie._lane} - {win}"
-            affichage_mid = f"{partie._kills}/{partie._death}/{partie._assists} ({kda} KDA) - {partie._total_damage_dealt_to_champions} dégats"
+            affichage_top = f"{partie._championName} - {partie._lane} - {win}"
+            affichage_mid = f"{partie._kills}/{partie._death}/{partie._assists} ({kda} KDA) - {partie._totalDamageDealtToChampions} dégats"
             affichage_bot = f"{gold_min} gold par minutes"
 
             max_lenght = max(len(affichage_top), len(affichage_mid), len(affichage_bot))

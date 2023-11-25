@@ -8,18 +8,18 @@ class Participant:
         self,
         id_game: str,
         puuid: str,
-        team_id: int,
-        total_damage_dealt_to_champions: int,
+        teamID: int,
+        totalDamageDealtToChampions: int,
         win: bool,
         lane: str,
         role: str,
-        total_minions_killed: int,
-        champion_name: str,
-        gold_earned: int,
+        totalMinionsKilled: int,
+        championName: str,
+        goldEarned: int,
         death: int,
         assists: int,
         kills: int,
-        game_duration: int
+        gameDuration: int
     ) -> None:
 
         ####################################
@@ -28,18 +28,18 @@ class Participant:
 
         self._id_game = id_game
         self._puuid = puuid
-        self._team_id = team_id
-        self._total_damage_dealt_to_champions = total_damage_dealt_to_champions
+        self._teamID = teamID
+        self._totalDamageDealtToChampions = totalDamageDealtToChampions
         self._win = win
         self._lane = lane
         self._role = role
-        self._total_minions_killed = total_minions_killed
-        self._champion_name = champion_name
-        self._gold_earned = gold_earned
+        self._totalMinionsKilled = totalMinionsKilled
+        self._championName = championName
+        self._goldEarned = goldEarned
         self._death = death
         self._assists = assists
         self._kills = kills
-        self._game_duration = game_duration
+        self._gameDuration = gameDuration
 
     ####################################
     #             Methods              #
