@@ -48,7 +48,7 @@ class ParticipantDAO(metaclass=Singleton):
             results = cursor.fetchall()
             return results
 
-        elif criteria == criteria_display[1]:
+        if criteria == criteria_display[1]:
             # List of champions ranked by winrate
             query = """
                 SELECT championName, COUNT(*) AS total_parties, 
@@ -61,7 +61,7 @@ class ParticipantDAO(metaclass=Singleton):
             results = cursor.fetchall()
             return results
 
-        elif criteria == criteria_display[2]:
+        if criteria == criteria_display[2]:
             # Champions list in descending order of KDA
             query = """
                 SELECT championName, ROUND(AVG((kills + assists) / deaths), 2) AS kda
@@ -73,7 +73,7 @@ class ParticipantDAO(metaclass=Singleton):
             results = cursor.fetchall()
             return results
 
-        elif criteria == criteria_display[3]:
+        if criteria == criteria_display[3]:
             # List of champions in descending order of gold per minute per game
             query = """
                 SELECT championName, ROUND(AVG(goldEarned / gameDuration),2) AS golds_per_minute
@@ -85,7 +85,7 @@ class ParticipantDAO(metaclass=Singleton):
             results = cursor.fetchall()
             return results
 
-        elif criteria == criteria_display[4]:
+        if criteria == criteria_display[4]:
             # List of lanes in descending order of total games played per lane
             query = """
                 SELECT lane, COUNT(*) AS total_parties, ROUND((SUM(win) * 1.0 / COUNT(*)),2)*100 AS winrate
@@ -97,7 +97,7 @@ class ParticipantDAO(metaclass=Singleton):
             results = cursor.fetchall()
             return results
 
-        elif criteria == criteria_display[5]:
+        if criteria == criteria_display[5]:
             # Champions list and their gold, totalminionkilled and descending order of total_games played
             query = """
                 SELECT championName, COUNT(*) AS total_parties, SUM(goldEarned) AS total_gold, SUM(totalMinionsKilled) AS total_minions_killed
