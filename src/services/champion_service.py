@@ -23,7 +23,7 @@ class ChampionService(metaclass=Singleton):
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0, 10):
+            for i in range(0, min(10,len(classement))):
                 champion_nom = classement[i][0]
                 champion_critere = classement[i][1]
 
@@ -41,7 +41,7 @@ class ChampionService(metaclass=Singleton):
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0, 10):
+            for i in range(0, min(10,len(classement))):
                 champion_nom = classement[i][0]
                 champion_critere = classement[i][3]
 
@@ -58,7 +58,7 @@ class ChampionService(metaclass=Singleton):
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0, 10):
+            for i in range(0, min(10,len(classement))):
                 champion_nom = classement[i][0]
                 champion_critere = classement[i][1]
 
@@ -75,7 +75,7 @@ class ChampionService(metaclass=Singleton):
             separateur = "+" + "-" * (len(affichage) - 2) + "+"
             affichage_finale = f"{separateur}\n{affichage}\n{separateur}"
 
-            for i in range(0, 10):
+            for i in range(0, min(10,len(classement))):
                 champion_nom = classement[i][0]
                 champion_critere = classement[i][1]
 
