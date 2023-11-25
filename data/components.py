@@ -7,7 +7,7 @@ def extract_participant_info(json_data) -> None :
 
     Return :
 
-        None
+        List
     """
     match_id = json_data["metadata"]["matchId"]
     info = json_data["info"]

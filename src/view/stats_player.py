@@ -63,9 +63,37 @@ class StatsPlayer(AbstractView):
         )
 
         if choice["yes"]:
-            from src.view.stats_player import StatsPlayer
+            if answer['choix'] != "Games Infos" :
+                # problème : comment créer une instance de Player avec les données d'un player de la base
+                name_player = answer['Name Player']
+                instance = PlayerService()
 
-            return StatsPlayer()
+                print(instance.afficher_stat_player(name_player))             
+        
+            else :
+                name_player = answer['Name Player']
+                instance = PlayerService()
+                #player = Player(name_player)
+
+                print(instance.afficher_parties(name_player))
+            
+            if Session().user_identifiant != "unknown" :
+                if Session().not_admin == "no" :
+                    from src.view.admin_view import AdminView
+                    Session().user_identifiant
+
+                    return AdminView()
+                
+                else :
+                    from src.view.member_view import MemberView
+                    Session().user_identifiant
+
+                    return MemberView()
+            
+            else :
+                from src.view.invite_view import InviteView
+                
+                return InviteView()
 
         else:
             if Session().user_identifiant != "unknown" :
