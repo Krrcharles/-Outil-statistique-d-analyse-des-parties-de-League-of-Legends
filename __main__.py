@@ -14,6 +14,8 @@ if __name__ == "__main__":
     #il n'a pas de DB de constitué et donc il faut l'initaliser
     init_db = input('Initialiser la base de données (très petite taille)? Y/n : ')
     if init_db == 'Y' or init_db == 'y':
+        
+        os.remove('data/database.db')
         print('Base de données non trouvée,\n initialisation ...')
         creer_database()
         fill()
