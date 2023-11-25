@@ -32,15 +32,16 @@ def fill():
         )
     )
     conn.commit()
-
+    print("user : done")
     # JOUEUR
+    print("chargement des joueurs ...")
     challengers_url = 'https://euw1.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5'
     final_challengers_url = challengers_url + '?api_key=' + api_key
 
     challengers_data = requests.get(final_challengers_url)
     time.sleep(1.2)
 
-    joueurs = pd.DataFrame(challengers_data.json()['entries'])
+    joueurs = pd.DataFrame(challengers_data.json()['entries']).iloc[:5,:]
 
     puuid = []
     level = []
@@ -68,14 +69,16 @@ def fill():
     joueurs['matches'] = joueurs['matches'].apply(json.dumps)
     joueurs.to_sql('joueur', conn, if_exists='replace', index=False)
     conn.close()
-
+    print("Pour faciliter le test voila la liste des joueurs chargé dans cette base de données de test")
+    print(joueurs['summonerName'])
+    print("joueur : done")
     # PARTICIPANT
     conn = sqlite3.connect('data/database.db')
     df = pd.read_sql('SELECT * FROM joueur', conn)
     df['matches'] = df['matches'].apply(json.loads)
     conn.close()
 
-    df['matches'] = df['matches'].apply(lambda x: x[:10])
+    df['matches'] = df['matches'].apply(lambda x: x[:2])
     liste_aplatie = df.explode('matches')['matches'].unique().tolist()
 
     for matchId in liste_aplatie:
@@ -91,3 +94,4 @@ def fill():
             cursor.execute('INSERT INTO participant VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', participant)
             conn.commit()
         conn.close()
+        print(f"match : {matchId}")

@@ -12,7 +12,8 @@ if __name__ == "__main__":
 
     #si l'utilisateur lance l'application pour la première fois
     #il n'a pas de DB de constitué et donc il faut l'initaliser
-    if not os.path.exists(os.path.exists(os.path.join(os.getcwd(),'databse.db'))):
+    init_db = input('Initialiser la base de données (très petite taille)? Y/n : ')
+    if init_db == 'Y' or init_db == 'y':
         print('Base de données non trouvée,\n initialisation ...')
         creer_database()
         fill()
