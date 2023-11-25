@@ -102,4 +102,4 @@ class AdminService:
                     gameDuration=participant[2]
                 )
 
-                ParticipantDAO.add_participant(participant_instance)
+                ParticipantDAO().add_participant(participant_instance)
