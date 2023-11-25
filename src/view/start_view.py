@@ -13,10 +13,10 @@ class StartView(AbstractView):
                 "name": "choix",
                 "message": "Hello",
                 "choices": [
-                    "Create",
-                    "Invite",
-                    "Connection",
-                    "Quit",
+                    "Créer un compte",
+                    "Rester en tant qu'invité",
+                    "Se connecter",
+                    "Quitter l'application",
                 ],
             }
         ]
@@ -30,17 +30,17 @@ class StartView(AbstractView):
         if reponse["choix"] == "Quit":
             pass
 
-        elif reponse["choix"] == "Create":  
+        elif reponse["choix"] == "Créer un compte":  
             from src.view.create_account_view import CreateAccountView
 
             return CreateAccountView()
 
-        elif reponse["choix"] == "Invite":
+        elif reponse["choix"] == "Rester en tant qu'invité":
             from src.view.invite_view import InviteView
 
             return InviteView()
 
-        elif reponse["choix"] == "Connection":
+        elif reponse["choix"] == "Se connecter":
             from src.view.connexion_view import ConnexionView
 
             return ConnexionView()
