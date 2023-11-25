@@ -20,7 +20,7 @@ docker pull krrcharles/po.gg:latest
 
 Run the image
 ```bash
-docker run krrcharles/po.gg
+docker run --rm -ti krrcharles/po.gg
 ```
 
 ## Installation with local python environement
