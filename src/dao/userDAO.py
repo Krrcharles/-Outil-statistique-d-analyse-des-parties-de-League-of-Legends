@@ -109,7 +109,3 @@ class UserDAO :
         conn.close()
 
         return real_password, isadmin
-
-
-"""a=UserDAO()
-print(a.rajouter_utilisateur('best_user','mdpasse'))"""
