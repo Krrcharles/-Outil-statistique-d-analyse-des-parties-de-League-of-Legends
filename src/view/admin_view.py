@@ -51,7 +51,7 @@ class AdminView(MemberView):
             stats_player = instance.afficher_stat_player(name_account)
             print(stats_player)
             from src.view.member_view import MemberView
-            return MemberView()
+            return AdminView()
 
         elif answer['choix'] == "Modification" :
             from src.services.admin_service import AdminService
