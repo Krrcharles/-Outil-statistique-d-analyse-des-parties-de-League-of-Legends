@@ -191,7 +191,7 @@ class ParticipantDAO(metaclass=Singleton):
             participant._teamID,
             participant._totalDamageDealtToChampions,
             participant._win,
-            participant._totaleMinionsKilled,
+            participant._totalMinionsKilled,
             participant._lane,
             participant._role,
             participant._championName,
