@@ -1,6 +1,10 @@
-import requests
-import json
+"""
+Module docstring: This module provides services related to administration functions
+in the application, specifically managing players by interacting with Riot's API.
+"""
+
 import time
+import requests
 from src.business.player.player import Player
 from src.business.participant.participant import Participant
 from src.dao.playerDAO import PlayerDAO
@@ -8,29 +12,36 @@ from src.dao.participantDAO import ParticipantDAO
 from data.components import extract_participant_info
 
 class AdminService:
+    """Class handling administrative services such as adding new players."""
+
     def __init__(self):
         pass
 
     def add_player(self, name, api_key):
-        # Retrieve summoner data from Riot API
-        summoner_url = f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}?api_key={api_key}'
-        summoner_data = requests.get(summoner_url)
-        
-        # Check if the request was successful
+        """
+        Adds a player to the database using their name and API key.
+        Retrieves player and match data from Riot's API.
+        """
+        # Define API URLs
+        summoner_url = (f'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/'
+                        f'{name}?api_key={api_key}')
+        league_url_template = ('https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/'
+                                '{}?api_key={}')
+
+        # Retrieve summoner data
+        summoner_data = requests.get(summoner_url, timeout=5)
         if summoner_data.status_code != 200:
-            return 'Error occurred, check your API key or API availability'
-        
-        # Parse the JSON response
+            return 'Error: Check your API key or API availability'
         summoner_data = summoner_data.json()
+        # Extract relevant data
         puuid = summoner_data['puuid']
         level = summoner_data['summonerLevel']
-        summonerId = summoner_data['id']
+        summoner_id = summoner_data['id']
 
-        # Retrieve league data for the summoner
-        league_url = f'https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/{summonerId}?api_key={api_key}'
-        league_data = requests.get(league_url).json()
+        # Retrieve league data
+        league_url = league_url_template.format(summoner_id, api_key)
+        league_data = requests.get(league_url, timeout=5).json()
 
-        # Check if the player is ranked
         is_ranked = False
         try:
             for queue in league_data:
@@ -38,13 +49,13 @@ class AdminService:
                     league_data = queue
                     is_ranked = True
                     break
-        except:
-            return 'Player not found'
+        except Exception as e:
+            return f'Player not found: {e}'
 
         if not is_ranked:
             return 'Unranked'
 
-        # Create a new player object with the retrieved data
+        # Create new player object
         new_player = Player(
             name=league_data['summonerName'], 
             id=league_data['summonerId'], 
@@ -55,25 +66,26 @@ class AdminService:
             level=level
         )
         
-        # Retrieve the last 20 ranked match IDs
-        matches_url = f'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?type=ranked&start=0&count=20&api_key={api_key}'
-        matches_id = requests.get(matches_url).json()
+        # Retrieve match IDs
+        matches_url = (f'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/'
+                       f'{puuid}/ids?type=ranked&start=0&count=20&api_key={api_key}')
+        matches_id = requests.get(matches_url, timeout=5).json()
 
-        print('Here are the infos that has been got:\n')
+        print('Retrieved player and match information:\n')
         print(new_player, matches_id)
 
-        # Add the new player and their matches to the database
         PlayerDAO().add_player(new_player, matches_id)
         time.sleep(1)
 
-        # Process each match and add participant data to the database
-        for matchId in matches_id[:10]:
-            match_url = f"https://europe.api.riotgames.com/lol/match/v5/matches/{matchId}?api_key={api_key}"
-            match_data = requests.get(match_url).json()
+        # Process and store participant data
+        for match_id in matches_id[:10]:
+            match_url = (f"https://europe.api.riotgames.com/lol/match/v5/matches/"
+                         f"{match_id}?api_key={api_key}")
+            match_data = requests.get(match_url, timeout=5).json()
             participants = extract_participant_info(match_data)
 
             for participant in participants:
-                P = Participant(
+                participant_instance = Participant(
                     id_game=participant[1],
                     puuid=participant[0],
                     teamID=participant[3],
@@ -90,4 +102,4 @@ class AdminService:
                     gameDuration=participant[2]
                 )
 
-                ParticipantDAO.add_participant(P)
+                ParticipantDAO.add_participant(participant_instance)
