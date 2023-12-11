@@ -18,7 +18,7 @@ class InviteView(AbstractView):
             Separator("📖"),
             "Stats Player",
             Separator("🚪"),
-            "Disconnect",
+            "Homepage",
         ]
         self.infos_option = infos_option
         self.__question = [
