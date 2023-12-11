@@ -1,17 +1,20 @@
+"""
+Module docstring: This module provides database access functions for managing participant data.
+"""
+
 import sqlite3
 from typing import List
 from src.utils.singleton import Singleton
 from src.dao.playerDAO import PlayerDAO
 from src.business.participant.participant import Participant
 
-
 class ParticipantDAO(metaclass=Singleton):
     """
-    Communicate with the participant table
+    DAO class for interacting with the participant table in the database.
+    Utilizes the Singleton design pattern.
     """
 
     def __init__(self, db_file='data/database.db'):
-
         """
         Initialize the class with the name of the SQLite database file.
 
@@ -20,131 +23,125 @@ class ParticipantDAO(metaclass=Singleton):
         """
         self.db_file = db_file
 
-
-    def find_best_champ(self, critere) -> List[str]:
+    def find_best_champ(self, criteria) -> List[str]:
         """
-        Get all champions by a specified criteria and return a list
+        Get all champions by a specified criteria and return a list.
 
-        :return: A list of statistics for champions
+        :param criteria: Criteria for selecting champions.
+        :type criteria: str
+        :return: A list of statistics for champions.
         :rtype: List of str
         """
-
-        """
-        Defining the criteria
-        Per_game: Returns a list of total games played for champions
-        Per_winrate: Returns a list of winrate for champions
-        ... 
-        """
-        critere_affichage = ["Per_game", "Per_winrate", "Per_KDA",  "Per_gold", "Per_lane", "Per_other_stat"]
+        criteria_display = ["Per_game", "Per_winrate", "Per_KDA", "Per_gold", "Per_lane", "Per_other_stat"]
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
-        if critere==critere_affichage[0]:   
-            #List of champions ranked by popularity (total number of games played)
-            query=  """ SELECT championName as Champion, COUNT(*) AS total_parties       
-                        FROM participant                  
-                        GROUP BY championName              
-                        ORDER BY total_parties DESC   
-                        """ 
+        if criteria == criteria_display[0]:
+            # List of champions ranked by popularity (total number of games played)
+            query = """
+                SELECT championName as Champion, COUNT(*) AS total_parties       
+                FROM participant                  
+                GROUP BY championName              
+                ORDER BY total_parties DESC   
+            """
             cursor.execute(query)
-            results = cursor.fetchall()   # Retrieving query results
+            results = cursor.fetchall()
             return results
 
-        #List of champions ranked by winrate (number of games won/number of games played)
-        elif critere==critere_affichage[1]:
-            query=  """SELECT championName, COUNT(*) AS total_parties, 
-                              SUM(win) AS parties_gagnees, ROUND((SUM(win) * 1.0 / COUNT(*)),2)*100 AS winrate
-                    FROM participant                                 
-                    GROUP BY championName                             
-                    ORDER BY winrate DESC                           
-                    """
+        if criteria == criteria_display[1]:
+            # List of champions ranked by winrate
+            query = """
+                SELECT championName, COUNT(*) AS total_parties, 
+                SUM(win) AS parties_gagnees, ROUND((SUM(win) * 1.0 / COUNT(*)),2)*100 AS winrate
+                FROM participant                                 
+                GROUP BY championName                             
+                ORDER BY winrate DESC                           
+            """
             cursor.execute(query)
-            results = cursor.fetchall()   # Retrieving query results
-
+            results = cursor.fetchall()
             return results
 
-        #Champions list in descending order of KDA (kills+assists)/deaths on all their games played
-        elif critere==critere_affichage[2]:
-            query= """SELECT championName , ROUND(AVG((kills + assists) / deaths), 2) AS kda
-                    FROM participant 
-                    GROUP BY championName 
-                    ORDER BY kda DESC  
-                """
-            cursor.execute(query)       
-            results = cursor.fetchall()   # Retrieving query results
-
+        if criteria == criteria_display[2]:
+            # Champions list in descending order of KDA
+            query = """
+                SELECT championName, ROUND(AVG((kills + assists) / deaths), 2) AS kda
+                FROM participant 
+                GROUP BY championName 
+                ORDER BY kda DESC  
+            """
+            cursor.execute(query)
+            results = cursor.fetchall()
             return results
 
-        #List of champions in descending order of gold per minute per game
-        elif critere==critere_affichage[3]:
-            query= """ SELECT championName, ROUND(AVG(goldEarned / gameDuration),2) AS golds_per_minute
-                    FROM participant
-                    GROUP BY championName 
-                    ORDER BY golds_per_minute DESC
-                """
-            cursor.execute(query)       
-            results = cursor.fetchall()   # Retrieving query results
-            
+        if criteria == criteria_display[3]:
+            # List of champions in descending order of gold per minute per game
+            query = """
+                SELECT championName, ROUND(AVG(goldEarned / gameDuration),2) AS golds_per_minute
+                FROM participant
+                GROUP BY championName 
+                ORDER BY golds_per_minute DESC
+            """
+            cursor.execute(query)
+            results = cursor.fetchall()
             return results
 
-        #List of lanes in descending order of total games played per lane
-        elif critere==critere_affichage[4]:
-            query= """ SELECT lane, COUNT(*) AS total_parties, ROUND((SUM(win) * 1.0 / COUNT(*)),2)*100 AS winrate
-                    FROM participant                                    
-                    GROUP BY lane                                       
-                    ORDER BY total_parties DESC                        
-                    """
-            cursor.execute(query)        
-            results = cursor.fetchall()   # Retrieving query results
-
-            return results
-        
-        #Champions list and their gold, totalminionkilled and descending order of total_games played
-        elif critere==critere_affichage[5]:
-            query=  """ SELECT championName, COUNT(*) AS total_parties, SUM(goldEarned) AS total_gold, SUM(totalMinionsKilled) AS total_minions_killed
-                        FROM participant                                    
-                        GROUP BY championName                               
-                        ORDER BY total_parties DESC                      
-                    """
-            cursor.execute(query)       
-            results = cursor.fetchall()   # Retrieving query results
-
+        if criteria == criteria_display[4]:
+            # List of lanes in descending order of total games played per lane
+            query = """
+                SELECT lane, COUNT(*) AS total_parties, ROUND((SUM(win) * 1.0 / COUNT(*)),2)*100 AS winrate
+                FROM participant                                    
+                GROUP BY lane                                       
+                ORDER BY total_parties DESC                        
+            """
+            cursor.execute(query)
+            results = cursor.fetchall()
             return results
 
-    
-    """
-    Requesting the statistics of a champion given his name
-    Statistics that are returned are: the champion's name, his total games played, winrate, kda and golds per minute
-    """
-    def stat_champ_by_name(self, name:str):
+        if criteria == criteria_display[5]:
+            # Champions list and their gold, totalminionkilled and descending order of total_games played
+            query = """
+                SELECT championName, COUNT(*) AS total_parties, SUM(goldEarned) AS total_gold, SUM(totalMinionsKilled) AS total_minions_killed
+                FROM participant                                    
+                GROUP BY championName                               
+                ORDER BY total_parties DESC                      
+            """
+            cursor.execute(query)
+            results = cursor.fetchall()
+            return results
+
+    def stat_champ_by_name(self, name: str):
+        """
+        Retrieves the statistics of a champion given their name.
+
+        :param name: Name of the champion.
+        :type name: str
+        :return: Champion's statistics including total games played, winrate, kda, and golds per minute.
+        """
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
-        query = """SELECT 
-                        championName AS name,
-                        COUNT(*) AS total_games,
-                        ROUND((SUM(win) * 1.0 / COUNT(*)), 3)*100 AS winrate,
-                        ROUND(AVG((kills + assists) / deaths),2) AS kda,
-                        ROUND(AVG(goldEarned / gameDuration),2) AS golds_per_minute
-                    FROM participant
-                    WHERE championName = ?
-                    """
+        query = """
+            SELECT 
+                championName AS name,
+                COUNT(*) AS total_games,
+                ROUND((SUM(win) * 1.0 / COUNT(*)), 3)*100 AS winrate,
+                ROUND(AVG((kills + assists) / deaths),2) AS kda,
+                ROUND(AVG(goldEarned / gameDuration),2) AS golds_per_minute
+            FROM participant
+            WHERE championName = ?
+        """
       
         cursor.execute(query, (name,))
-        res = cursor.fetchone()           # Retrieving query results
-
+        res = cursor.fetchone()
         return res
-
-
-    """
-    The "getpartie" method displays all the games played by a player with statistics for each game, 
-    including the champion's name, lane, game result (won or lost), kills, deaths, assists, 
-    totalDamageDone and goldEarned/gameDuration.
-
-    """
 
     def getpartie(self, name_player):
         """
+        Displays all the games played by a player with statistics for each game.
+
+        :param name_player: Name of the player.
+        :type name_player: str
+        :return: A list of Participant instances representing the games played.
         """
         player = PlayerDAO().find_player_by_name(name_player)
         if player is None:
@@ -154,36 +151,43 @@ class ParticipantDAO(metaclass=Singleton):
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
-        query = """ SELECT *
-                    FROM participant
-                    WHERE puuid = ?
-                    LIMIT 10;
-                    """
+        query = """
+            SELECT *
+            FROM participant
+            WHERE puuid = ?
+            LIMIT 10;
+        """
 
         cursor.execute(query, (puuid,))
         res = cursor.fetchall()
         parties = []
 
         for participant in res:
-            P = Participant(id_game=participant[1],
-                            puuid=participant[0],
-                            teamID=participant[3],
-                            totalDamageDealtToChampions=participant[4],
-                            win=participant[5],
-                            lane=participant[7],
-                            role=participant[8],
-                            totalMinionsKilled=participant[6],
-                            championName=participant[9],
-                            goldEarned=participant[10],
-                            death=participant[11],
-                            assists=participant[12],
-                            kills=participant[13],
-                            gameDuration=participant[2])
-            parties.append(P)
+            participant_instance = Participant(
+                id_game=participant[1],
+                puuid=participant[0],
+                teamID=participant[3],
+                totalDamageDealtToChampions=participant[4],
+                win=participant[5],
+                lane=participant[7],
+                role=participant[8],
+                totalMinionsKilled=participant[6],
+                championName=participant[9],
+                goldEarned=participant[10],
+                death=participant[11],
+                assists=participant[12],
+                kills=participant[13],
+                gameDuration=participant[2])
+            parties.append(participant_instance)
         return parties
 
-    def add_participant(participant: Participant):
-        
+    def add_participant(self, participant: Participant):
+        """
+        Adds a participant entry to the database.
+
+        :param participant: The participant instance to add.
+        :type participant: Participant
+        """
         participant_list = [
             participant._puuid,
             participant._id_game,
@@ -191,7 +195,7 @@ class ParticipantDAO(metaclass=Singleton):
             participant._teamID,
             participant._totalDamageDealtToChampions,
             participant._win,
-            participant._totaleMinionsKilled,
+            participant._totalMinionsKilled,
             participant._lane,
             participant._role,
             participant._championName,
@@ -201,26 +205,8 @@ class ParticipantDAO(metaclass=Singleton):
             participant._kills
         ]
 
-        conn = sqlite3.connect('data/database.db')
+        conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
         cursor.execute('INSERT INTO participant VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', participant_list)
         conn.commit()
         conn.close()
-
-
-#Exemple d'utilisation
-"""
-particip_dao = ParticipantDAO()
-result = particip_dao.find_best_champ("Per_KDA")
-print(result)
-"""
-"""
-champion_name = "Sylas"
-participant_dao = ParticipantDAO()
-result = participant_dao.stat_champ_by_name(champion_name)
-"""
-"""
-particip_dao = ParticipantDAO()
-result = particip_dao.getpartie("VIVE Serendrip")
-print(result[0]._death)
-"""

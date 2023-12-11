@@ -87,16 +87,3 @@ class Connexion_services():
         else:
             print("Le login n'est pas enregistré")
             return connexion
-
-
-#D = Connexion_services('data/database.db')
-
-# print(D.inscription('teemo_ultime', 'lemdpkitue'))
-
-# D.inscription('teemo', 'unmdpnul')
-
-# print(D.connexion('teemo', 'lemdpkitue'))
-
-"""print(D.connexion('admin', 'adminddd'))"""
-
-# print(D.connexion('teemo', '" or 1=1; -- '))

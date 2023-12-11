@@ -28,7 +28,53 @@ class TestChampionService(unittest.TestCase):
         )
         self.assertEqual(result, expected_output)
 
-    # Ajoutez d'autres tests similaires pour les autres critères
+    @patch('src.dao.participantDAO.ParticipantDAO.find_best_champ')
+    def test_classement_champion_Per_winrate(self, mock_find_best_champ):
+        mock_find_best_champ.return_value = [('Champion1', 0, 0, 93.5), ('Champion2', 0, 0, 73), ('Champion3', 0, 0, 12)]
+        champion_service = ChampionService()
+        result = champion_service.classement_champion("Per_winrate")
+        expected_output = (
+            "+-----------------------------------------------+\n"
+            "| Voici le classement des champions par winrate |\n"
+            "+-----------------------------------------------+\n"
+            "|     Champion1 : 93.5% de parties gagnées      |\n"
+            "|      Champion2 : 73% de parties gagnées       |\n"
+            "|      Champion3 : 12% de parties gagnées       |\n"
+            "+-----------------------------------------------+"
+        )
+        self.assertEqual(result, expected_output)
+
+    @patch('src.dao.participantDAO.ParticipantDAO.find_best_champ')
+    def test_classement_champion_Per_KDA(self, mock_find_best_champ):
+        mock_find_best_champ.return_value = [('Champion1', 13), ('Champion2', 9), ('Champion3', 2.3)]
+        champion_service = ChampionService()
+        result = champion_service.classement_champion("Per_KDA")
+        expected_output = (
+            "+-------------------------------------------+\n"
+            "| Voici le classement des champions par KDA |\n"
+            "+-------------------------------------------+\n"
+            "|           Champion1 : 13 de KDA           |\n"
+            "|           Champion2 : 9 de KDA            |\n"
+            "|          Champion3 : 2.3 de KDA           |\n"
+            "+-------------------------------------------+"
+        )
+        self.assertEqual(result, expected_output)
+
+    @patch('src.dao.participantDAO.ParticipantDAO.find_best_champ')
+    def test_classement_champion_Per_gold(self, mock_find_best_champ):
+        mock_find_best_champ.return_value = [('Champion1', 9.8), ('Champion2', 7), ('Champion3', 5.4)]
+        champion_service = ChampionService()
+        result = champion_service.classement_champion("Per_gold")
+        expected_output = (
+            "+---------------------------------------------------+\n"
+            "| Voici le classement des champions par gold gagnés |\n"
+            "+---------------------------------------------------+\n"
+            "|         Champion1 : 9.8 golds par minute          |\n"
+            "|          Champion2 : 7 golds par minute           |\n"
+            "|         Champion3 : 5.4 golds par minute          |\n"
+            "+---------------------------------------------------+"
+        )
+        self.assertEqual(result, expected_output)
 
     def test_stat_champion_invalid_champ(self):
         champion_service = ChampionService()

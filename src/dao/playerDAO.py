@@ -1,11 +1,14 @@
-from src.business.player.player import Player
 import sqlite3
 import json
+from src.business.player.player import Player
 
 class PlayerDAO:
+    """
+    Data Access Object (DAO) class for handling player data in the database.
+    Provides functionality to find and add player records.
+    """
 
     def __init__(self, db_name='data/database.db'):
-
         """
         Initialize the class with the name of the SQLite database file.
 
@@ -15,51 +18,57 @@ class PlayerDAO:
         self.db_name = db_name
 
     def find_player_by_name(self, name: str) -> Player:
+        """
+        Find a player by their name.
+
+        Parameters:
+        name (str): The name of the player to search for.
+
+        Returns:
+        Player: The found Player object, or None if not found.
+        """
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
 
-        # Using a parameterized query to avoid SQL injection
-        # precise the name of the columns in the case that the order change so ze can still use the integer from line 35 to 41
-        query = """SELECT summonerName AS name, summonerId AS id, puuid, rank, wins, losses, level 
-                    FROM joueur 
-                    WHERE summonerName = ?
-                    """
+        query = """
+            SELECT summonerName AS name, summonerId AS id, puuid, rank, wins, losses, level 
+            FROM joueur 
+            WHERE summonerName = ?
+        """
       
         cursor.execute(query, (name,))
-        
         res = cursor.fetchone()
-
-        player = None
 
         if res:
             # Create a Player object with the fetched data
-            player = Player(
-                name=res[0],  # Assuming 'summonerName' is the first column
-                id=res[1],    # Assuming 'summonerId' is the second column
-                puuid=res[2], # Assuming 'puuid' is the third column
-                rank=res[3],  # Assuming 'rank' is the fourth column
-                win=res[4],   # Assuming 'wins' is the fifth column
-                losses=res[5],  # Assuming 'losses' is the sixth column
-                level=res[6]  # Assuming 'level' is the seventh column
+            return Player(
+                name=res[0],
+                id=res[1],
+                puuid=res[2],
+                rank=res[3],
+                win=res[4],
+                losses=res[5],
+                level=res[6]
             )
 
-        return player
+        return None
 
+    def add_player(self, player: Player, matches_id: list):
+        """
+        Add a player to the database or update their record if they already exist.
 
-    def add_player (self, player: Player, matches_id: list) :
-        conn = sqlite3.connect('data/database.db')
+        Parameters:
+        player (Player): The Player object to be added or updated.
+        matches_id (list): List of match IDs associated with the player.
+        """
+        conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         
         if self.find_player_by_name(player._name):
             cursor.execute('DELETE FROM joueur WHERE summonerName = ?', (player._name,))
 
-        cursor.execute('INSERT INTO joueur (summonerId, summonerName, rank, wins, losses, puuid, level, matches) VALUES (?,?,?,?,?,?,?,?)',
-                       (player._id, player._name, player._rank, player._win, player._losses, player._puuid, player._level, json.dumps(matches_id)))
+        cursor.execute(
+            'INSERT INTO joueur (summonerId, summonerName, rank, wins, losses, puuid, level, matches) VALUES (?,?,?,?,?,?,?,?)',
+            (player._id, player._name, player._rank, player._win, player._losses, player._puuid, player._level, json.dumps(matches_id))
+        )
         conn.commit()
-        return False
-    
-"""# Example usage:
-player_name = "TwTv Raideru"
-player_dao = PlayerDAO()
-result = player_dao.find_player_by_name(player_name)
-print(result)"""
