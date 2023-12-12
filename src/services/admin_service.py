@@ -65,7 +65,7 @@ class AdminService:
             losses=league_data['losses'],
             level=level
         )
-        
+        print(new_player)
         # Retrieve match IDs
         matches_url = (f'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/'
                        f'{puuid}/ids?type=ranked&start=0&count=20&api_key={api_key}')
